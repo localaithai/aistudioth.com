@@ -1,24 +1,8 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
 import AboutSection from "@/components/AboutSection";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 
-export const metadata: Metadata = {
-  title: "เกี่ยวกับเรา — AI Studio Thailand",
-  description:
-    "AI Studio Thailand คือทีมเบื้องหลัง LocalAI Thailand และ CloudAI Thailand สอน พัฒนา สร้างสรรค์ AI สำหรับธุรกิจไทย",
-};
-
-export default function AboutPage() {
-  return (
-    <>
-      <Navbar />
-      <main>
-        <AboutSection />
-        <Contact />
-      </main>
-      <Footer />
-    </>
-  );
-}
+export const metadata: Metadata = { title: "เกี่ยวกับเรา", description: "AI Studio TH ประกอบ local AI rig บนโต๊ะตาม model และ runtime ที่ผู้ใช้ต้องการ." };
+export default function AboutPage() { return <><Navbar /><main><AboutSection /><Contact /></main><Footer /></>; }

@@ -1,130 +1,26 @@
-"use client";
-
 import Link from "next/link";
-import { Mail, Phone, MapPin } from "lucide-react";
-
-const footerColumns = [
-  {
-    title: "บริการ",
-    links: [
-      { label: "Workshop & Training", href: "/workshop" },
-      { label: "AI Development", href: "/development" },
-      { label: "AI Content Creation", href: "/creator" },
-      { label: "ราคา", href: "/pricing" },
-    ],
-  },
-  {
-    title: "Products",
-    links: [
-      {
-        label: "LocalAI Thailand",
-        href: "https://www.localaithai.com",
-        external: true,
-      },
-      {
-        label: "CloudAI Thailand",
-        href: "https://www.cloudaithai.com",
-        external: true,
-      },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { label: "เกี่ยวกับเรา", href: "/about" },
-      { label: "Case Studies", href: "/case-studies" },
-      { label: "Blog", href: "/blog" },
-      { label: "Ecosystem", href: "/ecosystem" },
-    ],
-  },
-];
+import { Mail, MessageCircle, Phone } from "lucide-react";
+import { site } from "@/lib/site";
 
 export default function Footer() {
   return (
     <footer className="bg-[#1d1d1f] text-white">
-      <div className="max-w-[1200px] mx-auto px-5 sm:px-6 py-16 lg:py-20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-10">
-          {/* Brand column */}
-          <div className="lg:col-span-2">
-            <Link href="/" className="inline-block mb-4">
-              <span className="text-2xl font-bold tracking-tight">
-                AI{" "}
-                <span className="gradient-text">Studio</span>
-              </span>
-            </Link>
-            <p className="text-gray-400 text-sm leading-relaxed max-w-sm mb-6">
-              ทีมพัฒนาเบื้องหลัง LocalAI Thailand และ CloudAI Thailand
-              — สอน พัฒนา สร้างสรรค์ AI สำหรับธุรกิจไทย
-            </p>
-            <div className="space-y-3 text-sm text-gray-400">
-              <a
-                href="mailto:chavin@pace-design.co.th"
-                className="flex items-center gap-2 py-2 hover:text-[#06c] transition-colors min-h-[44px]"
-              >
-                <Mail size={16} />
-                chavin@pace-design.co.th
-              </a>
-              <a
-                href="tel:0827047606"
-                className="flex items-center gap-2 py-2 hover:text-[#06c] transition-colors min-h-[44px]"
-              >
-                <Phone size={16} />
-                082-704-7606
-              </a>
-              <div className="flex items-center gap-2">
-                <MapPin size={16} />
-                Bangkok, Thailand
-              </div>
-            </div>
+      <div className="container-wide py-14">
+        <div className="grid gap-10 md:grid-cols-[1.3fr,1fr,1fr]">
+          <div>
+            <Link href="/" className="text-2xl font-bold tracking-tight">AI <span className="gradient-text">Studio</span> TH</Link>
+            <p className="mt-4 max-w-sm text-sm text-gray-400">AI rig บนโต๊ะสำหรับ developer, researcher และทีมเทคนิคเล็กที่ต้องการรัน model ในเครื่อง.</p>
           </div>
-
-          {/* Link columns */}
-          {footerColumns.map((col) => (
-            <div key={col.title}>
-              <h4 className="text-sm font-semibold text-white mb-5 tracking-wide uppercase">
-                {col.title}
-              </h4>
-              <ul className="space-y-1 sm:space-y-1.5">
-                {col.links.map((link) => (
-                  <li key={link.href}>
-                    {"external" in link && link.external ? (
-                      <a
-                        href={link.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm text-gray-400 py-2 hover:text-[#06c] transition-colors flex items-center gap-1.5 min-h-[44px]"
-                      >
-                        {link.label} <span className="text-[11px]">&rarr;</span>
-                      </a>
-                    ) : (
-                      <Link
-                        href={link.href}
-                        className="text-sm text-gray-400 py-2 hover:text-[#06c] transition-colors min-h-[44px] flex items-center"
-                      >
-                        {link.label}
-                      </Link>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-
-        {/* Bottom bar */}
-        <div className="mt-16 pt-8 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-gray-500">
-            &copy; {new Date().getFullYear()} AI Studio Thailand. All rights reserved.
-          </p>
-          <div className="flex items-center gap-6 text-sm text-gray-500">
-            <Link href="/privacy" className="py-2 hover:text-[#06c] transition-colors min-h-[44px] flex items-center">
-              Privacy
-            </Link>
-            <Link href="/terms" className="py-2 hover:text-[#06c] transition-colors min-h-[44px] flex items-center">
-              Terms
-            </Link>
+          <div>
+            <h2 className="text-sm font-semibold uppercase tracking-wider">สำรวจ</h2>
+            <div className="mt-4 grid gap-2 text-sm text-gray-400"><Link href="/builds" className="hover:text-white">Builds</Link><Link href="/models" className="hover:text-white">Models</Link><Link href="/benchmarks" className="hover:text-white">Benchmarks</Link><Link href="/about" className="hover:text-white">เกี่ยวกับเรา</Link><Link href="/ecosystem" className="hover:text-white">Local หรือ cloud</Link></div>
+          </div>
+          <div>
+            <h2 className="text-sm font-semibold uppercase tracking-wider">ติดต่อ</h2>
+            <div className="mt-4 grid gap-3 text-sm text-gray-400"><a href={`mailto:${site.contact.email}`} className="flex items-center gap-2 hover:text-white"><Mail size={15} />{site.contact.email}</a><a href={`tel:${site.contact.phone.replaceAll("-", "")}`} className="flex items-center gap-2 hover:text-white"><Phone size={15} />{site.contact.phone}</a><a href={site.contact.line} target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-white"><MessageCircle size={15} />LINE Official</a></div>
           </div>
         </div>
+        <div className="mt-12 border-t border-white/10 pt-6 text-sm text-gray-500">© {new Date().getFullYear()} AI Studio TH</div>
       </div>
     </footer>
   );

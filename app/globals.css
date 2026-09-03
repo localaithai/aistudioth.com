@@ -28,11 +28,11 @@ html { scroll-behavior: smooth; }
 ::selection { background: rgba(0,102,204,0.15); }
 ::-webkit-scrollbar { width: 0; }
 
-/* ─── Scrollbar hide for carousels ─── */
+/* Scrollbar hide for carousels */
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* ─── Typography ─── */
+/* Typography */
 p {
   font-weight: 400;
   line-height: 1.58;
@@ -46,7 +46,7 @@ h1, h2, h3, h4 {
   font-weight: 600;
 }
 
-/* ─── Section patterns ─── */
+/* Section patterns */
 .section-white { background: #fff; }
 .section-gray { background: #f5f5f7; }
 
@@ -57,20 +57,22 @@ h1, h2, h3, h4 {
   .feature-section { padding: 64px 0; }
 }
 
-/* ─── Cards ─── */
+/* Cards */
 .apple-card {
   background: #fff;
   border-radius: 20px;
   overflow: hidden;
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1),
+              box-shadow 200ms cubic-bezier(0.23, 1, 0.32, 1);
 }
-.apple-card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
+@media (hover: hover) and (pointer: fine) {
+  .apple-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
+  }
 }
 
-/* ─── Apple link ─── */
+/* Apple link */
 .apple-link {
   color: #06c;
   font-size: 17px;
@@ -82,7 +84,7 @@ h1, h2, h3, h4 {
 .apple-link:hover { text-decoration: underline; }
 .apple-link::after { content: '›'; font-size: 1.2em; }
 
-/* ─── Buttons ─── */
+/* Buttons */
 .btn-primary {
   display: inline-flex;
   align-items: center;
@@ -93,9 +95,10 @@ h1, h2, h3, h4 {
   font-weight: 500;
   background: #1d1d1f;
   color: #fff;
-  transition: all 0.3s;
+  transition: transform 150ms ease-out, background-color 150ms ease-out;
 }
 .btn-primary:hover { background: #000; }
+.btn-primary:active { transform: scale(0.97); }
 
 .btn-outline {
   display: inline-flex;
@@ -108,11 +111,12 @@ h1, h2, h3, h4 {
   color: #06c;
   background: transparent;
   border: 1px solid #06c;
-  transition: all 0.3s;
+  transition: transform 150ms ease-out, background-color 150ms ease-out, color 150ms ease-out;
 }
 .btn-outline:hover { background: #06c; color: #fff; }
+.btn-outline:active { transform: scale(0.97); }
 
-/* ─── Apple Buttons (CloudAI pattern) ─── */
+/* Apple buttons */
 .apple-btn {
   display: inline-flex;
   align-items: center;
@@ -121,7 +125,7 @@ h1, h2, h3, h4 {
   border-radius: 980px;
   font-size: 17px;
   font-weight: 400;
-  transition: all 0.3s;
+  transition: transform 150ms ease-out, background-color 150ms ease-out, color 150ms ease-out;
   cursor: pointer;
 }
 .apple-btn-blue {
@@ -131,6 +135,7 @@ h1, h2, h3, h4 {
 .apple-btn-blue:hover {
   background: #0077ed;
 }
+.apple-btn:active { transform: scale(0.97); }
 .apple-btn-outline {
   background: transparent;
   color: #2997ff;
@@ -141,14 +146,14 @@ h1, h2, h3, h4 {
   color: #fff;
 }
 
-/* ─── Nav ─── */
+/* Nav */
 .nav-glass {
   background: rgba(255,255,255,0.8);
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
 }
 
-/* ─── Section spacing — Apple uses HUGE spacing ─── */
+/* Section spacing */
 .apple-section {
   padding-top: 120px;
   padding-bottom: 120px;
@@ -161,7 +166,7 @@ h1, h2, h3, h4 {
   }
 }
 
-/* ─── Gradient text ─── */
+/* Gradient text */
 .gradient-text {
   background: linear-gradient(90deg, #2997ff, #5856d6);
   -webkit-background-clip: text;
@@ -169,10 +174,10 @@ h1, h2, h3, h4 {
   background-clip: text;
 }
 
-/* ─── Smooth transitions ─── */
+/* Smooth transitions */
 * { transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94); }
 
-/* ─── Container ─── */
+/* Container */
 .container-wide {
   max-width: 1200px;
   margin-left: auto;

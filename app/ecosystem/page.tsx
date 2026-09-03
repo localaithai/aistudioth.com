@@ -1,24 +1,8 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Ecosystem from "@/components/Ecosystem";
 import Contact from "@/components/Contact";
+import Ecosystem from "@/components/Ecosystem";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 
-export const metadata: Metadata = {
-  title: "Ecosystem — เครือข่าย AI ครบวงจร",
-  description:
-    "ระบบนิเวศ AI ครบวงจรจาก AI Studio Thailand — LocalAI Thailand สำหรับ On-Premise และ CloudAI Thailand สำหรับ Cloud Solutions",
-};
-
-export default function EcosystemPage() {
-  return (
-    <>
-      <Navbar />
-      <main>
-        <Ecosystem />
-        <Contact />
-      </main>
-      <Footer />
-    </>
-  );
-}
+export const metadata: Metadata = { title: "Local หรือ cloud", description: "เลือก local AI rig พร้อม Mimir Suites Local หรือ cloud models เมื่อไม่ต้องรัน inference ในเครื่อง." };
+export default function EcosystemPage() { return <><Navbar /><main><Ecosystem /><Contact /></main><Footer /></>; }

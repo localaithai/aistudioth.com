@@ -1,374 +1,45 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import {
-  Send,
-  Phone,
-  Mail,
-  MessageSquare,
-  MapPin,
-  Clock,
-  ArrowRight,
-  CheckCircle,
-  User,
-  Building,
-  FileText,
-  Sparkles,
-} from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Mail, MessageCircle, Phone } from "lucide-react";
+import { site } from "@/lib/site";
 
-const serviceOptions = [
-  { value: "", label: "เลือกบริการที่สนใจ" },
-  { value: "workshop", label: "AI Workshop & Training" },
-  { value: "development", label: "Custom AI Development" },
-  { value: "content", label: "AI Content Creation" },
-  { value: "other", label: "อื่นๆ" },
-];
-
-const contactInfo = [
-  {
-    icon: Phone,
-    label: "โทรศัพท์",
-    value: "082-704-7606",
-    href: "tel:0827047606",
-    color: "#06c",
-  },
-  {
-    icon: Mail,
-    label: "อีเมล",
-    value: "chavin@pace-design.co.th",
-    href: "mailto:chavin@pace-design.co.th",
-    color: "#1d4ed8",
-  },
-  {
-    icon: MessageSquare,
-    label: "LINE Official",
-    value: "@542mgysj",
-    href: "https://line.me/R/ti/p/@542mgysj",
-    color: "#059669",
-  },
-];
-
-const reasons = [
-  "ตอบกลับภายใน 24 ชั่วโมง",
-  "ปรึกษาเบื้องต้นฟรี",
-  "ออกแบบ solution เฉพาะ",
-  "ราคาโปร่งใส",
-];
+const fieldClass = "mt-2 w-full rounded-xl border border-black/10 bg-white px-4 py-3 text-sm text-[#1d1d1f] outline-none transition-[border-color,box-shadow] duration-150 ease-out focus:border-[#06c] focus:ring-2 focus:ring-[#06c]/20";
 
 export default function Contact() {
-  const [submitted, setSubmitted] = useState(false);
+  const pathname = usePathname() || "/";
 
   return (
-    <section
-      id="contact"
-      className="apple-section bg-white px-4"
-    >
-      <div className="max-w-[980px] mx-auto">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-16"
-        >
-          <p className="text-[13px] font-semibold text-[#06c] uppercase tracking-widest mb-3">
-            CONTACT US
-          </p>
-          <h2 className="text-[40px] sm:text-[56px] md:text-[64px] font-semibold tracking-[-0.04em] mb-4">
-            พร้อมเริ่มต้นกับ AI?
-          </h2>
-          <p className="text-[19px] sm:text-[21px] text-[#6e6e73] max-w-[600px] mx-auto leading-[1.47]">
-            ติดต่อเราวันนี้ รับคำปรึกษาเบื้องต้นฟรี
-            เราพร้อมช่วยคุณวางแผน AI ที่เหมาะกับธุรกิจ
-          </p>
-        </motion.div>
-
-        {/* Main Grid: Form + Info */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
-          {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="apple-card bg-white rounded-2xl p-5 md:p-6 lg:p-8 border border-black/[0.04] shadow-[0_2px_16px_rgba(0,0,0,0.04)]"
-          >
-            {submitted ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="text-center py-10 px-5"
-              >
-                <div className="w-16 h-16 rounded-[20px] bg-[rgba(5,150,105,0.1)] flex items-center justify-center mx-auto mb-5">
-                  <CheckCircle size={32} className="text-[#059669]" />
-                </div>
-                <h3 className="text-[22px] md:text-[24px] font-bold text-[#1d1d1f] mb-2">
-                  ส่งข้อความสำเร็จ!
-                </h3>
-                <p className="text-[15px] md:text-[16px] text-[#6e6e73] leading-relaxed">
-                  ขอบคุณที่สนใจบริการของเรา
-                  ทีมงานจะติดต่อกลับภายใน 24 ชั่วโมง
-                </p>
-              </motion.div>
-            ) : (
-              <form
-                action="https://formspree.io/f/mzzeydvp"
-                method="POST"
-                onSubmit={() => setSubmitted(true)}
-                className="flex flex-col gap-5"
-              >
-                <div className="text-[13px] font-bold text-[#06c] tracking-[0.06em] uppercase mb-1">
-                  ส่งข้อความถึงเรา
-                </div>
-
-                {/* Name + Company Row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label
-                      htmlFor="name"
-                      className="flex items-center gap-1.5 text-[13px] font-semibold text-[#1d1d1f] mb-2"
-                    >
-                      <User size={14} className="text-[#6e6e73]" />
-                      ชื่อ-นามสกุล
-                    </label>
-                    <input
-                      id="name"
-                      name="name"
-                      type="text"
-                      required
-                      placeholder="ชื่อของคุณ"
-                      className="w-full rounded-xl border border-black/10 px-4 py-3 text-[16px] text-[#1d1d1f] bg-white outline-none focus:ring-2 focus:ring-[#06c]/30 focus:border-[#06c] transition-all placeholder:text-[#c7c7cc] box-border"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="company"
-                      className="flex items-center gap-1.5 text-[13px] font-semibold text-[#1d1d1f] mb-2"
-                    >
-                      <Building size={14} className="text-[#6e6e73]" />
-                      บริษัท
-                    </label>
-                    <input
-                      id="company"
-                      name="company"
-                      type="text"
-                      placeholder="ชื่อบริษัท (ถ้ามี)"
-                      className="w-full rounded-xl border border-black/10 px-4 py-3 text-[16px] text-[#1d1d1f] bg-white outline-none focus:ring-2 focus:ring-[#06c]/30 focus:border-[#06c] transition-all placeholder:text-[#c7c7cc] box-border"
-                    />
-                  </div>
-                </div>
-
-                {/* Email + Phone Row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="flex items-center gap-1.5 text-[13px] font-semibold text-[#1d1d1f] mb-2"
-                    >
-                      <Mail size={14} className="text-[#6e6e73]" />
-                      อีเมล
-                    </label>
-                    <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      required
-                      placeholder="your@email.com"
-                      className="w-full rounded-xl border border-black/10 px-4 py-3 text-[16px] text-[#1d1d1f] bg-white outline-none focus:ring-2 focus:ring-[#06c]/30 focus:border-[#06c] transition-all placeholder:text-[#c7c7cc] box-border"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="phone"
-                      className="flex items-center gap-1.5 text-[13px] font-semibold text-[#1d1d1f] mb-2"
-                    >
-                      <Phone size={14} className="text-[#6e6e73]" />
-                      เบอร์โทร
-                    </label>
-                    <input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      placeholder="08X-XXX-XXXX"
-                      className="w-full rounded-xl border border-black/10 px-4 py-3 text-[16px] text-[#1d1d1f] bg-white outline-none focus:ring-2 focus:ring-[#06c]/30 focus:border-[#06c] transition-all placeholder:text-[#c7c7cc] box-border"
-                    />
-                  </div>
-                </div>
-
-                {/* Service Selector */}
-                <div>
-                  <label
-                    htmlFor="service"
-                    className="flex items-center gap-1.5 text-[13px] font-semibold text-[#1d1d1f] mb-2"
-                  >
-                    <FileText size={14} className="text-[#6e6e73]" />
-                    บริการที่สนใจ
-                  </label>
-                  <select
-                    id="service"
-                    name="service"
-                    required
-                    className="w-full rounded-xl border border-black/10 px-4 py-3 text-[16px] text-[#1d1d1f] bg-white outline-none cursor-pointer appearance-none bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20fill%3D%22%2386868b%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M8%2012l-6-6h12z%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_16px_center] box-border focus:ring-2 focus:ring-[#06c]/30 focus:border-[#06c] transition-all"
-                  >
-                    {serviceOptions.map((opt) => (
-                      <option key={opt.value} value={opt.value}>
-                        {opt.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Message */}
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="flex items-center gap-1.5 text-[13px] font-semibold text-[#1d1d1f] mb-2"
-                  >
-                    <MessageSquare size={14} className="text-[#6e6e73]" />
-                    ข้อความ
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    required
-                    rows={5}
-                    placeholder="บอกเราเกี่ยวกับโปรเจ็กต์หรือความต้องการของคุณ..."
-                    className="w-full rounded-xl border border-black/10 px-4 py-3 text-[16px] text-[#1d1d1f] bg-white outline-none resize-y min-h-[120px] leading-relaxed box-border font-[inherit] focus:ring-2 focus:ring-[#06c]/30 focus:border-[#06c] transition-all placeholder:text-[#c7c7cc]"
-                  />
-                </div>
-
-                {/* Submit */}
-                <motion.button
-                  type="submit"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full py-4 md:py-4 rounded-full bg-[#1d1d1f] text-white font-medium flex items-center justify-center gap-2 text-[16px] md:text-[16px] border-none cursor-pointer mt-1 min-h-[52px] hover:scale-[1.01] hover:shadow-lg active:scale-[0.99] transition-all"
-                  style={{
-                    background: "linear-gradient(135deg, #06c, #ea580c)",
-                  }}
-                >
-                  <Send size={18} />
-                  ส่งข้อความ
-                </motion.button>
-              </form>
-            )}
-          </motion.div>
-
-          {/* Contact Info Side */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            className="grid grid-cols-1 gap-3"
-          >
-            {/* Contact Cards */}
-            {contactInfo.map((info, i) => {
-              const InfoIcon = info.icon;
-              return (
-                <motion.a
-                  key={info.label}
-                  href={info.href}
-                  target={
-                    info.href.startsWith("http") ? "_blank" : undefined
-                  }
-                  rel={
-                    info.href.startsWith("http")
-                      ? "noopener noreferrer"
-                      : undefined
-                  }
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.35 + i * 0.08 }}
-                  whileHover={{ y: -2 }}
-                  className="apple-card flex items-center gap-4 p-4 md:p-6 min-h-[44px] bg-white rounded-[20px] border border-black/[0.06] no-underline cursor-pointer hover:shadow-md hover:border-[#06c]/20 transition-all"
-                >
-                  <div
-                    className="w-12 h-12 rounded-[14px] flex items-center justify-center shrink-0"
-                    style={{ background: `${info.color}12` }}
-                  >
-                    <InfoIcon size={22} style={{ color: info.color }} />
-                  </div>
-                  <div>
-                    <div className="text-[12px] font-semibold text-[#6e6e73] tracking-[0.04em] uppercase mb-0.5">
-                      {info.label}
-                    </div>
-                    <div className="text-[15px] md:text-[16px] font-semibold text-[#1d1d1f]">
-                      {info.value}
-                    </div>
-                  </div>
-                  <ArrowRight size={16} className="text-[#d1d5db] ml-auto" />
-                </motion.a>
-              );
-            })}
-
-            {/* Office Hours */}
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.6 }}
-              className="apple-card p-4 md:p-6 bg-white rounded-[20px] border border-black/[0.06] hover:shadow-md hover:border-[#06c]/20 transition-all"
-            >
-              <div className="flex items-center gap-2.5 mb-3.5">
-                <Clock size={18} className="text-[#06c]" />
-                <span className="text-[14px] font-bold text-[#1d1d1f]">
-                  เวลาทำการ
-                </span>
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <div className="flex justify-between text-[14px]">
-                  <span className="text-[#6e6e73]">จันทร์ - ศุกร์</span>
-                  <span className="text-[#1d1d1f] font-semibold">09:00 - 18:00</span>
-                </div>
-                <div className="flex justify-between text-[14px]">
-                  <span className="text-[#6e6e73]">เสาร์</span>
-                  <span className="text-[#1d1d1f] font-semibold">09:00 - 15:00</span>
-                </div>
-                <div className="flex justify-between text-[14px]">
-                  <span className="text-[#6e6e73]">อาทิตย์</span>
-                  <span className="text-[#6e6e73] font-medium">ปิดทำการ</span>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Why Contact Us */}
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.7 }}
-              className="apple-card p-4 md:p-6 rounded-[20px] border border-[rgba(232,89,12,0.1)] hover:shadow-md hover:border-[#06c]/20 transition-all"
-              style={{
-                background: "linear-gradient(135deg, rgba(232,89,12,0.04), rgba(232,89,12,0.02))",
-              }}
-            >
-              <div className="flex items-center gap-2 mb-3.5">
-                <Sparkles size={18} className="text-[#06c]" />
-                <span className="text-[14px] font-bold text-[#1d1d1f]">
-                  ทำไมต้องติดต่อเรา
-                </span>
-              </div>
-              <div className="flex flex-col gap-2">
-                {reasons.map((reason, i) => (
-                  <motion.div
-                    key={reason}
-                    initial={{ opacity: 0, x: 8 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.75 + i * 0.06 }}
-                    className="flex items-center gap-2.5 text-[14px] text-[#1d1d1f]"
-                  >
-                    <CheckCircle size={16} className="text-[#06c] shrink-0" />
-                    {reason}
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </motion.div>
+    <section id="contact" className="section-white apple-section scroll-mt-16">
+      <div className="container-wide">
+        <div className="max-w-3xl mb-10"><p className="text-[#06c] text-sm font-semibold tracking-widest uppercase mb-3">Configure your studio</p><h2 className="text-4xl sm:text-5xl font-semibold mb-5">ส่ง workload ของคุณมา</h2><p className="text-lg">บอก model, context และ stack ที่คุณจะใช้ เราจะเริ่มจาก memory budget ก่อนคุยเรื่อง build</p></div>
+        <div className="grid gap-8 lg:grid-cols-[1.4fr,0.6fr]">
+          <form action={site.contact.formspreeEndpoint} method="POST" className="rounded-3xl border border-black/[0.07] bg-[#f5f5f7] p-6 sm:p-8">
+            <input type="hidden" name="source_domain" value="aistudioth.com" />
+            <input type="hidden" name="source_page" value={pathname} />
+            <input type="hidden" name="campaign" value="" />
+            <input type="hidden" name="keyword" value="" />
+            <input type="hidden" name="crm_source" value={site.crmSource} />
+            <div className="grid gap-5 sm:grid-cols-2">
+              <label className="text-sm font-semibold text-[#1d1d1f]">ชื่อ<input required name="name" autoComplete="name" className={fieldClass} /></label>
+              <label className="text-sm font-semibold text-[#1d1d1f]">อีเมล<input required name="email" type="email" autoComplete="email" className={fieldClass} /></label>
+              <label className="text-sm font-semibold text-[#1d1d1f]">โทรศัพท์<input name="phone" type="tel" autoComplete="tel" className={fieldClass} /></label>
+              <label className="text-sm font-semibold text-[#1d1d1f]">บริษัท<input name="company" autoComplete="organization" className={fieldClass} /></label>
+              <label className="text-sm font-semibold text-[#1d1d1f]">คุณเป็นใคร<select name="customer_type" defaultValue="developer" className={fieldClass}><option value="developer">Developer</option><option value="researcher">Researcher</option><option value="technical_team">ทีมเทคนิคขนาดเล็ก</option><option value="other">อื่น ๆ</option></select></label>
+              <label className="text-sm font-semibold text-[#1d1d1f]">จำนวนผู้ใช้โดยประมาณ<input name="estimated_users" inputMode="numeric" placeholder="เช่น 1 หรือ 5" className={fieldClass} /></label>
+              <label className="text-sm font-semibold text-[#1d1d1f]">Hardware ที่สนใจ<select required name="hardware_interest" defaultValue="desk_rig" className={fieldClass}><option value="desk_rig">AI rig บนโต๊ะ</option><option value="dgx_spark">NVIDIA DGX Spark</option><option value="dual_spark">2x Spark</option><option value="rtx_5090">RTX 5090 workstation</option><option value="mac_studio_ultra">Mac Studio Ultra</option><option value="unsure">ยังไม่แน่ใจ</option></select></label>
+              <label className="text-sm font-semibold text-[#1d1d1f]">Software ที่สนใจ<select required name="software_interest" defaultValue="local" className={fieldClass}><option value="local">Mimir Suites Local</option><option value="none">ไม่เอา software, รับเฉพาะ hardware</option><option value="unsure">ยังไม่แน่ใจ</option></select></label>
+              <label className="text-sm font-semibold text-[#1d1d1f]">Edition<select name="edition" defaultValue="local" className={fieldClass}><option value="local">Local</option><option value="hardware_only">เฉพาะ hardware</option></select></label>
+              <label className="text-sm font-semibold text-[#1d1d1f]">จำนวนที่นั่งหรือพนักงานบน Suite<input name="seats" inputMode="numeric" placeholder="ถ้าเลือก Local" className={fieldClass} /></label>
+              <label className="text-sm font-semibold text-[#1d1d1f]">Budget<select name="budget" defaultValue="unsure" className={fieldClass}><option value="unsure">ยังไม่กำหนด</option><option value="under_100k">ต่ำกว่า 100k THB</option><option value="100k_300k">100k to 300k THB</option><option value="300k_plus">300k+ THB</option></select></label>
+              <label className="text-sm font-semibold text-[#1d1d1f]">Timeline<select name="timeline" defaultValue="exploring" className={fieldClass}><option value="exploring">กำลังศึกษา</option><option value="this_quarter">ภายในไตรมาสนี้</option><option value="planned">มีแผนภายหลัง</option></select></label>
+            </div>
+            <label className="mt-5 block text-sm font-semibold text-[#1d1d1f]">Use case<textarea required name="use_case" rows={3} placeholder="คุณจะให้ rig ทำอะไร" className={fieldClass} /></label>
+            <label className="mt-5 block text-sm font-semibold text-[#1d1d1f]">ความต้องการ model<textarea name="model_requirements" rows={3} placeholder="เช่น model size, quantisation, context, runtime" className={fieldClass} /></label>
+            <label className="mt-5 block text-sm font-semibold text-[#1d1d1f]">ความอ่อนไหวของข้อมูล<select name="data_sensitivity" defaultValue="unsure" className={fieldClass}><option value="unsure">ยังไม่แน่ใจ</option><option value="public">ข้อมูลสาธารณะ</option><option value="internal">ข้อมูลภายใน</option><option value="sensitive">ข้อมูลอ่อนไหว</option></select></label>
+            <button type="submit" className="apple-btn apple-btn-blue mt-7 w-full active:scale-[0.97] transition-transform">ส่งความต้องการของ build</button>
+          </form>
+          <aside className="space-y-4"><div className="rounded-3xl bg-[#1d1d1f] p-7 text-white"><h3 className="text-xl font-semibold text-white mb-3">อยากคุยโดยตรง?</h3><p className="text-sm text-gray-300">ส่ง model list และ current stack มาก่อนได้</p></div><a href={`mailto:${site.contact.email}`} className="flex items-center gap-3 rounded-2xl border border-black/[0.07] p-5 text-sm font-semibold text-[#1d1d1f] transition-[transform,box-shadow] duration-150 ease-out hover:shadow-md active:scale-[0.97]"><Mail className="text-[#06c]" size={19} />{site.contact.email}</a><a href={`tel:${site.contact.phone.replaceAll("-", "")}`} className="flex items-center gap-3 rounded-2xl border border-black/[0.07] p-5 text-sm font-semibold text-[#1d1d1f] transition-[transform,box-shadow] duration-150 ease-out hover:shadow-md active:scale-[0.97]"><Phone className="text-[#06c]" size={19} />{site.contact.phone}</a><a href={site.contact.line} target="_blank" rel="noreferrer" className="flex items-center gap-3 rounded-2xl border border-black/[0.07] p-5 text-sm font-semibold text-[#1d1d1f] transition-[transform,box-shadow] duration-150 ease-out hover:shadow-md active:scale-[0.97]"><MessageCircle className="text-[#06c]" size={19} />LINE Official</a></aside>
         </div>
       </div>
     </section>
