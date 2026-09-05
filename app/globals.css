@@ -201,3 +201,90 @@ h1, h2, h3, h4 {
     padding-right: 24px;
   }
 }
+
+.channel-row:has(a[hidden]) { display: none; }
+
+/* Omni lead form */
+.omni-form {
+  display: grid;
+  gap: 20px;
+  border-radius: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  background: #f5f5f7;
+  padding: 24px;
+}
+@media (min-width: 640px) {
+  .omni-form { padding: 32px; }
+}
+
+.omni-heading { display: none; }
+
+.omni-field {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1d1d1f;
+}
+.omni-field--checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.omni-input {
+  margin-top: 8px;
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #fff;
+  padding: 12px 16px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  color: #1d1d1f;
+  outline: none;
+  transition: border-color 150ms ease-out, box-shadow 150ms ease-out;
+}
+.omni-input:focus {
+  border-color: #06c;
+  box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
+}
+textarea.omni-input {
+  min-height: 96px;
+  resize: vertical;
+}
+.omni-field--checkbox .omni-input {
+  margin-top: 0;
+  width: auto;
+  padding: 0;
+}
+
+.omni-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 12px 24px;
+  border-radius: 980px;
+  background: #06c;
+  color: #fff;
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: transform 150ms ease-out, background-color 150ms ease-out;
+}
+.omni-submit:hover { background: #0055aa; }
+.omni-submit:active { transform: scale(0.97); }
+.omni-submit:disabled { opacity: 0.6; cursor: default; }
+
+.omni-error {
+  color: #b3261e;
+  font-size: 14px;
+  font-weight: 500;
+}
+.omni-success {
+  color: #1d1d1f;
+  font-size: 17px;
+  font-weight: 500;
+}

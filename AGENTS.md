@@ -21,7 +21,8 @@ Before writing copy, CTAs, footer disclosures, or cross-links, read:
 ## Project rules
 
 - The buyer is the person who will sit at the machine. Voice is spec-led and geeky: VRAM versus model tables, bench numbers, build guides. `aiworkstationthailand.com` is the procurement-facing sibling; never paste from it.
-- `lib/site.ts` is the only place a brand value is written: name, URL, CTA, contact, CRM source, Mimir role, legal disclosure. `lib/rig-data.ts` owns build tiers, model fit and bench figures. Pages read from both; they never restate a value inline.
+- `lib/site.ts` is the only place a brand value is written: name, URL, CTA, Mimir role, legal disclosure. `lib/rig-data.ts` owns build tiers, model fit and bench figures. Pages read from both; they never restate a value inline.
+- Contact channels (email, LINE, phone) and the lead form come from omni's `cta.js` via `data-cta` attributes; never hardcode them in components.
 - Fully static export (`output: "export"` in `next.config.ts`). No API routes, middleware or request-time rendering.
 - Primary CTA is "Configure your studio" into the contact form. "Visit Mimir Suites" is never the primary CTA; "Powered by Mimir Suites" is fine.
 - `site.legalDisclosure` stays `null` until the operating entity is named. Render nothing, never a placeholder.

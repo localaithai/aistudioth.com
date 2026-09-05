@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Bai_Jamjuree } from "next/font/google";
+import Script from "next/script";
+import OmniToaster from "@/components/OmniToaster";
 import PageTransition from "@/components/PageTransition";
 import { site } from "@/lib/site";
 import "./globals.css";
@@ -81,6 +83,8 @@ export default function RootLayout({
       </head>
       <body className={`${baiJamjuree.variable} antialiased`}>
         <PageTransition>{children}</PageTransition>
+        <Script src="https://localai-omni.vercel.app/cta.js" strategy="afterInteractive" />
+        <OmniToaster />
       </body>
     </html>
   );
