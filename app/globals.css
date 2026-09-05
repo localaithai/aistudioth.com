@@ -129,20 +129,20 @@ h1, h2, h3, h4 {
   cursor: pointer;
 }
 .apple-btn-blue {
-  background: #2997ff;
+  background: #06c;
   color: #fff;
 }
 .apple-btn-blue:hover {
-  background: #0077ed;
+  background: #0055aa;
 }
 .apple-btn:active { transform: scale(0.97); }
 .apple-btn-outline {
   background: transparent;
-  color: #2997ff;
-  border: 1px solid #2997ff;
+  color: #06c;
+  border: 1px solid #06c;
 }
 .apple-btn-outline:hover {
-  background: #2997ff;
+  background: #06c;
   color: #fff;
 }
 
@@ -176,6 +176,16 @@ h1, h2, h3, h4 {
 
 /* Smooth transitions */
 * { transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
 
 /* Container */
 .container-wide {

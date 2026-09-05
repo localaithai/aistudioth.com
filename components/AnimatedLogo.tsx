@@ -1,7 +1,9 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 export default function AnimatedLogo({ className = "" }: { className?: string }) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <div className={`flex items-center justify-center gap-0 overflow-visible pr-4 ${className}`}>
       {/* "AI" */}
@@ -29,7 +31,7 @@ export default function AnimatedLogo({ className = "" }: { className?: string })
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           backgroundClip: "text",
-          animation: "gradientShift 4s ease-in-out infinite",
+          animation: reduceMotion ? "none" : "gradientShift 4s ease-in-out infinite",
         }}
       >
         Studio
@@ -51,11 +53,13 @@ export default function AnimatedLogo({ className = "" }: { className?: string })
         transition={{ delay: 1.2, type: "spring", stiffness: 300, damping: 15 }}
       >
         <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-[#e8590c]" />
-        <motion.div
-          className="absolute inset-0 rounded-full border-[1.5px] border-[#e8590c]"
-          animate={{ scale: [1, 2], opacity: [0.5, 0] }}
-          transition={{ delay: 1.4, duration: 1.2, repeat: Infinity }}
-        />
+        {!reduceMotion && (
+          <motion.div
+            className="absolute inset-0 rounded-full border-[1.5px] border-[#e8590c]"
+            animate={{ scale: [1, 2], opacity: [0.5, 0] }}
+            transition={{ delay: 1.4, duration: 1.2, repeat: Infinity }}
+          />
+        )}
       </motion.div>
 
       {/* CSS animation for gradient shift */}
