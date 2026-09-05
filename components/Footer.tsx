@@ -16,7 +16,7 @@ export default function Footer() {
           </div>
           <div>
             <h2 className="text-sm font-semibold uppercase tracking-wider">ติดต่อ</h2>
-            <div className="mt-4 grid gap-3 text-sm text-gray-400"><span className="channel-row flex items-center gap-2"><Mail size={15} /><a data-cta="email" className="hover:text-white" /></span><span className="channel-row flex items-center gap-2"><Phone size={15} /><a data-cta="tel" className="hover:text-white" /></span><a data-cta="line" className="flex items-center gap-2 hover:text-white"><MessageCircle size={15} />LINE Official</a></div>
+            <div className="mt-4 grid gap-3 text-sm text-gray-400"><a data-cta="email" className="flex items-center gap-2 hover:text-white"><Mail size={15} /></a><a data-cta="tel" className="flex items-center gap-2 hover:text-white"><Phone size={15} /></a><a data-cta="line" className="flex items-center gap-2 hover:text-white"><MessageCircle size={15} />LINE Official</a></div>
           </div>
         </div>
         <div className="mt-12 border-t border-white/10 pt-6 text-sm text-gray-500">© {new Date().getFullYear()} AI Studio TH</div>
