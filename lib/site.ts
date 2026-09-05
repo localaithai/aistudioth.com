@@ -12,7 +12,7 @@ export const site = {
   mimirRole:
     "Mimir Suites Local installed on the rig, or a bare rig for people who run their own stack.",
   contact: {
-    email: "chavin@pace-design.co.th",
+    email: "sales@aistudioth.com",
     phone: "082-704-7606",
     line: "https://line.me/R/ti/p/@542mgysj",
     formspreeEndpoint: "https://formspree.io/f/mzzeydvp",
