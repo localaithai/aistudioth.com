@@ -5,8 +5,8 @@ Thai-first, spec-led desk-side AI rig builds for developers, researchers, and sm
 ## Development
 
 ```bash
-npm install
-npm run build
+pnpm install
+pnpm build
 ```
 
 The project uses Next.js static export. The production output is written to `out/`.
