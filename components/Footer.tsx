@@ -12,7 +12,7 @@ export default function Footer() {
           </div>
           <div>
             <h2 className="text-sm font-semibold uppercase tracking-wider">สำรวจ</h2>
-            <div className="mt-4 grid gap-2 text-sm text-gray-400"><Link href="/builds" className="hover:text-white">Builds</Link><Link href="/models" className="hover:text-white">Models</Link><Link href="/benchmarks" className="hover:text-white">Benchmarks</Link><Link href="/about" className="hover:text-white">เกี่ยวกับเรา</Link><Link href="/ecosystem" className="hover:text-white">Local หรือ cloud</Link></div>
+            <div className="mt-4 grid gap-2 text-sm text-gray-400"><Link href="/builds" className="hover:text-white">Builds</Link><Link href="/models" className="hover:text-white">Models</Link><Link href="/benchmarks" className="hover:text-white">Benchmarks</Link><Link href="/about" className="hover:text-white">เกี่ยวกับเรา</Link><Link href="/ecosystem" className="hover:text-white">Local หรือ cloud</Link><Link href="/privacy" className="hover:text-white">นโยบายความเป็นส่วนตัว</Link></div>
           </div>
           <div>
             <h2 className="text-sm font-semibold uppercase tracking-wider">ติดต่อ</h2>

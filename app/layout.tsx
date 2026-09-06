@@ -84,6 +84,7 @@ export default function RootLayout({
       <body className={`${baiJamjuree.variable} antialiased`}>
         <PageTransition>{children}</PageTransition>
         <Script src="https://localai-omni.vercel.app/cta.js" strategy="afterInteractive" />
+        <Script src="https://localai-omni.vercel.app/analytics.js" strategy="afterInteractive" />
         <OmniToaster />
       </body>
     </html>
