@@ -8,6 +8,9 @@ import Ecosystem from "@/components/Ecosystem";
 import Partners from "@/components/Partners";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import { metadataFor } from "@/lib/site-data";
+
+export const metadata = metadataFor("/");
 
 export default function Home() {
   return (

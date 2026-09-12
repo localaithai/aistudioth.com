@@ -7,19 +7,72 @@ export default function Footer() {
       <div className="container-wide py-14">
         <div className="grid gap-10 md:grid-cols-[1.3fr,1fr,1fr]">
           <div>
-            <Link href="/" className="text-2xl font-bold tracking-tight">AI <span className="gradient-text">Studio</span> TH</Link>
-            <p className="mt-4 max-w-sm text-sm text-gray-400">AI rig บนโต๊ะสำหรับ developer, researcher และทีมเทคนิคเล็กที่ต้องการรัน model ในเครื่อง.</p>
+            <Link href="/" className="text-2xl font-bold tracking-tight">
+              AI <span className="gradient-text">Studio</span> TH
+            </Link>
+            <p className="mt-4 max-w-sm text-sm text-gray-400">
+              AI rig บนโต๊ะสำหรับ developer, researcher และทีมเทคนิคเล็กที่ต้องการรัน
+              model ในเครื่อง.
+            </p>
           </div>
           <div>
-            <h2 className="text-sm font-semibold uppercase tracking-wider">สำรวจ</h2>
-            <div className="mt-4 grid gap-2 text-sm text-gray-400"><Link href="/builds" className="hover:text-white">Builds</Link><Link href="/models" className="hover:text-white">Models</Link><Link href="/benchmarks" className="hover:text-white">Benchmarks</Link><Link href="/about" className="hover:text-white">เกี่ยวกับเรา</Link><Link href="/ecosystem" className="hover:text-white">Local หรือ cloud</Link><Link href="/privacy" className="hover:text-white">นโยบายความเป็นส่วนตัว</Link></div>
+            <h2 className="text-sm font-semibold uppercase tracking-wider">
+              สำรวจ
+            </h2>
+            <div className="mt-4 grid gap-2 text-sm text-gray-400">
+              <Link href="/builds" className="hover:text-white">
+                Builds
+              </Link>
+              <Link href="/models" className="hover:text-white">
+                Models
+              </Link>
+              <Link href="/benchmarks" className="hover:text-white">
+                Benchmarks
+              </Link>
+              <Link href="/about" className="hover:text-white">
+                About
+              </Link>
+              <Link href="/ecosystem" className="hover:text-white">
+                Ecosystem
+              </Link>
+              <Link href="/contact" className="hover:text-white">
+                Contact
+              </Link>
+              <Link href="/privacy" className="hover:text-white">
+                นโยบายความเป็นส่วนตัว
+              </Link>
+            </div>
           </div>
           <div>
-            <h2 className="text-sm font-semibold uppercase tracking-wider">ติดต่อ</h2>
-            <div className="mt-4 grid gap-3 text-sm text-gray-400"><a data-cta="email" className="flex items-center gap-2 hover:text-white"><Mail size={15} /></a><a data-cta="tel" className="flex items-center gap-2 hover:text-white"><Phone size={15} /></a><a data-cta="line" className="flex items-center gap-2 hover:text-white"><MessageCircle size={15} />LINE Official</a></div>
+            <h2 className="text-sm font-semibold uppercase tracking-wider">
+              ติดต่อ
+            </h2>
+            <div className="mt-4 grid gap-3 text-sm text-gray-400">
+              <a
+                data-cta="email"
+                className="flex items-center gap-2 hover:text-white"
+              >
+                <Mail size={15} />
+              </a>
+              <a
+                data-cta="tel"
+                className="flex items-center gap-2 hover:text-white"
+              >
+                <Phone size={15} />
+              </a>
+              <a
+                data-cta="line"
+                className="flex items-center gap-2 hover:text-white"
+              >
+                <MessageCircle size={15} />
+                LINE Official
+              </a>
+            </div>
           </div>
         </div>
-        <div className="mt-12 border-t border-white/10 pt-6 text-sm text-gray-500">© {new Date().getFullYear()} AI Studio TH</div>
+        <div className="mt-12 border-t border-white/10 pt-6 text-sm text-gray-500">
+          © {new Date().getFullYear()} AI Studio TH
+        </div>
       </div>
     </footer>
   );

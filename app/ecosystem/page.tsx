@@ -1,8 +1,21 @@
-import type { Metadata } from "next";
 import Contact from "@/components/Contact";
 import Ecosystem from "@/components/Ecosystem";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { SitelinkTrail } from "@/components/SitelinkTrail";
+import { metadataFor } from "@/lib/site-data";
 
-export const metadata: Metadata = { title: "Local หรือ cloud", description: "เลือก local AI rig พร้อม Mimir Suites Local หรือ cloud models เมื่อไม่ต้องรัน inference ในเครื่อง." };
-export default function EcosystemPage() { return <><Navbar /><main><Ecosystem /><Contact /></main><Footer /></>; }
+export const metadata = metadataFor("/ecosystem");
+export default function EcosystemPage() {
+  return (
+    <>
+      <Navbar />
+      <main>
+        <SitelinkTrail path="/ecosystem" />
+        <Ecosystem />
+        <Contact />
+      </main>
+      <Footer />
+    </>
+  );
+}

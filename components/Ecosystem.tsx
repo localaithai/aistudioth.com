@@ -12,9 +12,9 @@ export default function Ecosystem() {
           <p className="text-[#06c] text-sm font-semibold tracking-widest uppercase mb-3">
             เลือกวิธีใช้งาน
           </p>
-          <h1 className="text-4xl sm:text-5xl font-semibold mb-5">
+          <h2 className="text-4xl sm:text-5xl font-semibold mb-5">
             Local rig หรือ cloud models
-          </h1>
+          </h2>
           <p className="text-lg">เลือกจากที่ inference ต้องทำงาน ไม่ใช่จากชื่อแบรนด์</p>
         </div>
         <div className="grid md:grid-cols-2 gap-5">

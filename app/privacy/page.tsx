@@ -1,13 +1,8 @@
-import type { Metadata } from "next";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import { site } from "@/lib/site";
+import { metadataFor } from "@/lib/site-data";
 
-export const metadata: Metadata = {
-  title: "นโยบายความเป็นส่วนตัว",
-  description: "การเก็บ ใช้ และคุ้มครองข้อมูลบนเว็บไซต์ AI Studio TH ตาม PDPA",
-  alternates: { canonical: `${site.url}/privacy/` },
-};
+export const metadata = metadataFor("/privacy");
 
 export default function PrivacyPage() {
   return (

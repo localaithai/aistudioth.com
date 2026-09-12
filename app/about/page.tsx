@@ -1,8 +1,21 @@
-import type { Metadata } from "next";
 import AboutSection from "@/components/AboutSection";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { SitelinkTrail } from "@/components/SitelinkTrail";
+import { metadataFor } from "@/lib/site-data";
 
-export const metadata: Metadata = { title: "เกี่ยวกับเรา", description: "AI Studio TH ประกอบ local AI rig บนโต๊ะตาม model และ runtime ที่ผู้ใช้ต้องการ." };
-export default function AboutPage() { return <><Navbar /><main><AboutSection /><Contact /></main><Footer /></>; }
+export const metadata = metadataFor("/about");
+export default function AboutPage() {
+  return (
+    <>
+      <Navbar />
+      <main>
+        <SitelinkTrail path="/about" />
+        <AboutSection />
+        <Contact />
+      </main>
+      <Footer />
+    </>
+  );
+}

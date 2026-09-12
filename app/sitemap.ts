@@ -1,10 +1,15 @@
 import type { MetadataRoute } from "next";
-import { site } from "@/lib/site";
+import { absoluteUrl } from "@/lib/site";
+import { CONTENT_REVIEWED, routes } from "@/lib/site-data";
 
 export const dynamic = "force-static";
 
-const routes = ["/", "/builds", "/models", "/benchmarks", "/about", "/ecosystem", "/contact", "/privacy"];
-
 export default function sitemap(): MetadataRoute.Sitemap {
-  return routes.map((route) => ({ url: `${site.url}${route === "/" ? "" : route}`, lastModified: new Date(), changeFrequency: route === "/" ? "weekly" : "monthly", priority: route === "/" ? 1 : 0.8 }));
+  const lastModified = new Date(`${CONTENT_REVIEWED}T00:00:00+07:00`);
+  return routes.map((route) => ({
+    url: absoluteUrl(route.path),
+    lastModified,
+    changeFrequency: route.changeFrequency,
+    priority: route.priority,
+  }));
 }

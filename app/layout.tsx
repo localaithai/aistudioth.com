@@ -4,6 +4,8 @@ import Script from "next/script";
 import OmniToaster from "@/components/OmniToaster";
 import PageTransition from "@/components/PageTransition";
 import { site } from "@/lib/site";
+import { metadataFor } from "@/lib/site-data";
+import { siteGraph } from "@/lib/structured-data";
 import "./globals.css";
 
 const baiJamjuree = Bai_Jamjuree({
@@ -13,61 +15,17 @@ const baiJamjuree = Bai_Jamjuree({
   display: "swap",
 });
 
-const title = "AI Studio TH, AI rig บนโต๊ะสำหรับรัน model ในเครื่อง";
-const description =
-  "AI rig บนโต๊ะที่ปรับตาม model, VRAM, runtime และงานจริง สำหรับ developer, researcher และทีมเทคนิคขนาดเล็กในไทย.";
-
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: { default: title, template: `%s | ${site.displayName}` },
-  description,
-  keywords: [
-    "AI PC build Thailand",
-    "local LLM Thailand",
-    "VRAM for 70B",
-    "AI Studio TH",
-    "AI rig บนโต๊ะ",
-    "RTX 5090 workstation",
-    "DGX Spark",
-    "Mac Studio Ultra",
-  ],
-  alternates: { canonical: site.url },
-  openGraph: {
-    type: "website",
-    locale: "th_TH",
-    url: site.url,
-    siteName: site.displayName,
-    title,
-    description,
+  title: { default: "AI Studio TH", template: `%s | ${site.displayName}` },
+  manifest: "/manifest.webmanifest",
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+    ...(process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+      ? { other: { "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION } }
+      : {}),
   },
-  twitter: { card: "summary", title, description },
-};
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Organization",
-      "@id": `${site.url}/#organization`,
-      name: site.displayName,
-      url: site.url,
-      description,
-    },
-    {
-      "@type": "WebSite",
-      "@id": `${site.url}/#website`,
-      name: site.displayName,
-      url: site.url,
-      inLanguage: "th",
-    },
-    {
-      "@type": "Product",
-      name: "AI rig บนโต๊ะ",
-      description:
-        "เครื่อง AI ที่ปรับสเปกเพื่อรัน model ในเครื่อง เลือกติดตั้ง Mimir Suites Local หรือรับเฉพาะ hardware ได้.",
-      brand: { "@type": "Brand", name: site.displayName },
-    },
-  ],
+  ...metadataFor("/"),
 };
 
 export default function RootLayout({
@@ -76,9 +34,10 @@ export default function RootLayout({
   return (
     <html lang="th">
       <head>
+        <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-friendly summary" />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteGraph()) }}
         />
       </head>
       <body className={`${baiJamjuree.variable} antialiased`}>
