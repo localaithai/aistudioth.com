@@ -1,11 +1,13 @@
+import Image from "next/image";
+
 const partners = [
-  "INGRAM MICRO",
-  "TD SYNNEX",
-  "SIS",
-  "ASCENTI",
-  "EATON",
-  "SCHNEIDER",
-  "VST ECS",
+  { name: "Ingram Micro", logo: "/partners/ingram-micro.svg" },
+  { name: "TD SYNNEX", logo: "/partners/td-synnex.svg" },
+  { name: "SiS Distribution", logo: "/partners/sis.png" },
+  { name: "Ascenti", logo: "/partners/ascenti-dark.png" },
+  { name: "Eaton", logo: "/partners/eaton.svg" },
+  { name: "Schneider Electric", logo: "/partners/schneider-electric.svg" },
+  { name: "VST ECS", logo: "/partners/vst-ecs.png" },
 ] as const;
 
 export default function Partners() {
@@ -21,8 +23,8 @@ export default function Partners() {
         </div>
         <ul className="mt-12 grid grid-cols-2 border-l border-t border-black/[0.08] sm:grid-cols-3 lg:grid-cols-7">
           {partners.map((partner) => (
-            <li key={partner} className="flex min-h-24 items-center justify-center border-b border-r border-black/[0.08] px-4 text-center text-sm font-semibold tracking-[-0.01em] text-[#1d1d1f]">
-              {partner}
+            <li key={partner.name} className="flex min-h-28 items-center justify-center border-b border-r border-black/[0.08] bg-white px-5 py-6">
+              <Image src={partner.logo} alt={`${partner.name} logo`} width={160} height={64} className="h-10 w-full object-contain" />
             </li>
           ))}
         </ul>
