@@ -1,5 +1,6 @@
 "use client";
 
+import { assetUrl } from "@/lib/assets";
 import { motion } from "framer-motion";
 import { Cloud } from "lucide-react";
 import Image from "next/image";
@@ -26,7 +27,7 @@ export default function Ecosystem() {
             className="apple-card bg-[#1d1d1f] p-8 text-white"
           >
             <Image
-              src="/mimir-suite-logo.png"
+              src={assetUrl("/mimir-suite-logo.png")}
               alt=""
               width={72}
               height={48}

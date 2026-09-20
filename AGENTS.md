@@ -5,7 +5,7 @@ Static Next.js 16 site for aistudioth.com, the hardware line's developer door: o
 ## Quick reference
 
 - Package manager: `pnpm@10.17.1` (`pnpm-lock.yaml` is the committed lockfile)
-- Develop: `pnpm dev`
+- Develop: `pnpm dev` at `http://localhost:3005`
 - Verification: `pnpm lint && pnpm build` (static export writes `out/`)
 - Before changing routes, navigation, headings, metadata, copy, internal links, structured data, robots, sitemap, or `llms.txt`, read [SEO, AEO, and sitelink maintenance](docs/reference/seo-aeo-maintenance.md).
 - No typecheck script and no test suite. `next build` is the type gate.
@@ -31,6 +31,13 @@ Before writing copy, CTAs, footer disclosures, or cross-links, read:
 - Motion is framer-motion only. Animation serves the spec story, never decoration, and honours reduced motion.
 - Use the `@/*` alias. TypeScript is strict; do not weaken types or add broad suppressions.
 - Preserve WCAG 2.2 AA behavior: semantic structure, keyboard access, visible focus, contrast and touch targets.
+
+## Shared image assets
+
+- Browser-loaded content images use immutable URLs from `https://assets.mimir.business/assets/` through `lib/assets.ts` (or `src/lib/assets.ts`) in both development and production. Do not add local URL fallbacks.
+- Keep favicons, manifest icons, social cards, and structured-data identity images on this site origin because crawlers may omit the `Referer` header required by the asset-host WAF rule.
+- Add or replace shared images through the `assets.mimir.business` catalogue workflow, then update the generated hash URL in the asset module.
+- The asset host catalogue, deployment rules, and decisions live in the `assets.mimir.business` repository.
 
 ## Source of truth
 

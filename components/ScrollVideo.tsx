@@ -1,4 +1,6 @@
 "use client";
+
+import { studioFrameUrls } from "@/lib/assets";
 import { useEffect, useRef, useState, useCallback } from "react";
 
 const TOTAL_FRAMES = 180;
@@ -22,7 +24,7 @@ export default function ScrollVideo() {
 
     for (let i = 0; i < TOTAL_FRAMES; i++) {
       const img = new Image();
-      img.src = `/frames/element-${String(i).padStart(3, "0")}.jpeg`;
+      img.src = studioFrameUrls[i];
       img.onload = () => {
         count++;
         loadedRef.current[i] = true;
