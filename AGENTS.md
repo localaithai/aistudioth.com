@@ -41,7 +41,15 @@ Before writing copy, CTAs, footer disclosures, or cross-links, read:
 
 ## Source of truth
 
-- Implementation status: `docs/central-plan/CENTRAL_PLAN_aistudio-rig-repositioning.html`
+- Active multi-session plan: `docs/central-plan/CENTRAL_PLAN_aistudio-rig-repositioning.html`
 - Business strategy, brand architecture and domain briefs: `../../business/`
 
 Update the plan in the same change when implementation changes what is currently true.
+
+## Documentation lifecycle
+
+- Production code, executable configuration, and meaningful tests define implemented behavior. Agreed product and business requirements define the behavior changes must satisfy; investigate any mismatch.
+- Multi-session work belongs in `docs/central-plan/CENTRAL_PLAN_<feature>.html`. Preserve the settled design, ordered file and symbol changes, edge cases, tests, commands, progress, and exact resume point, then archive the plan after delivery.
+- `docs/decisions/<domain>/log-YYYY-MM-DD.md` preserves selective durable rationale. Routine changes need no decision record.
+- Former domain summary pages under `docs/decisions/` are historical snapshots and navigation aids. Assess their content when that domain is next changed; keep dated logs and links intact.
+- Update maintained documentation only when a change affects one of its claims. Do not create empty documentation folders.
