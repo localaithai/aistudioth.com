@@ -12,7 +12,7 @@ type StaticRoute = {
   sitelinkName?: string;
 };
 
-export const CONTENT_REVIEWED = "2026-09-13";
+export const CONTENT_REVIEWED = "2026-09-23";
 
 export const routes = [
   {

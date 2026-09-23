@@ -1,4 +1,6 @@
 const sharedAssets: Readonly<Record<string, string>> = {
+  "/nvidia-dgx-spark.jpg":
+    "https://assets.mimir.business/assets/sites/mimir.business/presentations/nvidia-dgx-spark.8d2f40a53de1.jpg",
   "/mimir-suite-logo.png": "https://assets.mimir.business/assets/shared/brand/mimir-suite-logo.52b4d97f76ea.png",
   "/partners/ascenti-dark.png": "https://assets.mimir.business/assets/shared/partners/ascenti-dark.9ab2939100e8.png",
   "/partners/eaton.svg": "https://assets.mimir.business/assets/shared/partners/eaton.4d7cc489208e.svg",

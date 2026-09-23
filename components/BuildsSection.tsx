@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, Cpu, HardDrive, MemoryStick } from "lucide-react";
+import Image from "next/image";
+import { assetUrl } from "@/lib/assets";
 import { buildTiers } from "@/lib/rig-data";
 
 export default function BuildsSection() {
@@ -30,6 +32,21 @@ export default function BuildsSection() {
               className="apple-card border border-black/[0.06] p-7 sm:p-8"
             >
               <h3 className="text-2xl font-semibold mb-6">{tier.name}</h3>
+              {tier.name === "NVIDIA DGX Spark" && (
+                <figure className="mb-6">
+                  <Image
+                    src={assetUrl("/nvidia-dgx-spark.jpg")}
+                    alt="NVIDIA DGX Spark"
+                    width={1350}
+                    height={580}
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    className="h-auto w-full rounded-xl"
+                  />
+                  <figcaption className="mt-3 text-sm text-[#6e6e73]">
+                    ภาพจริงของ NVIDIA DGX Spark
+                  </figcaption>
+                </figure>
+              )}
               <dl className="space-y-4 text-sm">
                 <div className="flex gap-3"><Cpu className="text-[#06c] shrink-0" size={18} /><div><dt className="font-semibold text-[#1d1d1f]">GPU</dt><dd>{tier.hardware}</dd></div></div>
                 <div className="flex gap-3"><MemoryStick className="text-[#06c] shrink-0" size={18} /><div><dt className="font-semibold text-[#1d1d1f]">หน่วยความจำ</dt><dd>{tier.memory}</dd><dd className="text-xs mt-1">{tier.systemMemory}</dd></div></div>
