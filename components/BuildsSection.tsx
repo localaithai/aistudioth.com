@@ -6,6 +6,13 @@ import Image from "next/image";
 import { assetUrl } from "@/lib/assets";
 import { buildTiers } from "@/lib/rig-data";
 
+const localMachineOptions = [
+  { name: "MSI EdgeXpert", image: "/msi-edgexpert.png", width: 520, height: 230 },
+  { name: "Acer Veriton GN100", image: "/acer-gn100.jpg", width: 1306, height: 808 },
+  { name: "ASUS Ascent GX10", image: "/asus-gx10.png", width: 498, height: 205 },
+  { name: "Lenovo ThinkStation PGX", image: "/lenovo-pgx.png", width: 537, height: 281 },
+] as const;
+
 export default function BuildsSection() {
   return (
     <section id="builds" className="section-gray apple-section scroll-mt-16">
@@ -21,6 +28,28 @@ export default function BuildsSection() {
           <h2 className="text-4xl sm:text-5xl font-semibold mb-5">เริ่มจาก model ที่คุณอยากรัน</h2>
           <p className="text-lg">ทุก build เป็นจุดเริ่มต้นสำหรับปรับ memory, storage, runtime และ Mimir Suites Local ให้พอดีกับงานของคุณ ไม่มีราคาและสเปกตายตัวบนหน้านี้</p>
         </motion.div>
+        <div className="mb-10">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {localMachineOptions.map((option) => (
+              <figure key={option.name} className="apple-card border border-black/[0.06] p-5">
+                <Image
+                  src={assetUrl(option.image)}
+                  alt={option.name}
+                  width={option.width}
+                  height={option.height}
+                  sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw"
+                  className="h-36 w-full rounded-xl object-contain"
+                />
+                <figcaption className="mt-3 text-sm font-semibold text-[#1d1d1f]">
+                  {option.name}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+          <p className="mt-4 text-sm text-[#6e6e73]">
+            ตัวอย่างเครื่อง AI on-site ระดับ NVIDIA GB10 จาก MSI, Acer, ASUS และ Lenovo โดยเลือกรุ่นและขนาดระบบสุดท้ายตาม workload จริง รวมถึงระบบขนาดใหญ่กว่าเมื่อเหมาะกับงาน
+          </p>
+        </div>
         <div className="grid md:grid-cols-2 gap-5">
           {buildTiers.map((tier, index) => (
             <motion.article
