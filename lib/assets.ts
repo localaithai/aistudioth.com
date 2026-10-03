@@ -1,4 +1,8 @@
 const sharedAssets: Readonly<Record<string, string>> = {
+  "/photography/hero.webp":
+    "https://assets.mimir.business/assets/sites/aistudioth.com/general/hero.ff15e2bf544a.webp",
+  "/photography/hero-mobile.webp":
+    "https://assets.mimir.business/assets/sites/aistudioth.com/general/hero-mobile.4f88ac1551b9.webp",
   "/nvidia-dgx-spark.jpg":
     "https://assets.mimir.business/assets/sites/mimir.business/presentations/nvidia-dgx-spark.8d2f40a53de1.jpg",
   "/msi-edgexpert.png":
