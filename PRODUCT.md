@@ -12,6 +12,10 @@ Thai developers, researchers, and small technical teams choosing a desk-side mac
 
 Sell one configurable local AI rig through model-fit guidance, build specifications, and honest benchmark context, with Mimir Suites Local available as an option.
 
+## Current app scope
+
+Slides, Image Studio, and Video Studio are paused and excluded from Mimir Suites Local and Cloud.
+
 ## Brand Personality
 
 Geeky, exact, and approachable. The site should feel like a premium bench notebook for a serious machine.

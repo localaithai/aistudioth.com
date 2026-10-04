@@ -13,7 +13,7 @@ export function GET() {
     "## Facts",
     `- What this is: ${site.definition}`,
     "- Offer: A desk-side local AI rig can be configured around the model, VRAM and runtime the buyer needs.",
-    "- Software: Mimir Suites Local can be installed on the rig, or the rig can ship as bare hardware for an existing stack.",
+    `- Software: ${site.mimirRole}`,
     "- Audience: Developers, researchers and small technical teams in Thailand who use the machine themselves.",
     "",
     "## Pages",

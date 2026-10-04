@@ -1,3 +1,6 @@
+export const mimirScopeNotice =
+  "Slides, Image Studio และ Video Studio หยุดพัฒนาไว้ และไม่รวมอยู่ใน Mimir Suites ทั้ง Local และ Cloud";
+
 export const site = {
   name: "AI Studio TH",
   displayName: "AI Studio Thailand",
@@ -16,7 +19,7 @@ export const site = {
     href: "/#contact",
   },
   mimirRole:
-    "Mimir Suites Local installed on the rig, or a bare rig for people who run their own stack.",
+    `Mimir Suites Local installed on the rig, or a bare rig for people who run their own stack. ${mimirScopeNotice}`,
 } as const;
 
 export const TITLE_SUFFIX = ` | ${site.displayName}`;

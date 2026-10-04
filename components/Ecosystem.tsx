@@ -1,6 +1,7 @@
 "use client";
 
 import { assetUrl } from "@/lib/assets";
+import { mimirScopeNotice } from "@/lib/site";
 import { motion } from "framer-motion";
 import { Cloud } from "lucide-react";
 import Image from "next/image";
@@ -40,6 +41,7 @@ export default function Ecosystem() {
               ติดตั้งและตั้งค่า Mimir Suites Local บน rig ได้ เมื่อคุณต้องการรับ software
               layer พร้อม hardware.
             </p>
+            <p className="text-gray-300 text-sm mt-4">{mimirScopeNotice}</p>
           </motion.article>
           <motion.article
             initial={{ opacity: 0, y: 16 }}
