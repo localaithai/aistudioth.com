@@ -1,11 +1,13 @@
 "use client";
 
-import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import { site } from "@/lib/site";
+import { blogIndex } from "@/lib/site-data";
 
 const links = [
+  { label: blogIndex.navLabel, href: "/blog/" },
   { label: "Builds", href: "/builds" },
   { label: "Models", href: "/models" },
   { label: "Benchmarks", href: "/benchmarks" },

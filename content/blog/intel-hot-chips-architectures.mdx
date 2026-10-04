@@ -1,0 +1,49 @@
+---
+title: "ออกแบบ Rig จากข่าวสถาปัตยกรรม"
+description: "ข่าว Intel Hot Chips ใช้ตั้งคำถามออกแบบ rig ได้ แต่การซื้อยังต้องรอ parts configuration และหลักฐานที่ยืนยันในไทย"
+kind: "news"
+query: "Intel Hot Chips future architecture AI rig design inputs Thailand available parts"
+cluster: "/builds/"
+source: "intel-hot-chips-architectures"
+published: "2026-10-05"
+reviewed: "2026-10-05"
+newsDate: "2026-08-25"
+summary: "ใช้ข่าวสถาปัตยกรรมบันทึก requirement และคำถามออกแบบ แยกจาก BOM ซื้อจริงที่ต้องมีชิ้นส่วนพร้อมเสนอ ซอฟต์แวร์รองรับและผลทดลอง"
+faq: [{"question":"ใส่ชื่อสถาปัตยกรรมใหม่ใน BOM ได้เลยไหม","answer":"ควรรอ part configuration ราคาและกำหนดส่งที่ยืนยัน รายการศึกษาเทคโนโลยีควรแยกจากรายการซื้อ"},{"question":"ต้องรอเครื่องใหม่จึงทดสอบโครงการได้ไหม","answer":"ทดลอง requirement บนเครื่องที่เข้าถึงได้ก่อน แล้วใช้ข้อจำกัดที่วัดได้ประเมินตัวเลือกใหม่เมื่อมีข้อมูล"}]
+citations: [{"title":"Intel Outlines Architectures for Agentic AI at Hot Chips 2026","url":"https://www.intel.de/content/www/de/de/newsroom/news/client-computing/intel-outlines-architectures-for-agentic-ai-at-hot-chips-2026.html","publisher":"Intel","published":"2026-08-25","accessed":"2026-10-05"},{"title":"Intel® Xeon® 6 Architecture and Proven Performance RAG | Technology Launch | Innovation Selects","url":"https://www.youtube.com/watch?v=Kn8oeUFYPPM","publisher":"Intel Devs","published":"2024-10-21","accessed":"2026-10-05"}]
+hero: {"src":"https://assets.mimir.business/assets/sites/mimir.business/presentations/acer-gn100.c2d1031bbb2d.jpg","alt":"Acer Veriton GN100 เป็นภาพประกอบ AI rig ขนาดเล็ก","caption":"ภาพประกอบตัวเลือกเครื่อง ไม่ใช่ฮาร์ดแวร์ Intel จากข่าว Hot Chips 2026 หรือ parts ที่ยืนยันพร้อมซื้อ","credit":"Mimir, ภาพประกอบผลิตภัณฑ์และระบบงาน","sourceUrl":"https://mimir.business/"}
+videos: [{"url":"https://www.youtube.com/watch?v=Kn8oeUFYPPM","title":"Intel® Xeon® 6 Architecture and Proven Performance RAG | Technology Launch | Innovation Selects","publisher":"Intel Devs","published":"2024-10-21","context":true}]
+---
+
+## ข่าวช่วยตั้งโจทย์ แต่ยังไม่ใช่ BOM
+
+Intel เผยสถาปัตยกรรม agentic AI ที่ Hot Chips ในหน้าแหล่งข่าวลงวันที่ 25 สิงหาคม 2026 ข้อมูลนี้ยังไม่ยืนยัน parts สำหรับ rig ที่พร้อมซื้อไทย [แหล่งข่าวทางการ](https://www.intel.de/content/www/de/de/newsroom/news/client-computing/intel-outlines-architectures-for-agentic-ai-at-hot-chips-2026.html)
+
+นักพัฒนาสามารถใช้ข่าวสถาปัตยกรรมทบทวนว่าโครงการต้องการหน่วยความจำ I/O หรือกำลังประมวลผลแบบไหน แต่การเลือก rig ต้องผูกกับของที่เสนอได้จริง อย่าเติม BOM ด้วยชื่อผลิตภัณฑ์ที่ยังไม่มี configuration และวันส่งชัด เพราะจะทำให้แผนพัฒนารอสิ่งที่ควบคุมไม่ได้
+
+## แยกแผนทดลองกับรายการซื้อ
+
+ข้อวิเคราะห์คือเก็บสองรายการแยกกัน รายการคำถามเทคโนโลยีไว้ศึกษาทางเลือก ส่วนรายการซื้อไว้กับความต้องการที่ยืนยันแล้ว การแยกนี้ช่วยให้ทดลอง requirement ได้โดยไม่อ้างว่าชิ้นส่วนในข่าวพร้อมใช้หรือจะได้ตามเวลาที่หวัง
+
+| รายการแผน | หลักฐานก่อนใช้ตัดสิน |
+| --- | --- |
+| Requirement | โมเดล ข้อมูลและเวลางานที่ทีมต้องการ |
+| BOM เสนอซื้อ | part number ราคาและกำหนดส่งยืนยัน |
+| Software | OS runtime framework และ extension รองรับ |
+| รับมอบ | งานตัวอย่างและเกณฑ์ผ่านที่วัดได้ |
+
+ช่องที่ยังไม่มีข้อมูลควรเป็นคำถามเปิดพร้อมผู้ติดตาม ไม่ใส่ค่าจากรุ่นก่อนหรือกราฟคาดการณ์ให้ดูครบ หากต้องรอ ให้กำหนดวันที่ทบทวนและทางเลือกที่ยังทำงานได้
+
+## ตั้งจุดตัดสินใจที่มีหลักฐาน
+
+ทดลองโครงการบนเครื่องที่เข้าถึงได้เพื่อวัด requirement ก่อน เช่น พื้นที่สูงสุด เวลาโหลดและ I/O ของ dataset เก็บข้อจำกัดที่พบ แล้วใช้ข้อมูลนี้ถามผู้ขายเมื่อมี configuration ใหม่ การทดลองเช่นนี้ลดการตัดสินจากชื่อรุ่นโดยไม่ต้องแสร้งว่าฮาร์ดแวร์ใหม่พร้อมแล้ว
+
+หากต้องซื้อภายในกำหนดโครงการ ให้แบ่งสิ่งที่จำเป็นวันนี้กับสิ่งที่ขยายภายหลังโดยมีเหตุผลตรวจได้ อย่าซื้อเผื่อรูปแบบการเชื่อมต่อที่ยังไม่ยืนยัน และอย่าเลื่อน deliverable ทั้งหมดโดยไม่มีเกณฑ์สิ้นสุดการรอ
+
+## รักษาทางเลือกที่พร้อมทำงาน
+
+[Intel® Xeon® 6 Architecture and Proven Performance RAG | Technology Launch | Innovation Selects](https://www.youtube.com/watch?v=Kn8oeUFYPPM) ของ Intel Devs เป็นเนื้อหา Xeon 6 จากปี 2024 ใช้เป็นพื้นหลังเรื่องสถาปัตยกรรมและ RAG ไม่ใช่เดโมชิ้นส่วน Intel รุ่นที่ประกาศใน Hot Chips 2026
+
+ไม่มีราคาไทย วันพร้อมซื้อหรือ benchmark ฮาร์ดแวร์ใหม่ที่เรายืนยันในบทความนี้ แผนซื้อควรใช้ข้อมูลจากข้อเสนอจริงและผลทดลอง configuration ก่อนอนุมัติ
+
+เตรียม requirement กับรายการคำถามที่ยังเปิดก่อนอ่าน [การวางชุด AI Rig](/builds/)

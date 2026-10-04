@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { TITLE_SUFFIX, absoluteUrl, site } from "@/lib/site";
+import { absoluteUrl, site, TITLE_SUFFIX } from "@/lib/site";
 import { assertSnippet } from "@/lib/snippet";
 import { pageSocial } from "@/lib/social";
 
@@ -11,6 +11,13 @@ type StaticRoute = {
   changeFrequency: "weekly" | "monthly" | "yearly";
   sitelinkName?: string;
 };
+
+export const blogIndex = {
+  title: "ข่าว Local AI สำหรับนักพัฒนา",
+  description:
+    "ข่าว runtime โมเดล และ AI rig สำหรับนักพัฒนาไทย พร้อมวิธีทดสอบ latency หน่วยความจำ และสภาพแวดล้อมที่ทำซ้ำได้",
+  navLabel: "ข่าวและอัปเดต",
+} as const;
 
 export const CONTENT_REVIEWED = "2026-10-05";
 

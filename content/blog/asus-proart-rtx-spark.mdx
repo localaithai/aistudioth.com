@@ -1,0 +1,51 @@
+---
+title: "Unified Memory กับ Framework"
+description: "ข่าว ProArt RTX Spark ชวนแยกความจุ unified memory ออกจากการรองรับ framework และ extension ก่อนย้ายโครงการพัฒนา AI"
+kind: "news"
+query: "ProArt RTX Spark unified memory framework extension compatibility developer"
+cluster: "/models/"
+source: "asus-proart-rtx-spark"
+published: "2026-10-05"
+reviewed: "2026-10-05"
+newsDate: "2026-09-02"
+summary: "ความจุโมเดลกับ compatibility ของ framework เป็นคนละด่าน ต้องตรวจสถาปัตยกรรม OS แพ็กเกจและ extension พร้อมทดลอง pipeline เดิมบนเครื่องเป้าหมาย"
+faq: [{"question":"มี unified memory มากแล้ว framework ใช้ได้ทุกตัวไหม","answer":"ไม่ ต้องตรวจ OS สถาปัตยกรรม runtime และ dependency ของ framework และ extension แต่ละตัว"},{"question":"ควร benchmark ก่อนตรวจ dependency ไหม","answer":"ควรให้ pipeline จำเป็นติดตั้งและทำงานถูกต้องก่อน แล้ววัด performance ภายใต้เงื่อนไขที่ชัดเจน"}]
+citations: [{"title":"ASUS brings powered by NVIDIA RTX Spark solutions to IFA2026","url":"https://www.asus.com/us/business/resources/news/asus-proart-at-ifa2026/","publisher":"ASUS","published":"2026-09-02","accessed":"2026-10-05"},{"title":"ProArt - Create the Unimagined ｜ ASUS","url":"https://www.youtube.com/watch?v=IUOaVe2wTJQ","publisher":"ASUS","published":"2026-05-20","accessed":"2026-10-05"}]
+hero: {"src":"https://assets.mimir.business/assets/sites/mimir.business/presentations/asus-gx10.239a2586deb1.png","alt":"ASUS GX10 เป็นภาพประกอบเครื่อง AI ขนาดเล็ก","caption":"ภาพ ASUS GX10 ในแคตตาล็อก ไม่ใช่ ProArt RTX Spark และไม่ยืนยัน framework ที่รองรับบนรุ่นใหม่","credit":"Mimir, ภาพประกอบผลิตภัณฑ์และระบบงาน","sourceUrl":"https://mimir.business/"}
+videos: [{"url":"https://www.youtube.com/watch?v=IUOaVe2wTJQ","title":"ProArt - Create the Unimagined ｜ ASUS","publisher":"ASUS","published":"2026-05-20","context":true}]
+---
+
+## ความจุไม่ตอบทุกคำถามของโครงการ
+
+ASUS ประกาศ ProArt RTX Spark วันที่ 2 กันยายน 2026 ระบุ Grace CPU, Blackwell GPU และหน่วยความจำสูงสุด 128GB ข่าวไม่ใช่ compatibility matrix ของโครงการคุณ [แหล่งข่าวทางการ](https://www.asus.com/us/business/resources/news/asus-proart-at-ifa2026/)
+
+นักพัฒนาที่อยากใช้โมเดลใหญ่บนเครื่องเล็กควรตรวจสองเรื่องแยกกัน คือพื้นที่พอหรือไม่ และโค้ดรันได้หรือไม่ สคริปต์ Python ที่ดูเหมือนเหมือนกันอาจเรียก binary หรือ extension ที่มีเงื่อนไขของตน รายการ dependency จึงควรอยู่ใน brief ซื้อ rig พร้อมรายการโมเดล
+
+## ตรวจสองด่านก่อนย้าย stack
+
+ข้อวิเคราะห์คือทำ compatibility check ก่อน performance test หากยังติดตั้ง extension จำเป็นไม่ได้ ให้บันทึกเป็นข้อจำกัดและภาระย้าย ไม่ข้ามไปเทียบ token rate ของ demo ที่ไม่ได้ใช้ pipeline เดียวกัน
+
+| ด่านตรวจ | สิ่งที่ต้องบันทึก |
+| --- | --- |
+| ระบบ | สถาปัตยกรรม CPU OS driver และ runtime |
+| Framework | เวอร์ชันและวิธีติดตั้งที่รองรับชุดเป้าหมาย |
+| Extension | binary kernel หรือ plugin ที่โครงการใช้ |
+| โมเดลและข้อมูล | precision บริบทและขั้นอ่านเขียนครบ pipeline |
+
+ให้ตารางแยกเอกสารรองรับจากผลติดตั้งจริง หากต้อง build เอง ให้เก็บขั้นตอนและเวลาที่ใช้ ไม่เรียกผลนั้นว่าใช้งานได้ทันทีโดยไม่มีเงื่อนไข
+
+ตรวจเส้นทางจากโค้ดถึง extension ที่เรียกจริงด้วย ชื่อ framework เดียวกันอาจมีองค์ประกอบย่อยต่างรุ่น ให้บันทึกแพ็กเกจที่โหลดในขณะรัน เพื่อไม่สรุปจากรายการที่ติดตั้งไว้เพียงอย่างเดียว
+
+## ทดลอง dependency ที่เฉพาะทาง
+
+เริ่มทดสอบ dependency ที่เปลี่ยนยากที่สุดก่อน จากนั้นติดตั้งจากสภาพสะอาดแล้วรันโครงการตัวอย่างที่มี input และ output อ้างอิง ตรวจทั้งผลถูกต้องและขั้นที่ต้องปรับโค้ด ถ้ามีการเปลี่ยน runtime ให้เก็บผล baseline บนเครื่องเดิมไว้เปรียบเทียบ
+
+เมื่อผ่าน compatibility แล้วจึงเพิ่มบริบทและโหลดตามงานเพื่อวัดพื้นที่จริง รวมเครื่องมือพัฒนาที่ต้องเปิดควบคู่ ถ้าจะสลับใช้หลายเครื่อง ให้ตรวจว่า artifact และ configuration เคลื่อนย้ายได้อย่างไร เพื่อไม่ให้เครื่องใหม่กลายเป็นสภาพแวดล้อมเฉพาะที่ทีมอื่นทำซ้ำไม่ได้
+
+## แยกผลพอดีจากผลพร้อมพัฒนา
+
+[ProArt - Create the Unimagined ｜ ASUS](https://www.youtube.com/watch?v=IUOaVe2wTJQ) ของ ASUS เผยแพร่ก่อนข่าวรุ่นใหม่ เป็นพื้นหลังระบบนิเวศ ProArt ไม่ใช่การทดสอบ framework หรือ extension บน RTX Spark และไม่ยืนยันว่าโค้ดจะย้ายได้โดยไม่แก้
+
+บทความนี้ไม่มีผลทดสอบ compatibility หรือราคาไทยของ RTX Spark ขอรายการรองรับและเครื่องทดลองตรง configuration ก่อนซื้อ ความจุที่โฆษณาไม่ควรถูกใช้แทนผล pipeline ของทีม
+
+เตรียม lock file extension และโมเดลร่วมกับหน้า [โมเดลและ Runtime สำหรับ AI Rig](/models/)

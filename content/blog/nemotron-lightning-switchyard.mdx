@@ -1,0 +1,49 @@
+---
+title: "วัด Router จากงานที่เสร็จจริง"
+description: "ข่าว Switchyard ชวนออกแบบ benchmark ที่รวมเวลาเลือกโมเดล retry และตรวจผล แทนการนับ token rate เพียงช่วงเดียว"
+kind: "news"
+query: "Switchyard router benchmark complete task latency developer"
+cluster: "/benchmarks/"
+source: "nemotron-lightning-switchyard"
+published: "2026-10-05"
+reviewed: "2026-10-05"
+newsDate: "2026-08-11"
+summary: "Benchmark ของ router ควรนับเวลาตั้งแต่รับงานจนได้ผลที่ผ่านเกณฑ์ รวม routing retry และการตรวจคำตอบ พร้อมเทียบ baseline เดียวกัน"
+faq: [{"question":"Token ต่อวินาทีพอสำหรับวัด router ไหม","answer":"ไม่พอ ต้องรวมเวลาเลือกเส้นทาง queue retry และผลที่ผ่านเกณฑ์ตั้งแต่ต้นจนจบงาน"},{"question":"ใช้คำถามชุดเดียวปรับและทดสอบได้ไหม","answer":"ควรแยกชุดพัฒนากับชุดประเมิน เพื่อเห็นว่าการตั้งค่าใช้กับงานใหม่ได้หรือเพียงจำชุดเดิม"}]
+citations: [{"title":"NVIDIA Nemotron 3.5 Lightning and NeMo Switchyard Deliver Faster, Smarter, More Efficient Agentic AI","url":"https://blogs.nvidia.com/blog/nemotron-lightning-switchyard-rtx-dgx/","publisher":"NVIDIA","published":"2026-08-11","accessed":"2026-10-05"},{"title":"Why AI Agents Need More Than One Model","url":"https://www.youtube.com/watch?v=Np0afRWtdp8","publisher":"NVIDIA","published":"2026-08-04","accessed":"2026-10-05"}]
+hero: {"src":"https://assets.mimir.business/assets/sites/mimir.business/presentations/msi-edgexpert.d4296d826892.png","alt":"MSI EdgeXpert เป็นภาพประกอบ AI rig","caption":"ภาพประกอบฮาร์ดแวร์พัฒนา AI ไม่ใช่ผล benchmark ของ Lightning หรือ Switchyard บนเครื่องนี้","credit":"Mimir, ภาพประกอบผลิตภัณฑ์และระบบงาน","sourceUrl":"https://mimir.business/"}
+videos: [{"url":"https://www.youtube.com/watch?v=Np0afRWtdp8","title":"Why AI Agents Need More Than One Model","publisher":"NVIDIA","published":"2026-08-04","context":true}]
+---
+
+## Router ต้องถูกนับในเวลารวม
+
+NVIDIA ประกาศ NeMo Switchyard เมื่อ 11 สิงหาคม 2026 เพื่อเลือกเส้นทางระหว่างโมเดล ร่วมกับ Nemotron 3.5 Lightning ข่าวนี้ไม่ได้ให้ผล benchmark ของ rig เรา [แหล่งข่าวทางการ](https://blogs.nvidia.com/blog/nemotron-lightning-switchyard-rtx-dgx/)
+
+ทีมพัฒนาที่เพิ่ม router มักหวังลดค่าใช้จ่ายหรือเวลารอ แต่ router เพิ่มจุดตัดสินใจอีกหนึ่งจุด ถ้ามันวิเคราะห์งานนานหรือเลือกผิดแล้ว retry ผู้ใช้จะรอเพิ่ม การทดลองจึงต้องเทียบกับระบบเดิมที่ไม่มี router และใช้ชุดคำขอเดียวกัน ไม่เปลี่ยนโมเดลพร้อมเปลี่ยนวิธีวัด
+
+## กำหนดผลสำเร็จก่อนกดจับเวลา
+
+ข้อวิเคราะห์คือกำหนดคำว่าเสร็จให้ชัดก่อนเก็บตัวเลข สำหรับงานโค้ดอาจเป็น patch ที่ผ่าน check สำหรับงานเอกสารอาจเป็นคำตอบพร้อมอ้างอิงที่คนตรวจแล้ว แสดงจำนวนงานผ่านคู่กับเวลา มิฉะนั้นระบบที่หยุดตอบเร็วหรือข้ามขั้นอาจดูเร็วกว่าระบบที่ทำครบ
+
+| ตัววัด | เหตุผลที่ต้องเก็บ |
+| --- | --- |
+| เวลาจบงาน | รวม router queue โมเดลและตรวจผล |
+| งานผ่านเกณฑ์ | ไม่ให้ความเร็วกลบคำตอบผิด |
+| จำนวน retry | เห็นต้นทุนการเลือกเส้นทางผิด |
+| เส้นทางที่เลือก | วิเคราะห์ว่าประเภทงานใดเหมาะกับโมเดลใด |
+
+บันทึกคำขอและ configuration แบบไม่เผยข้อมูลลับ ใช้รหัสแทนข้อมูลส่วนบุคคล และเก็บรุ่นโมเดลไว้กับผล เพื่อให้ทีมรันซ้ำแล้วหาสาเหตุได้เมื่อผลเปลี่ยน
+
+## รันทดสอบที่หาเหตุผิดได้
+
+แบ่ง corpus เป็นงานง่าย งานยาก และงานที่ระบบควรปฏิเสธ สลับลำดับการรันเพื่อไม่ให้ cache เอื้อฝ่ายเดียว แยกการเริ่มระบบครั้งแรกกับช่วง warm-up แล้วทดลองหลายรอบภายใต้โหลดที่กำหนด รายงานทั้งค่ากลางและกรณีรอสูง ไม่เลือกเฉพาะรอบที่ดีที่สุด
+
+เพิ่มกรณีโมเดลไม่พร้อม เครื่องมือ timeout และคำขอกำกวม ดูว่า router หยุดถามกลับหรือวิ่งวน ถ้ามี fallback ต้องนับเวลาที่เสียก่อนส่งต่อด้วย การปรับ threshold ควรใช้ชุดพัฒนาแยกจากชุดประเมิน เพื่อไม่แต่งระบบให้ชนะคำถามเดิมโดยไม่รู้ตัว
+
+## รายงานสิ่งที่ยังไม่ได้วัด
+
+[Why AI Agents Need More Than One Model](https://www.youtube.com/watch?v=Np0afRWtdp8) ของ NVIDIA เผยแพร่ก่อนข่าว เป็นพื้นหลังเรื่องเหตุผลที่ agent ใช้หลายโมเดล ไม่ใช่ผลทดสอบ Switchyard หรือค่าความเร็วภาษาไทยบน rig ใด
+
+บทความนี้เสนอวิธีทดลอง ไม่มีตัวเลขความเร็วหรือต้นทุนที่วัดโดยเรา ความเข้ากันได้ของ runtime และราคา hardware ไทยยังต้องตรวจในชุดติดตั้งจริง ก่อนนำ router เข้าระบบหลักให้เก็บ baseline ที่ย้อนกลับได้
+
+จัด corpus และนิยามงานผ่านไว้ก่อนอ่าน [Benchmark สำหรับ AI Rig](/benchmarks/)

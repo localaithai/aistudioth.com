@@ -1,0 +1,51 @@
+---
+title: "ต้นแบบ Agent ก่อนสั่งอุปกรณ์จริง"
+description: "ข่าว Model Hardware Standard ชวนแยกต้นแบบอุปกรณ์จากสิทธิ์สั่งงานจริง พร้อม simulation ขอบเขตคำสั่ง และคนอนุมัติ"
+kind: "news"
+query: "Model Hardware Standard developer device integration simulation physical commands"
+cluster: "/models/"
+source: "anthropic-model-hardware-standard"
+published: "2026-10-05"
+reviewed: "2026-10-05"
+newsDate: "2026-08-27"
+summary: "ต้นแบบเชื่อมโมเดลกับอุปกรณ์ควรเริ่มใน simulation ด้วยคำสั่งที่จำกัด ตรวจสิทธิ์และการหยุดก่อนให้เข้าถึงอุปกรณ์จริง มาตรฐาน preview ไม่ใช่การรับรองความปลอดภัย"
+faq: [{"question":"Research preview ใช้แทน safety approval ได้ไหม","answer":"ไม่ได้ ต้องมีข้อกำหนดและการประเมินจากเจ้าของอุปกรณ์ตามงานจริง มาตรฐานไม่ใช่การรับรองความปลอดภัย"},{"question":"ควรเริ่มจากอุปกรณ์จริงเลยไหม","answer":"ควรเริ่ม simulation และขอบเขตคำสั่งจำกัด ก่อนพิจารณาเชื่อมจริงภายใต้ผู้รับผิดชอบ"}]
+citations: [{"title":"Previewing the Model Hardware Standard","url":"https://www.anthropic.com/news/model-hardware-standard-research-preview","publisher":"Anthropic","published":"2026-08-27","accessed":"2026-10-05"},{"title":"Model Hardware Standard: AI operating physical equipment","url":"https://www.youtube.com/watch?v=UxJZrCFzTHY","publisher":"Anthropic","published":"2026-08-27","accessed":"2026-10-05"}]
+hero: {"src":"https://assets.mimir.business/assets/sites/mimir.business/presentations/msi-edgexpert.d4296d826892.png","alt":"MSI EdgeXpert เป็นภาพประกอบเครื่องพัฒนา AI","caption":"ภาพประกอบ AI rig ไม่ใช่อุปกรณ์ทดลอง Model Hardware Standard หรือหลักฐานการเชื่อมอุปกรณ์ของ Mimir","credit":"Mimir, ภาพประกอบผลิตภัณฑ์และระบบงาน","sourceUrl":"https://mimir.business/"}
+videos: [{"url":"https://www.youtube.com/watch?v=UxJZrCFzTHY","title":"Model Hardware Standard: AI operating physical equipment","publisher":"Anthropic","published":"2026-08-27","context":false}]
+---
+
+## Preview เป็นจุดเริ่มทดลอง
+
+Anthropic เปิด Model Hardware Standard เป็น research preview วันที่ 27 สิงหาคม 2026 สำหรับอุปกรณ์ programmable พร้อมข้อมูลขอบเขตคำสั่งและความปลอดภัย ไม่ใช่ผลิตภัณฑ์ที่ Mimir รวมให้ใช้งาน [แหล่งข่าวทางการ](https://www.anthropic.com/news/model-hardware-standard-research-preview)
+
+การเชื่อม agent กับอุปกรณ์ต่างจากการสร้างข้อความ เพราะคำสั่งอาจมีผลต่อโลกจริง นักพัฒนาควรเริ่มด้วยอุปกรณ์จำลองและชุดคำสั่งที่แคบ ไม่ให้โมเดลสร้างคำสั่งอิสระแล้วหวังว่าคำอธิบายจะควบคุมได้ เจ้าของอุปกรณ์ต้องกำหนดผลที่อนุญาตก่อนทีมเขียน adapter
+
+## กำหนด contract ของคำสั่ง
+
+ข้อวิเคราะห์คือออกแบบ command contract ที่ตรวจด้วยระบบก่อนส่งต่อ แยกคำขอของโมเดลออกจากการอนุมัติทำจริง ระบุรูปแบบ ค่าและสถานะที่ใช้ได้ พร้อมพฤติกรรมเมื่อข้อมูลไม่ครบ ไม่ถือว่ามาตรฐานข้อความแทนข้อกำหนดความปลอดภัยของอุปกรณ์ได้
+
+| ขอบเขตต้นแบบ | สิ่งที่ต้องทดสอบ |
+| --- | --- |
+| คำสั่ง | รายการที่อนุญาต รูปแบบค่าและข้อจำกัด |
+| ตัวตน | บัญชีที่เรียกได้และผู้อนุมัติ |
+| สถานะ | เงื่อนไขก่อนสั่งและการตรวจผลกลับ |
+| หยุดงาน | การยกเลิก timeout และบันทึกเหตุการณ์ |
+
+ตารางนี้เป็นแนวทางต้นแบบ ไม่ใช่ certification จาก Anthropic ให้เริ่มด้วยคำสั่งอ่านสถานะหรือผลจำลองที่ไม่มีการเคลื่อนไหวและไม่มีผลต่อผู้ใช้จริง
+
+ใช้รหัสคำขอให้ตรวจได้ว่าเป็นคำสั่งใหม่หรือส่งซ้ำ และเก็บสถานะก่อนกับหลังในผลจำลอง เพื่อให้ทดสอบการ retry โดยไม่ทำซ้ำผลที่ควรเกิดเพียงครั้งเดียว
+
+## เริ่มใน simulation ที่ไม่มีผลจริง
+
+สร้าง simulator ที่ตอบตามสถานะกำหนด แล้วป้อนคำขอถูกต้อง ผิดรูปแบบและเกินขอบเขต ตรวจว่า adapter ปฏิเสธได้โดยไม่ต้องพึ่งโมเดลยอมทำตาม เพิ่มกรณีตอบช้า ขาดการเชื่อมต่อและผลซ้ำ เพื่อให้ระบบไม่ตีความความเงียบเป็นความสำเร็จ
+
+ก่อนเชื่อมอุปกรณ์จริง ต้องให้เจ้าของระบบและผู้รับผิดชอบความปลอดภัยประเมินขอบเขตเฉพาะงาน ไม่ขยายจาก demo ไปสู่คำสั่งที่มีผลสำคัญโดยอัตโนมัติ แยกบัญชีทดสอบจากบัญชีจริง และมีทางหยุดที่คนควบคุมได้โดยไม่ขึ้นกับคำตอบของ agent
+
+## แยกความสามารถจากการอนุญาต
+
+[Model Hardware Standard: AI operating physical equipment](https://www.youtube.com/watch?v=UxJZrCFzTHY) ของ Anthropic เป็นเดโมทางการจากวันเปิด preview ใช้ดูแนวคิดเชื่อมอุปกรณ์ ไม่ใช่การรับรองต้นแบบของคุณหรือหลักฐานว่าอุปกรณ์ทุกชนิดปลอดภัยเมื่อใช้ agent
+
+บทความนี้ไม่ได้ยืนยัน hardware compatibility การใช้จริงหรือราคาไทย และไม่ได้กล่าวว่า Mimir Suites มี integration นี้ ความสามารถ preview ควรถูกประเมินในขอบเขตทดลองก่อน
+
+จัดรายการคำสั่งจำลองและเกณฑ์ปฏิเสธร่วมกับหน้า [โมเดลและ Runtime สำหรับนักพัฒนา](/models/)

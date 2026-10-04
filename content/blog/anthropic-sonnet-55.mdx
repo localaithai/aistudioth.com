@@ -1,0 +1,49 @@
+---
+title: "วัด Coding Helper แยกจาก Rig"
+description: "ข่าว Sonnet 5.5 ชวน benchmark ผู้ช่วยเขียนโค้ด cloud แยกจาก inference local พร้อมเวลา check retry ค่าใช้จ่าย และเส้นทางข้อมูล"
+kind: "news"
+query: "Sonnet 5.5 cloud coding helper benchmark separate local inference rig"
+cluster: "/benchmarks/"
+source: "anthropic-sonnet-55"
+published: "2026-10-05"
+reviewed: "2026-10-05"
+newsDate: "2026-09-28"
+summary: "ผู้ช่วยโค้ด cloud และ inference บน rig เป็นคนละเส้นทาง ต้องวัดงานแก้โค้ดที่ผ่าน check พร้อม retry ค่าใช้จ่ายและข้อมูลที่ส่งออก แยกจากความเร็ว GPU local"
+faq: [{"question":"โมเดล cloud เร็วขึ้นทำให้ rig เร็วขึ้นไหม","answer":"เป็นคนละเส้นทาง ต้องวัดผู้ช่วย cloud และ inference local แยกกัน ไม่ใช้ผลหนึ่งแทนอีกผล"},{"question":"ควรวัดถึงโมเดลตอบเสร็จเท่านั้นไหม","answer":"ควรรวมเวลาจน patch ผ่าน check และคนตรวจ รวม retry และค่าใช้จ่ายรอบที่ไม่ผ่าน"}]
+citations: [{"title":"Introducing Claude Sonnet 5.5","url":"https://www.anthropic.com/claude-sonnet-5-5","publisher":"Anthropic","published":"2026-09-28","accessed":"2026-10-05"},{"title":"The future of agentic coding with Claude Code","url":"https://www.youtube.com/watch?v=iF9iV4xponk","publisher":"Anthropic","published":"2025-09-02","accessed":"2026-10-05"}]
+hero: {"src":"https://assets.mimir.business/assets/sites/aistudioth.com/general/hero.ff15e2bf544a.webp","alt":"ภาพประกอบพื้นที่พัฒนา AI บน rig","caption":"ภาพประกอบ AI Studio Thailand ไม่ใช่ระบบ Claude cloud หรือเครื่องที่ใช้วัด Sonnet 5.5","credit":"Mimir / aistudioth.com","sourceUrl":"https://aistudioth.com/"}
+videos: [{"url":"https://www.youtube.com/watch?v=iF9iV4xponk","title":"The future of agentic coding with Claude Code","publisher":"Anthropic","published":"2025-09-02","context":true}]
+---
+
+## ข่าวโมเดล Cloud ไม่ใช่การอัปเกรด GPU
+
+Anthropic เผย Sonnet 5.5 เมื่อ 28 กันยายน 2026 พร้อมคำกล่าวด้านความเร็วและค่าใช้จ่าย ผลจากผู้ผลิตไม่ใช่เวลาจบโครงการพัฒนาของเรา [แหล่งข่าวทางการ](https://www.anthropic.com/claude-sonnet-5-5)
+
+ทีมที่ใช้ rig รันโมเดล local อาจใช้ผู้ช่วย cloud เขียนโค้ดด้วย แต่สองงานนี้ใช้ทรัพยากรและข้อมูลคนละเส้นทาง โมเดล cloud เร็วขึ้นไม่ได้หมายความว่า GPU ใน rig รัน inference เร็วขึ้น ให้แยก benchmark และคำขอซื้อเครื่องจากการประเมินผู้ช่วยพัฒนา
+
+## ตั้ง benchmark จากโค้ดที่ผ่าน
+
+ข้อวิเคราะห์คือวัดงานแก้โค้ดที่ตรวจแล้ว แทนการวัดเวลาจนข้อความตอบครบ กำหนด issue โค้ดตั้งต้นและ check ที่ใช้เหมือนกันทุกโมเดล ให้รวมเวลาที่นักพัฒนาตรวจ แก้เพิ่มและรันใหม่ เพราะผู้ใช้ต้องรับงานทั้งหมด
+
+| ตัววัดผู้ช่วยโค้ด | สิ่งที่ต้องเก็บ |
+| --- | --- |
+| งานผ่าน | patch ที่ผ่าน check และการตรวจของคน |
+| เวลารวม | เรียกโมเดล เครื่องมือ retry และตรวจผล |
+| ค่าใช้จ่าย | คำขอทั้งหมดรวมรอบที่ไม่ผ่าน |
+| ข้อมูล | โค้ดและบริบทที่ส่งไปผู้ให้บริการ |
+
+ตารางนี้เป็นวิธีประเมินที่เสนอ ไม่ใช่ผล Sonnet 5.5 ที่เราทดสอบ ใช้ชุดพัฒนาแยกจากชุดประเมิน และบันทึกเวอร์ชันโมเดลกับเครื่องมือ เพื่อไม่สรุปจาก task ที่ปรับให้เหมาะกับตัวเลือกหนึ่ง
+
+## วัดเส้นทางที่ใช้จริงพร้อมต้นทุน
+
+เลือกงานเล็กที่มีเกณฑ์ชัด เช่น แก้ข้อผิดพลาดในโครงการทดลองที่ได้รับอนุญาต รันหลายรอบด้วยข้อกำหนดเดียวกัน เก็บ patch ที่ไม่ผ่านและเหตุแก้ซ้ำ อย่าคัดเฉพาะคำตอบที่ดูเรียบร้อย เพราะผลที่ยังรันไม่ได้สร้างภาระให้คนตรวจ
+
+ตรวจสิทธิ์ repository และข้อมูลก่อนใช้ cloud ไม่ส่งโค้ดลับเพียงเพราะ workflow เดิมใช้ rig local หากต้องเรียกเครื่องมือภายใน ให้กำหนดสิทธิ์และการอนุมัติแยกกัน เก็บผล benchmark local inference อีกชุดหนึ่งสำหรับตัดสินฮาร์ดแวร์ เพื่อไม่ให้ตัวเลข cloud ปนกับข้อเสนอซื้อ GPU
+
+## แบ่งข้อมูลและผลรายงานให้ชัด
+
+[The future of agentic coding with Claude Code](https://www.youtube.com/watch?v=iF9iV4xponk) ของ Anthropic เป็นเนื้อหา Claude Code จากปี 2025 ใช้เป็นพื้นหลังการพัฒนาด้วย agent ไม่ใช่ benchmark Sonnet 5.5 หรือหลักฐานเปอร์เซ็นต์ความเร็วของรุ่นใหม่
+
+บทความนี้ไม่มีตัวเลขราคาไทย latency หรือคุณภาพที่เราวัด และไม่กล่าวว่า Sonnet รวมใน Mimir Suites Local ต้องตรวจนโยบายผู้ให้บริการและขอบเขตข้อมูลของงานก่อนทดลอง
+
+แยก corpus ของ coding helper กับ local inference แล้วใช้ [Benchmark สำหรับ AI Rig](/benchmarks/)

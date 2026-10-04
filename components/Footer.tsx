@@ -1,5 +1,6 @@
-import Link from "next/link";
 import { Mail, MessageCircle, Phone } from "lucide-react";
+import Link from "next/link";
+import { blogIndex } from "@/lib/site-data";
 
 export default function Footer() {
   return (
@@ -20,6 +21,9 @@ export default function Footer() {
               สำรวจ
             </h2>
             <div className="mt-4 grid gap-2 text-sm text-gray-400">
+              <Link href="/blog/" className="hover:text-white">
+                {blogIndex.navLabel}
+              </Link>
               <Link href="/builds" className="hover:text-white">
                 Builds
               </Link>

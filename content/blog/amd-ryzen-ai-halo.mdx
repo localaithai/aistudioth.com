@@ -1,0 +1,51 @@
+---
+title: "งบ Memory และ I/O ของ AI Rig"
+description: "ข่าว Ryzen AI Halo ชวนจัดงบทรัพยากรของ developer rig ให้โมเดล IDE container และข้อมูลทดลองอยู่ร่วมกันได้จริง"
+kind: "news"
+query: "Ryzen AI Halo developer rig memory IO IDE containers budget"
+cluster: "/builds/"
+source: "amd-ryzen-ai-halo"
+published: "2026-10-05"
+reviewed: "2026-10-05"
+newsDate: "2026-07-23"
+summary: "Developer rig ต้องเผื่อโมเดลพร้อม IDE container ดัชนีและ I/O ของงานทดลอง วัดขณะใช้ workflow จริงก่อนเลือกเครื่องจากหน่วยความจำรวม"
+faq: [{"question":"ทดสอบโมเดลเดี่ยวพอเลือก developer rig ไหม","answer":"ควรทดลองพร้อม IDE container และข้อมูลที่ใช้จริงด้วย เพราะเป็นทรัพยากรร่วมในวันทำงาน"},{"question":"ควรคิด I/O แม้มีหน่วยความจำมากไหม","answer":"ควร การโหลดโมเดล build และอ่าน dataset ยังใช้ดิสก์หรือเครือข่าย ซึ่งอาจเป็นจุดรอของ workflow"}]
+citations: [{"title":"AMD Brings Personal AI Compute Closer to Users","url":"https://newsroom.amd.com/news/aai-2026-client-computing-update/","publisher":"AMD","published":"2026-07-23","accessed":"2026-10-05"},{"title":"Advancing AI 2026 | Build What's Next with @AMD","url":"https://www.youtube.com/watch?v=crEztVjfAPM","publisher":"AMD","published":"2026-07-23","accessed":"2026-10-05"}]
+hero: {"src":"https://assets.mimir.business/assets/sites/mimir.business/presentations/acer-gn100.c2d1031bbb2d.jpg","alt":"Acer Veriton GN100 เป็นภาพประกอบ AI rig ขนาดเล็ก","caption":"ภาพประกอบฮาร์ดแวร์สำหรับงานพัฒนา ไม่ใช่ Ryzen AI Halo หรือผลทดสอบหน่วยความจำของรุ่นใหม่","credit":"Mimir, ภาพประกอบผลิตภัณฑ์และระบบงาน","sourceUrl":"https://mimir.business/"}
+videos: [{"url":"https://www.youtube.com/watch?v=crEztVjfAPM","title":"Advancing AI 2026 | Build What's Next with @AMD","publisher":"AMD","published":"2026-07-23","context":false}]
+---
+
+## Rig ของนักพัฒนาไม่ได้รันโมเดลอย่างเดียว
+
+AMD ประกาศ Ryzen AI Halo วันที่ 23 กรกฎาคม 2026 โดยระบุ unified memory 128GB ข่าวนี้ไม่ได้วัด workflow ของนักพัฒนาที่เปิดหลายเครื่องมือพร้อมกัน [แหล่งข่าวทางการ](https://newsroom.amd.com/news/aai-2026-client-computing-update/)
+
+วันทำงานบน AI rig มีทั้งแก้โค้ด ทดสอบโมเดล build image และอ่าน dataset เครื่องที่ผ่าน demo โมเดลเดี่ยวจึงอาจไม่เหมาะกับวันทำงานจริง ให้เขียนลำดับงานที่เกิดซ้ำก่อนซื้อ และระบุว่ามีอะไรเปิดค้างอยู่เมื่อรัน inference
+
+## ทำงบจาก workflow ที่ใช้จริง
+
+ข้อวิเคราะห์คือแบ่งทรัพยากรเป็นงานประจำ งานทดลองและพื้นที่เผื่อ ใช้การวัดบนสภาพที่ใกล้การพัฒนา ไม่เริ่มจาก memory ว่างหลัง boot แล้วถือว่าเป็นพื้นที่โมเดลทั้งหมด ดิสก์และการอ่านข้อมูลก็ต้องถูกนับ เพราะการ build กับโหลดโมเดลอาจชนกัน
+
+| งานบน rig | ทรัพยากรที่ต้องวัด |
+| --- | --- |
+| IDE และเครื่องมือทีม | RAM ของโปรแกรม background และ index |
+| Runtime โมเดล | น้ำหนัก บริบท cache และพื้นที่ชั่วคราว |
+| Container และ build | พื้นที่ image การเขียนดิสก์และ CPU |
+| Dataset ทดลอง | ขนาดไฟล์ วิธีอ่านและพื้นที่สำรอง |
+
+ตารางนี้เป็นบัญชีงานที่เสนอ ไม่ใช่ requirement ตายตัวของ Halo ให้เติมตัวเลขจากโครงการของคุณ และแยกค่าที่คาดจากค่าที่วัด เพื่อให้คำขอซื้อมีเหตุผลตรวจได้
+
+แยกงานที่เลื่อนเวลาได้ เช่น build หรือสำรองข้อมูล ออกจากงานที่ผู้ใช้รอทันที การจัดตารางอาจช่วยลดการชนกันของ I/O ได้ก่อนต้องเพิ่มอุปกรณ์ แต่ควรทดลองผลกับงานครบหนึ่งรอบ
+
+## ทดลองรอบแก้โค้ดและรันใหม่
+
+ทดลองวงจรพัฒนาหนึ่งรอบ ตั้งแต่แก้โค้ด สร้างสภาพแวดล้อม โหลดโมเดลและรันชุดทดสอบ วัดเวลารวมและค่าทรัพยากรสูงสุด ทำซ้ำขณะที่เครื่องมือประจำเปิดอยู่ หากต้องปิด IDE เพื่อให้โมเดลพอดี ให้รายงานเงื่อนไขนั้นตรง ๆ แทนการนับว่าผ่านวันทำงาน
+
+ลองสลับรุ่นโมเดลและเก็บ artifact หลายรุ่นเพื่อดูพื้นที่ disk ที่ต้องใช้ วางตำแหน่ง cache และวิธีล้างของเก่าโดยไม่ลบผลทดลองที่ต้องเก็บ ถ้ามีคำขอจากเพื่อนร่วมทีม ให้กำหนดขอบเขตคิวและสิทธิ์ข้อมูลแยกจากงานส่วนตัว
+
+## เลือกรุ่นพร้อมพื้นที่เผื่องาน
+
+[Advancing AI 2026 | Build What's Next with @AMD](https://www.youtube.com/watch?v=crEztVjfAPM) ของ AMD เป็นเวทีเปิดตัว AMD ใช้ประกอบภาพรวม client AI ไม่ใช่การวัด IDE container หรือวงจรพัฒนาบน Halo ตามที่เราเสนอ
+
+เราไม่มีผล benchmark หรือราคาไทยของ Halo และไม่ยืนยันแพ็กเกจพัฒนาของคุณใช้งานได้ ต้องตรวจสถาปัตยกรรม runtime และ configuration ที่เสนอจริงก่อนเลือก
+
+นำลำดับงานและงบทรัพยากรไปใช้กับ [แนวทางจัดชุด AI Rig](/builds/)

@@ -1,0 +1,49 @@
+---
+title: "ROCm กับชุดพัฒนาที่ทำซ้ำได้"
+description: "ข่าวเครื่องมือ ROCm ชวนทำ manifest ของ driver runtime และแพ็กเกจ ก่อนเปลี่ยนชุดพัฒนา AI rig ให้ทีมรันงานซ้ำได้"
+kind: "news"
+query: "ROCm AI developer rig runtime compatibility reproducible manifest"
+cluster: "/models/"
+source: "amd-rocm-ai"
+published: "2026-10-05"
+reviewed: "2026-10-05"
+newsDate: "2026-07-23"
+summary: "ก่อนเปลี่ยน ROCm stack ให้บันทึก OS driver runtime โมเดล และแพ็กเกจ แล้วทดลองติดตั้งใหม่กับงานเดิมและแผนย้อนกลับ"
+faq: [{"question":"มี CLI แล้วไม่ต้องเก็บ dependency lock ไหม","answer":"ยังควรเก็บ CLI ช่วยจัดการงาน แต่เวอร์ชันโครงการต้องชัดเจนเพื่อสร้างซ้ำและย้อนกลับ"},{"question":"Container ทำให้ใช้ได้ทุก GPU หรือไม่","answer":"ไม่ ต้องตรวจฮาร์ดแวร์ driver runtime และแพ็กเกจที่ container ต้องใช้ร่วมกับระบบจริง"}]
+citations: [{"title":"AMD ROCm.AI Accelerates AI Development Across AMD Platforms","url":"https://newsroom.amd.com/news/aai-2026-rocm-ai-software/","publisher":"AMD","published":"2026-07-23","accessed":"2026-10-05"},{"title":"Advancing AI 2026 | Build What's Next with @AMD","url":"https://www.youtube.com/watch?v=crEztVjfAPM","publisher":"AMD","published":"2026-07-23","accessed":"2026-10-05"}]
+hero: {"src":"https://assets.mimir.business/assets/sites/aistudioth.com/general/hero.ff15e2bf544a.webp","alt":"ภาพประกอบพื้นที่ทำงานพัฒนา AI ของ AI Studio Thailand","caption":"ภาพประกอบ AI rig สำหรับนักพัฒนา ไม่ใช่เครื่องที่ใช้ยืนยันผล ROCm เวอร์ชันใหม่","credit":"Mimir / aistudioth.com","sourceUrl":"https://aistudioth.com/"}
+videos: [{"url":"https://www.youtube.com/watch?v=crEztVjfAPM","title":"Advancing AI 2026 | Build What's Next with @AMD","publisher":"AMD","published":"2026-07-23","context":false}]
+---
+
+## เครื่องมือใหม่ไม่แทนรายการเวอร์ชัน
+
+AMD ประกาศเครื่องมือ ROCm AI เมื่อ 23 กรกฎาคม 2026 รวม CLI สำหรับติดตั้ง deploy และ troubleshooting ข้อมูลนี้ยังไม่ยืนยันทุกแพ็กเกจของโครงการ [แหล่งข่าวทางการ](https://newsroom.amd.com/news/aai-2026-rocm-ai-software/)
+
+นักพัฒนามักเริ่มจาก notebook ที่รันได้บนเครื่องหนึ่ง แล้วพบว่าทีมติดตั้งซ้ำไม่ได้เมื่อเปลี่ยน driver หรือ dependency การซื้อ rig ใหม่จึงควรมี deliverable เป็นสภาพแวดล้อมที่สร้างซ้ำได้ด้วย ไม่ใช่เพียงผล screenshot ว่าโมเดลตอบคำถามแล้ว กำหนดงานตัวอย่างที่ทีมต้องรันเหมือนกันก่อนเลือกเวอร์ชัน
+
+## เก็บสภาพแวดล้อมให้ครบก่อนอัปเดต
+
+ข้อวิเคราะห์คือทำ manifest แยกชั้นฮาร์ดแวร์ ซอฟต์แวร์ระบบ และโครงการ ใช้คำสั่งติดตั้งที่มีเวอร์ชันกำกับ และเก็บไฟล์ lock ของแพ็กเกจ อย่าใช้คำว่า latest เป็นหลักฐานรับมอบ เพราะคำเดิมอาจติดตั้งคนละชุดในวันถัดไป
+
+| ชั้นที่บันทึก | ข้อมูลจำเป็น |
+| --- | --- |
+| เครื่องและระบบ | GPU สถาปัตยกรรม OS kernel และ driver |
+| Runtime | ROCm framework และ image digest หากใช้ container |
+| โมเดล | รุ่น ไฟล์ precision และค่ารัน |
+| โครงการ | dependency lock คำสั่งเริ่มงานและผลอ้างอิง |
+
+ตารางนี้เป็นมาตรฐานเตรียมงานที่เราเสนอ ไม่ใช่รายการ compatibility จาก AMD ต้องเทียบกับเอกสารรองรับของซอฟต์แวร์ที่เลือกอีกครั้ง ถ้ามีแพ็กเกจเฉพาะทาง ให้ทดสอบมันก่อนงานสาธิตทั่วไป
+
+## ทดสอบการติดตั้งซ้ำและย้อนกลับ
+
+สร้างสภาพแวดล้อมใหม่จาก manifest บนเครื่องทดสอบ โดยไม่อาศัยแพ็กเกจที่ติดค้างจากงานเดิม รันชุดงานสั้นเพื่อหา error แล้วรันงานเต็มที่มีการโหลดโมเดล อ่านไฟล์และเขียนผล เก็บทั้ง log และผลลัพธ์ที่ตรวจด้วยคน เพื่อแยกปัญหาติดตั้งออกจากปัญหาคุณภาพโมเดล
+
+เตรียมทางย้อนกลับก่อนอัปเดตเครื่องหลัก เก็บ image หรือรายการเวอร์ชันเดิม พร้อมทดสอบว่ากลับไปทำงานได้ หากทีมมีหลาย rig ให้เลือกเครื่องทดลองหนึ่งเครื่องและค่อยขยายเมื่อผ่านเกณฑ์ การทำพร้อมกันทั้งหมดทำให้เสียจุดอ้างอิงและเพิ่มเวลาหยุดพัฒนา
+
+## เปลี่ยน stack เมื่อหลักฐานครบ
+
+[Advancing AI 2026 | Build What's Next with @AMD](https://www.youtube.com/watch?v=crEztVjfAPM) ของ AMD เป็นภาพรวมการเปิดตัว AMD ไม่ใช่บทพิสูจน์ว่าแพ็กเกจทุกตัวในโครงการของคุณรองรับ ROCm และไม่ใช่ผลทดสอบ rig ของ AI Studio Thailand
+
+ราคาไทย สต็อก GPU และ compatibility ของชุดเครื่องต้องตรวจเป็นราย configuration แยกเวลาที่ใช้แก้โค้ดออกจากเวลาติดตั้ง เพราะการย้าย stack อาจคุ้มด้านอื่นแม้ไม่ได้ลดงานดูแลทันที
+
+นำ manifest และงานตัวอย่างมาใช้ร่วมกับหน้า [โมเดลและ Runtime สำหรับ AI Rig](/models/)

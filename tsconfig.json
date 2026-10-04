@@ -19,6 +19,7 @@
       }
     ],
     "paths": {
+      "@mimir/blog": ["./vendor/mimir-blog/core/index.ts"],
       "@/*": ["./*"]
     }
   },
