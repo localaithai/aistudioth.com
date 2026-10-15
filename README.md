@@ -9,7 +9,7 @@ pnpm install
 pnpm build
 ```
 
-The project uses Next.js static export. The production output is written to `out/`.
+The project uses Astro static output; React ships only as client islands. The production output is written to `dist/`.
 
 ## Routes
 

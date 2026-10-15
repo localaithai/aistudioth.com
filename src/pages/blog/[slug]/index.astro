@@ -1,0 +1,73 @@
+---
+import { serializeJsonLd } from "@mimir/blog";
+import BlogArticle from "@/components/blog/BlogArticle.astro";
+import BlogLayout from "@/layouts/BlogLayout.astro";
+import { blog, blogPostImage, blogSite, orderedBlogPosts } from "@/lib/blog";
+import type { PageHead } from "@/lib/seo";
+import { absoluteUrl, site, TITLE_SUFFIX } from "@/lib/site";
+import { assertSnippet } from "@/lib/snippet";
+
+export function getStaticPaths() {
+  return blog.staticParams().map((params) => ({ params }));
+}
+
+const post = blog.post(Astro.params.slug ?? "");
+if (!post) throw new Error(`blog: no post for ${Astro.params.slug}`);
+
+assertSnippet(post.path, {
+  title: post.title,
+  description: post.description,
+  titleSuffix: TITLE_SUFFIX,
+});
+const title = post.title + TITLE_SUFFIX;
+const image = blogPostImage(post);
+
+const head: PageHead = {
+  title,
+  description: post.description,
+  canonical: absoluteUrl(post.path),
+  openGraph: {
+    type: "article",
+    title,
+    description: post.description,
+    url: absoluteUrl(post.path),
+    siteName: blogSite.name,
+    locale: blogSite.locale === "th" ? "th_TH" : "en_US",
+    publishedTime: post.published.toISOString(),
+    modifiedTime: post.reviewed.toISOString(),
+    images: [{ url: image, alt: post.hero?.alt ?? post.title }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description: post.description,
+    images: [image],
+  },
+};
+
+const relatedPosts = orderedBlogPosts
+  .filter(
+    (candidate) =>
+      candidate.slug !== post.slug && candidate.cluster === post.cluster,
+  )
+  .slice(0, 2);
+---
+
+<BlogLayout head={head}>
+  <main id="content" tabindex="-1">
+    <script
+      type="application/ld+json"
+      set:html={serializeJsonLd(
+        blog.jsonLd(post, { imageUrl: blogPostImage(post) }),
+      )}
+    />
+    <BlogArticle
+      blog={blog}
+      post={post}
+      siteName={blogSite.name}
+      ctaLabel={site.primaryCta.label}
+      ctaHref={site.primaryCta.href}
+      relatedPosts={relatedPosts}
+    />
+  </main>
+</BlogLayout>

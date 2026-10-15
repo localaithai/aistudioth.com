@@ -1,0 +1,19 @@
+---
+import AboutSection from "@/components/AboutSection";
+import Contact from "@/components/Contact.astro";
+import Footer from "@/components/Footer.astro";
+import Navbar from "@/components/Navbar";
+import SitelinkTrail from "@/components/SitelinkTrail.astro";
+import Base from "@/layouts/Base.astro";
+import { metadataFor } from "@/lib/site-data";
+---
+
+<Base head={metadataFor("/about")}>
+  <Navbar client:load />
+  <main>
+    <SitelinkTrail path="/about" />
+    <AboutSection client:load />
+    <Contact />
+  </main>
+  <Footer />
+</Base>

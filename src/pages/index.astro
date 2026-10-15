@@ -1,0 +1,29 @@
+---
+import BenchmarksSection from "@/components/BenchmarksSection";
+import BuildsSection from "@/components/BuildsSection";
+import Contact from "@/components/Contact.astro";
+import Ecosystem from "@/components/Ecosystem";
+import Footer from "@/components/Footer.astro";
+import Hero from "@/components/Hero.astro";
+import ModelsSection from "@/components/ModelsSection";
+import Navbar from "@/components/Navbar";
+import Partners from "@/components/Partners.astro";
+import Services from "@/components/Services";
+import Base from "@/layouts/Base.astro";
+import { metadataFor } from "@/lib/site-data";
+---
+
+<Base head={metadataFor("/")}>
+  <Navbar client:load />
+  <main>
+    <Hero />
+    <Services client:visible />
+    <BuildsSection client:visible />
+    <ModelsSection client:visible />
+    <BenchmarksSection client:visible />
+    <Ecosystem client:visible />
+    <Partners />
+    <Contact />
+  </main>
+  <Footer />
+</Base>

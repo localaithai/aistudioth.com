@@ -1,14 +1,14 @@
 # aistudioth.com
 
-Static Next.js 16 site for aistudioth.com, the hardware line's developer door: one desk-side AI rig spec'd to run models locally, sold as a build. `CLAUDE.md` is a symlink to this file.
+Static Astro 7 site for aistudioth.com, the hardware line's developer door: one desk-side AI rig spec'd to run models locally, sold as a build. React ships only as client islands. `CLAUDE.md` is a symlink to this file.
 
 ## Quick reference
 
 - Package manager: `pnpm@10.17.1` (`pnpm-lock.yaml` is the committed lockfile)
-- Develop: `pnpm dev` at `http://localhost:15005`
-- Verification: `pnpm lint && pnpm build` (static export writes `out/`)
+- Develop: `pnpm dev` at `http://localhost:15005`; `pnpm preview` serves the built `dist/` on the same port
+- Verification: `pnpm lint && pnpm typecheck && pnpm build` (static build writes `dist/`)
 - Before changing routes, navigation, headings, metadata, copy, internal links, structured data, robots, sitemap, or `llms.txt`, read [SEO, AEO, and sitelink maintenance](docs/reference/seo-aeo-maintenance.md).
-- No typecheck script and no test suite. `next build` is the type gate.
+- No automated test suite. Lint, `astro check` and the static build are the gates.
 
 ## Business context
 
@@ -22,9 +22,11 @@ Before writing copy, CTAs, footer disclosures, or cross-links, read:
 ## Project rules
 
 - The buyer is the person who will sit at the machine. Voice is spec-led and geeky: VRAM versus model tables, bench numbers, build guides. `aiworkstationthailand.com` is the procurement-facing sibling; never paste from it.
-- `lib/site.ts` is the only place a brand value is written: name, URL, CTA, Mimir role, legal disclosure. `lib/rig-data.ts` owns build tiers, model fit and bench figures. Pages read from both; they never restate a value inline.
+- `src/lib/site.ts` is the only place a brand value is written: name, URL, CTA, Mimir role, legal disclosure. `src/lib/rig-data.ts` owns build tiers, model fit and bench figures. Pages read from both; they never restate a value inline.
 - Contact channels (email, LINE, phone) and the lead form come from omni's `cta.js` via `data-cta` attributes; never hardcode them in components.
-- Fully static export (`output: "export"` in `next.config.ts`). No API routes, middleware or request-time rendering.
+- Fully static build (`output: "static"`, `build.format: "preserve"` in `astro.config.ts`). Pages keep slashless URLs and files (`/builds` is `builds.html`); the blog keeps `/blog/` and `/blog/<slug>/` as `index.html` files, the layout the Next.js export published. No adapter, API routes, middleware or request-time rendering. Non-page routes are prerendered endpoints under `src/pages/`: `robots.txt.ts`, `sitemap.xml.ts`, `llms.txt.ts`, `manifest.webmanifest.ts`, `blog/feed.xml.ts` and the extensionless `opengraph-image.ts` (satori and resvg at build time). No host configuration is committed.
+- `metadataFor()` in `src/lib/site-data.ts` builds each page head and `src/layouts/Base.astro` renders it. Page `<title>`s are the bare route titles, the social titles carry the suffix, and the favicon and not-found og:image keep the cache-busting query strings the Next.js build published.
+- Pages, layouts and static sections (`Hero`, `Partners`, `Contact`, `Footer`, `SitelinkTrail`) are `.astro` and ship no JS. React stays only for islands: `PageTransition` and `Navbar` (`client:load`), the toaster (`client:idle`), and the framer-motion sections (`client:visible`, or `client:load` when the section opens the page), plus server-only rendering of the blog MDX through `RenderNode`. Astro drops a `class` prop on React components, so pass `className`. A `client:visible` island must server-render an element, or it never hydrates.
 - Primary CTA is "Configure your studio" into the contact form. "Visit Mimir Suites" is never the primary CTA; "Powered by Mimir Suites" is fine.
 - `site.legalDisclosure` stays `null` until the operating entity is named. Render nothing, never a placeholder.
 - Copy is Thai-first with English technical nouns inline (GPU, VRAM, quantisation, runtime). Bai Jamjuree carries both scripts; keep Thai line heights.
@@ -34,7 +36,7 @@ Before writing copy, CTAs, footer disclosures, or cross-links, read:
 
 ## Shared image assets
 
-- Browser-loaded content images use immutable URLs from `https://assets.mimir.business/assets/` through `lib/assets.ts` (or `src/lib/assets.ts`) in both development and production. Do not add local URL fallbacks.
+- Browser-loaded content images use immutable URLs from `https://assets.mimir.business/assets/` through `src/lib/assets.ts` in both development and production. Do not add local URL fallbacks.
 - Keep favicons, manifest icons, social cards, and structured-data identity images on this site origin because crawlers may omit the `Referer` header required by the asset-host WAF rule.
 - Add or replace shared images through the `assets.mimir.business` catalogue workflow, then update the generated hash URL in the asset module.
 - The asset host catalogue, deployment rules, and decisions live in the `assets.mimir.business` repository.

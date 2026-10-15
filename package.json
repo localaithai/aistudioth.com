@@ -2,20 +2,24 @@
   "name": "ai-studio-thailand",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "next dev --port 15005",
-    "build": "node vendor/mimir-blog/verify.mjs && node scripts/blog-social-images.mjs && next build && node scripts/blog-normalize-export.mjs",
-    "start": "next start",
+    "dev": "astro dev --port 15005",
+    "build": "node vendor/mimir-blog/verify.mjs && node scripts/blog-social-images.mjs && astro build",
+    "preview": "astro preview --port 15005",
     "lint": "biome lint .",
     "format": "biome format --write .",
+    "typecheck": "astro check",
     "seo:audit": "node scripts/seo-audit.mjs \"${SITE_URL:-https://aistudioth.com}\" --ai-bots --max=50"
   },
   "dependencies": {
+    "@astrojs/react": "^7.0.1",
+    "@lucide/astro": "~0.577.0",
     "@mdx-js/mdx": "^3.1.1",
+    "astro": "^7.3.8",
     "framer-motion": "^12.37.0",
     "github-slugger": "^2.0.0",
     "lucide-react": "^0.577.0",
-    "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "rehype-slug": "^6.0.0",
@@ -25,13 +29,17 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.10",
     "@biomejs/biome": "^2.5.12",
-    "@tailwindcss/postcss": "^4",
+    "@fontsource/geist-sans": "^5.3.0",
+    "@resvg/resvg-js": "^2.6.2",
+    "@tailwindcss/vite": "^4.3.3",
     "@types/mdx": "^2.0.14",
     "@types/node": "^22.20.5",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19",
-    "tailwindcss": "^4",
+    "satori": "^0.59.1",
+    "tailwindcss": "^4.3.3",
     "typescript": "^5"
   },
   "packageManager": "pnpm@10.17.1"
