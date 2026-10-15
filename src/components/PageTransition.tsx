@@ -4,9 +4,11 @@ import type { ReactNode } from "react";
 export default function PageTransition({ children }: { children: ReactNode }) {
   return (
     <MotionConfig reducedMotion="user">
+      {/* Lift only, never fade: the page, and the hero headline as its LCP
+          element, stay visible before JS runs and under reduced motion. */}
       <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ y: 12 }}
+        animate={{ y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
         {children}

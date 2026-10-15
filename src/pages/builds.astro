@@ -9,7 +9,7 @@ import { metadataFor } from "@/lib/site-data";
 ---
 
 <Base head={metadataFor("/builds")}>
-  <Navbar client:load />
+  <Navbar client:load pathname={Astro.url.pathname} />
   <main>
     <SitelinkTrail path="/builds" />
     <BuildsSection client:load />

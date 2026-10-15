@@ -15,6 +15,14 @@
   box-sizing: border-box;
 }
 
+/* The site's base paragraph is muted and tighter; blog text takes the reader's
+   ink and line height from the article instead. Zero specificity keeps every
+   classed paragraph below in charge of its own colour. */
+:where(.mimir-blog-index, .mimir-blog-article) p {
+  color: inherit;
+  line-height: inherit;
+}
+
 .mimir-blog-index a,
 .mimir-blog-article a {
   display: inline-flex;
@@ -215,9 +223,9 @@
 .mimir-blog-summary-panel {
   margin-block: 1.5rem;
   padding: 1.25rem;
-  border-inline-start: 3px solid var(--blog-accent, #2348bf);
-  border-radius: 0 0.75rem 0.75rem 0;
-  background: var(--blog-surface, #ffffff);
+  border: 1px solid var(--blog-border, #d4dae4);
+  border-radius: 0.75rem;
+  background: var(--blog-tint, #ffffff);
 }
 
 .mimir-blog-summary-label {
@@ -344,9 +352,8 @@
   margin: 1.5rem 0;
   padding: 1.25rem;
   border: 1px solid var(--blog-border, #d4dae4);
-  border-inline-start: 3px solid var(--blog-accent, #2348bf);
   border-radius: 0.5rem;
-  background: var(--blog-surface, #ffffff);
+  background: var(--blog-tint, #ffffff);
 }
 
 .mimir-blog-callout-title {

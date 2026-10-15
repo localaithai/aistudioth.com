@@ -5,7 +5,7 @@ import { blogIndex } from "@/lib/site-data";
 
 <footer class="bg-[#1d1d1f] text-white">
   <div class="container-wide py-14">
-    <div class="grid gap-10 md:grid-cols-[1.3fr,1fr,1fr]">
+    <div class="grid gap-10 md:grid-cols-[1.3fr_1fr_1fr]">
       <div>
         <a href="/" class="text-2xl font-bold tracking-tight">
           AI <span class="gradient-text">Studio</span> TH
@@ -16,34 +16,34 @@ import { blogIndex } from "@/lib/site-data";
         </p>
       </div>
       <div>
-        <h2 class="text-sm font-semibold uppercase tracking-wider">สำรวจ</h2>
-        <div class="mt-4 grid gap-2 text-sm text-gray-400">
-          <a href="/blog" class="hover:text-white">{blogIndex.navLabel}</a>
-          <a href="/builds" class="hover:text-white">Builds</a>
-          <a href="/models" class="hover:text-white">Models</a>
-          <a href="/benchmarks" class="hover:text-white">Benchmarks</a>
-          <a href="/about" class="hover:text-white">About</a>
-          <a href="/ecosystem" class="hover:text-white">Ecosystem</a>
-          <a href="/contact" class="hover:text-white">Contact</a>
-          <a href="/privacy" class="hover:text-white">นโยบายความเป็นส่วนตัว</a>
+        <h2 class="text-sm font-semibold text-white">สำรวจ</h2>
+        <div class="mt-2 grid text-sm text-gray-400">
+          <a href="/blog" class="flex min-h-11 items-center hover:text-white">{blogIndex.navLabel}</a>
+          <a href="/builds" class="flex min-h-11 items-center hover:text-white">Builds</a>
+          <a href="/models" class="flex min-h-11 items-center hover:text-white">Models</a>
+          <a href="/benchmarks" class="flex min-h-11 items-center hover:text-white">Benchmarks</a>
+          <a href="/about" class="flex min-h-11 items-center hover:text-white">About</a>
+          <a href="/ecosystem" class="flex min-h-11 items-center hover:text-white">Ecosystem</a>
+          <a href="/contact" class="flex min-h-11 items-center hover:text-white">Contact</a>
+          <a href="/privacy" class="flex min-h-11 items-center hover:text-white">นโยบายความเป็นส่วนตัว</a>
         </div>
       </div>
       <div>
-        <h2 class="text-sm font-semibold uppercase tracking-wider">ติดต่อ</h2>
-        <div class="mt-4 grid gap-3 text-sm text-gray-400">
-          <a data-cta="email" class="flex items-center gap-2 hover:text-white">
+        <h2 class="text-sm font-semibold text-white">ติดต่อ</h2>
+        <div class="mt-2 grid text-sm text-gray-400">
+          <a data-cta="email" class="flex min-h-11 items-center gap-2 hover:text-white">
             <Mail size={15} />
           </a>
-          <a data-cta="tel" class="flex items-center gap-2 hover:text-white">
+          <a data-cta="tel" class="flex min-h-11 items-center gap-2 hover:text-white">
             <Phone size={15} />
           </a>
-          <a data-cta="line" class="flex items-center gap-2 hover:text-white">
+          <a data-cta="line" class="flex min-h-11 items-center gap-2 hover:text-white">
             <MessageCircle size={15} />LINE Official
           </a>
         </div>
       </div>
     </div>
-    <div class="mt-12 border-t border-white/10 pt-6 text-sm text-gray-500">
+    <div class="mt-12 border-t border-white/10 pt-6 text-sm text-gray-400">
       © {new Date().getFullYear()} AI Studio TH
     </div>
   </div>

@@ -6,7 +6,7 @@ import { metadataFor } from "@/lib/site-data";
 ---
 
 <Base head={metadataFor("/privacy")}>
-  <Navbar client:load />
+  <Navbar client:load pathname={Astro.url.pathname} />
   <main class="bg-[#fbfbfd] text-[#1d1d1f]">
     <article class="container-wide py-20 sm:py-28">
       <p class="text-sm font-semibold text-[#06c]">PDPA</p>
@@ -20,7 +20,7 @@ import { metadataFor } from "@/lib/site-data";
         ปรับปรุงล่าสุด 7 กันยายน 2026
       </p>
 
-      <div class="mt-14 grid max-w-3xl gap-10 text-base leading-8 text-[#424245]">
+      <div class="mt-14 grid max-w-3xl gap-10 text-base leading-8 text-[#424245] [&_p]:leading-8 [&_p]:text-[#424245]">
         <section>
           <h2 class="text-2xl font-semibold text-[#1d1d1f]">
             ข้อมูลติดต่อ

@@ -29,7 +29,7 @@ const blogTheme = {
     type="application/rss+xml"
     href="/blog/feed.xml"
   />
-  <Navbar client:load />
+  <Navbar client:load pathname={Astro.url.pathname} />
   <div class="mimir-blog" style={blogTheme}>
     <slot />
   </div>

@@ -8,7 +8,7 @@ import { metadataFor } from "@/lib/site-data";
 ---
 
 <Base head={metadataFor("/contact")}>
-  <Navbar client:load />
+  <Navbar client:load pathname={Astro.url.pathname} />
   <main>
     <SitelinkTrail path="/contact" />
     <Contact />

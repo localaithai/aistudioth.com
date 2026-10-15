@@ -30,7 +30,7 @@ Before writing copy, CTAs, footer disclosures, or cross-links, read:
 - Primary CTA is "Configure your studio" into the contact form. "Visit Mimir Suites" is never the primary CTA; "Powered by Mimir Suites" is fine.
 - `site.legalDisclosure` stays `null` until the operating entity is named. Render nothing, never a placeholder.
 - Copy is Thai-first with English technical nouns inline (GPU, VRAM, quantisation, runtime). Bai Jamjuree carries both scripts; keep Thai line heights.
-- Motion is framer-motion only. Animation serves the spec story, never decoration, and honours reduced motion.
+- Motion uses framer-motion for section entrances and React Bits `ScrambledText` with GSAP for Latin-only build memory capacities. The user's React Bits request supersedes the former framer-motion-only rule. Keep real text in server HTML, Thai outside the scramble boundary, the hero visible, and reduced motion static; see `docs/decisions/design/log-2026-10-15.md`.
 - Use the `@/*` alias. TypeScript is strict; do not weaken types or add broad suppressions.
 - Preserve WCAG 2.2 AA behavior: semantic structure, keyboard access, visible focus, contrast and touch targets.
 
