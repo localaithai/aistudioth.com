@@ -23,14 +23,14 @@ export default function AboutSection() {
   return (
     <section className="section-white apple-section">
       <div className="container-wide">
-        <Reveal amount={0} className="max-w-3xl">
-          <p className="label mb-3">
+        <Reveal amount={0} className="max-w-[44rem]">
+          <p className="label mb-4">
             เกี่ยวกับ AI Studio TH
           </p>
-          <h2 className="text-4xl sm:text-5xl font-semibold mb-6">
+          <h2 className="text-h2 font-semibold mb-6">
             ผู้ประกอบและ integrator สำหรับ local AI rig
           </h2>
-          <p className="text-lg">
+          <p className="text-lead">
             AI Studio TH ประกอบ machine บนโต๊ะสำหรับคนที่ต้องดู memory budget, เลือก
             runtime และทำงานใกล้กับ model ของตัวเอง เราปรับ hardware ตาม workload
             ติดตั้ง Mimir Suites Local เมื่อเหมาะกับ build หรือส่ง bare hardware
@@ -45,11 +45,11 @@ export default function AboutSection() {
                 as="article"
                 key={principle.title}
                 amount={0}
-                delay={index * 0.05}
+                delay={index * 0.09}
                 className="apple-card section-gray p-7"
               >
                 <Icon className="text-[#06c] mb-5" size={24} />
-                <h2 className="text-xl font-semibold mb-3">
+                <h2 className="text-h3 font-semibold mb-3">
                   {principle.title}
                 </h2>
                 <p className="text-sm">{principle.body}</p>

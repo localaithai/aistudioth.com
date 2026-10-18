@@ -11,8 +11,8 @@ export default function Services() {
   return (
     <section id="services" className="section-white apple-section scroll-mt-16">
       <div className="container-wide">
-        <div className="max-w-3xl mb-12"><p className="eyebrow mb-3">Three ways to buy</p><h2 className="text-4xl sm:text-5xl font-semibold mb-5">เลือก build, ไม่ต้องเลือกคำโฆษณา</h2><p className="text-lg">เริ่มจากสิ่งที่คุณจะรันบนเครื่อง แล้วเลือกว่าจะรับ Mimir Suites Local ไปพร้อมกัน หรือรับเฉพาะ hardware</p></div>
-        <div className="grid md:grid-cols-3 gap-5">{offers.map((offer, index) => { const Icon = offer.icon; return <Reveal as="article" key={offer.title} delay={index * 0.06} className="apple-card border border-black/[0.06] p-7"><div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#06c]/10 text-[#06c]"><Icon size={23} /></div><h3 className="text-xl font-semibold mb-3">{offer.title}</h3><p className="text-sm">{offer.body}</p></Reveal>; })}</div>
+        <Reveal className="max-w-[44rem] mb-12"><p className="eyebrow mb-4">Three ways to buy</p><h2 className="text-h2 font-semibold mb-5">เลือก build, ไม่ต้องเลือกคำโฆษณา</h2><p className="text-lead">เริ่มจากสิ่งที่คุณจะรันบนเครื่อง แล้วเลือกว่าจะรับ Mimir Suites Local ไปพร้อมกัน หรือรับเฉพาะ hardware</p></Reveal>
+        <div className="grid md:grid-cols-3 gap-5">{offers.map((offer, index) => { const Icon = offer.icon; return <Reveal as="article" key={offer.title} delay={index * 0.09} className="apple-card border border-black/[0.06] p-7"><div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#06c]/10 text-[#06c]"><Icon size={23} /></div><h3 className="text-h3 font-semibold mb-3">{offer.title}</h3><p className="text-sm">{offer.body}</p></Reveal>; })}</div>
       </div>
     </section>
   );

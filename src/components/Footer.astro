@@ -4,8 +4,8 @@ import { blogIndex } from "@/lib/site-data";
 ---
 
 <footer class="bg-[#1d1d1f] text-white">
-  <div class="container-wide py-14">
-    <div class="grid gap-10 md:grid-cols-[1.3fr_1fr_1fr]">
+  <div class="container-wide pt-20 pb-10 sm:pt-24">
+    <div class="grid gap-10 md:grid-cols-[1.3fr_1fr_1fr] md:gap-0">
       <div>
         <a href="/" class="text-2xl font-bold tracking-tight">
           AI <span class="gradient-text">Studio</span> TH
@@ -15,35 +15,35 @@ import { blogIndex } from "@/lib/site-data";
           model ในเครื่อง.
         </p>
       </div>
-      <div>
+      <div class="border-t border-white/10 pt-6 md:border-t-0 md:border-l md:pt-0 md:pl-10">
         <h2 class="text-sm font-semibold text-white">สำรวจ</h2>
-        <div class="mt-2 grid text-sm text-gray-400">
-          <a href="/blog" class="flex min-h-11 items-center hover:text-white">{blogIndex.navLabel}</a>
-          <a href="/builds" class="flex min-h-11 items-center hover:text-white">Builds</a>
-          <a href="/models" class="flex min-h-11 items-center hover:text-white">Models</a>
-          <a href="/benchmarks" class="flex min-h-11 items-center hover:text-white">Benchmarks</a>
-          <a href="/about" class="flex min-h-11 items-center hover:text-white">About</a>
-          <a href="/ecosystem" class="flex min-h-11 items-center hover:text-white">Ecosystem</a>
-          <a href="/contact" class="flex min-h-11 items-center hover:text-white">Contact</a>
-          <a href="/privacy" class="flex min-h-11 items-center hover:text-white">นโยบายความเป็นส่วนตัว</a>
+        <div class="mt-2 grid justify-items-start text-sm text-gray-400">
+          <a href="/blog" class="link-line flex min-h-11 items-center hover:text-white">{blogIndex.navLabel}</a>
+          <a href="/builds" class="link-line flex min-h-11 items-center hover:text-white">Builds</a>
+          <a href="/models" class="link-line flex min-h-11 items-center hover:text-white">Models</a>
+          <a href="/benchmarks" class="link-line flex min-h-11 items-center hover:text-white">Benchmarks</a>
+          <a href="/about" class="link-line flex min-h-11 items-center hover:text-white">About</a>
+          <a href="/ecosystem" class="link-line flex min-h-11 items-center hover:text-white">Ecosystem</a>
+          <a href="/contact" class="link-line flex min-h-11 items-center hover:text-white">Contact</a>
+          <a href="/privacy" class="link-line flex min-h-11 items-center hover:text-white">นโยบายความเป็นส่วนตัว</a>
         </div>
       </div>
-      <div>
+      <div class="border-t border-white/10 pt-6 md:border-t-0 md:border-l md:pt-0 md:pl-10">
         <h2 class="text-sm font-semibold text-white">ติดต่อ</h2>
-        <div class="mt-2 grid text-sm text-gray-400">
-          <a data-cta="email" class="flex min-h-11 items-center gap-2 hover:text-white">
+        <div class="mt-2 grid justify-items-start text-sm text-gray-400">
+          <a data-cta="email" class="link-line flex min-h-11 items-center gap-2 hover:text-white">
             <Mail size={15} />
           </a>
-          <a data-cta="tel" class="flex min-h-11 items-center gap-2 hover:text-white">
+          <a data-cta="tel" class="link-line flex min-h-11 items-center gap-2 hover:text-white">
             <Phone size={15} />
           </a>
-          <a data-cta="line" class="flex min-h-11 items-center gap-2 hover:text-white">
+          <a data-cta="line" class="link-line flex min-h-11 items-center gap-2 hover:text-white">
             <MessageCircle size={15} />LINE Official
           </a>
         </div>
       </div>
     </div>
-    <div class="mt-12 border-t border-white/10 pt-6 text-sm text-gray-400">
+    <div class="mt-16 border-t border-white/10 pt-6 text-[13px] text-gray-400">
       © {new Date().getFullYear()} AI Studio TH
     </div>
   </div>

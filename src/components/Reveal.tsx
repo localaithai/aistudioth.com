@@ -1,8 +1,10 @@
 import { motion, useAnimationControls, useReducedMotion } from "framer-motion";
 import { type ReactNode, useEffect, useRef } from "react";
 
+const glide = [0.22, 0.75, 0.2, 1] as const;
+
 type RevealProps = {
-  as?: "div" | "article";
+  as?: "div" | "article" | "figure";
   className?: string;
   delay?: number;
   y?: number;
@@ -20,8 +22,8 @@ export function Reveal({
   as = "div",
   className,
   delay = 0,
-  y = 16,
-  amount = 0.2,
+  y = 22,
+  amount = 0.08,
   children,
 }: RevealProps) {
   const element = useRef<HTMLElement | null>(null);
@@ -44,10 +46,13 @@ export function Reveal({
         void controls.start({
           opacity: 1,
           y: 0,
-          transition: { duration: 0.35, delay, ease: "easeOut" },
+          transition: {
+            opacity: { duration: 1.1, delay, ease: glide },
+            y: { duration: 1.2, delay, ease: glide },
+          },
         });
       },
-      { threshold: amount },
+      { threshold: amount, rootMargin: "0px 0px -8% 0px" },
     );
     observer.observe(node);
     return () => observer.disconnect();
@@ -56,6 +61,14 @@ export function Reveal({
   const ref = (node: HTMLElement | null) => {
     element.current = node;
   };
+
+  if (as === "figure") {
+    return (
+      <motion.figure ref={ref} animate={controls} className={className}>
+        {children}
+      </motion.figure>
+    );
+  }
 
   return as === "article" ? (
     <motion.article ref={ref} animate={controls} className={className}>

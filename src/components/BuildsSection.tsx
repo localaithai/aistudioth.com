@@ -45,15 +45,15 @@ export default function BuildsSection() {
   return (
     <section id="builds" className="section-gray apple-section scroll-mt-16">
       <div className="container-wide">
-        <Reveal className="max-w-3xl mb-12">
-          <p className="label mb-3">จุดตั้งต้น ไม่ใช่แพ็กเกจ</p>
-          <h2 className="text-4xl sm:text-5xl font-semibold mb-5">เริ่มจาก model ที่คุณอยากรัน</h2>
-          <p className="text-lg">ทุก build เป็นจุดเริ่มต้นสำหรับปรับ memory, storage, runtime และ Mimir Suites Local ให้พอดีกับงานของคุณ ไม่มีราคาและสเปกตายตัวบนหน้านี้</p>
+        <Reveal className="max-w-[44rem] mb-12">
+          <p className="label mb-4">จุดตั้งต้น ไม่ใช่แพ็กเกจ</p>
+          <h2 className="text-h2 font-semibold mb-5">เริ่มจาก model ที่คุณอยากรัน</h2>
+          <p className="text-lead">ทุก build เป็นจุดเริ่มต้นสำหรับปรับ memory, storage, runtime และ Mimir Suites Local ให้พอดีกับงานของคุณ ไม่มีราคาและสเปกตายตัวบนหน้านี้</p>
         </Reveal>
         <div className="mb-10">
           <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
-            {localMachineOptions.map((option) => (
-              <figure key={option.name} className="apple-card border border-black/[0.06] p-4 sm:p-5">
+            {localMachineOptions.map((option, index) => (
+              <Reveal as="figure" key={option.name} delay={index * 0.09} className="apple-card border border-black/[0.06] p-4 sm:p-5">
                 <img
                   src={assetUrl(option.image)}
                   alt={option.name}
@@ -67,7 +67,7 @@ export default function BuildsSection() {
                 <figcaption className="mt-3 text-sm font-semibold text-[#1d1d1f]">
                   {option.name}
                 </figcaption>
-              </figure>
+              </Reveal>
             ))}
           </div>
           <p className="mt-4 text-sm text-[#6e6e73]">
@@ -81,7 +81,7 @@ export default function BuildsSection() {
               key={tier.name}
               y={18}
               amount={0.15}
-              delay={index * 0.05}
+              delay={index * 0.09}
               className="apple-card border border-black/[0.06] p-7 sm:p-8"
             >
               <h3 className="text-2xl font-semibold mb-6">{tier.name}</h3>
@@ -109,7 +109,7 @@ export default function BuildsSection() {
               </dl>
               <p className="mt-6 pt-5 border-t border-black/[0.06] text-sm text-[#1d1d1f]"><span className="font-semibold">รันอะไรได้:</span> {tier.whatRuns}</p>
               {tier.note && <p className="mt-3 text-xs text-[#6e6e73]">{tier.note}</p>}
-              <a href="#contact" className="apple-link mt-6 active:scale-[0.97] transition-transform">ตั้งค่า build นี้ <ArrowRight size={16} /></a>
+              <a href="#contact" className="apple-link mt-6">ตั้งค่า build นี้ <ArrowRight size={16} /></a>
             </Reveal>
           ))}
         </div>

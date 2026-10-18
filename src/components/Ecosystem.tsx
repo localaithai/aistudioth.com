@@ -7,15 +7,15 @@ export default function Ecosystem() {
   return (
     <section className="section-gray apple-section">
       <div className="container-wide">
-        <div className="max-w-3xl mb-12">
-          <p className="label mb-3">
+        <Reveal className="max-w-[44rem] mb-12">
+          <p className="label mb-4">
             เลือกวิธีใช้งาน
           </p>
-          <h2 className="text-4xl sm:text-5xl font-semibold mb-5">
+          <h2 className="text-h2 font-semibold mb-5">
             Local rig หรือ cloud models
           </h2>
-          <p className="text-lg">เลือกจากที่ inference ต้องทำงาน ไม่ใช่จากชื่อแบรนด์</p>
-        </div>
+          <p className="text-lead">เลือกจากที่ inference ต้องทำงาน ไม่ใช่จากชื่อแบรนด์</p>
+        </Reveal>
         <div className="grid md:grid-cols-2 gap-5">
           <Reveal
             as="article"
@@ -44,7 +44,7 @@ export default function Ecosystem() {
           <Reveal
             as="article"
             amount={0}
-            delay={0.05}
+            delay={0.09}
             className="apple-card bg-white p-8 border border-black/[0.06]"
           >
             <Cloud className="text-[#06c] mb-6" size={28} />
@@ -53,7 +53,7 @@ export default function Ecosystem() {
               ถ้าไม่ต้องรัน inference ในเครื่อง ดู cloud models ได้ที่ CloudAIThai.com.
             </p>
             <a
-              className="apple-link active:scale-[0.97] transition-transform"
+              className="apple-link"
               href="https://cloudaithai.com"
               target="_blank"
               rel="noreferrer"
