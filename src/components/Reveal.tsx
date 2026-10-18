@@ -38,7 +38,10 @@ export function Reveal({
       return;
     }
     if (node.getBoundingClientRect().top < window.innerHeight) return;
+    // controls.set only updates motion values, so a server-rendered element stays painted until the entrance starts and snaps to 0; hide it in the DOM too.
     controls.set({ opacity: 0, y });
+    node.style.opacity = "0";
+    node.style.transform = `translateY(${y}px)`;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry?.isIntersecting) return;
