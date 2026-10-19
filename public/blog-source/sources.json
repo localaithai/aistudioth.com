@@ -1,0 +1,76 @@
+{
+  "sources": [
+    {
+      "source_id": "anthropic-model-hardware-standard",
+      "file": "anthropic-model-hardware-standard.png",
+      "original_image_url": "https://www.anthropic.com/_next/image?url=https%3A%2F%2Fwww-cdn.anthropic.com%2Fimages%2F4zrzovbb%2Fwebsite%2F0aa7623ba0e545ce39e0de725583c0445ce6b76d-1999x1250.png&w=3840&q=75",
+      "source_page": "https://www.anthropic.com/news/model-hardware-standard-research-preview",
+      "credit": "Anthropic (แหล่งภาพ)",
+      "sha256": "eec5a9763a95464eda819a5978c56777ea6544c39931700a950b924bbc721c60"
+    },
+    {
+      "source_id": "anthropic-sonnet-55",
+      "file": "anthropic-sonnet-55.png",
+      "original_image_url": "https://www.anthropic.com/_next/image?url=https%3A%2F%2Fwww-cdn.anthropic.com%2Fimages%2F4zrzovbb%2Fwebsite%2Fcf0eae4b26b6fbe29e370d300ecac766cb94bc2d-1600x1000.png%3Frect%3D0%252C0%252C1600%252C1000&w=3840&q=75",
+      "source_page": "https://www.anthropic.com/claude-sonnet-5-5",
+      "credit": "Anthropic (แหล่งภาพ)",
+      "sha256": "66e96699f9715e5ba3c3381b0ecfb4343fd32ddefeea6c8d42999d45b9a157c8"
+    },
+    {
+      "source_id": "asus-proart-rtx-spark",
+      "file": "asus-proart-rtx-spark.jpg",
+      "original_image_url": "https://dlcdnwebimgs.asus.com/files/media/202609/6a35a889-6349-4336-946c-7c8ee53ff679/KV.jpg",
+      "source_page": "https://www.asus.com/us/business/resources/news/asus-proart-at-ifa2026/",
+      "credit": "ASUS (แหล่งภาพ)",
+      "sha256": "97d28a42d607d8a8e7a2c50ecb6206af5943f25006beaad1fe7c712f4bbeeb0a"
+    },
+    {
+      "source_id": "hp-redhat-edge-ai",
+      "file": "hp-redhat-edge-ai.jpg",
+      "original_image_url": "https://www.hp.com/content/dam/sites/garage-press/press/press-releases/2026/hp-brings-data-center-class-ai-to-where-work-happens/ZGX%20Fury%20Press%20Release%20Header.png",
+      "source_page": "https://www.hp.com/us-en/newsroom/press-releases/2026/hp-extends-data-center-ai-architecture-to-the-edge.html",
+      "credit": "HP (แหล่งภาพ)",
+      "sha256": "7d998811191d9c527b8654f76538e65e8708770748c4436e631ea15d9c38f645"
+    },
+    {
+      "source_id": "intel-hot-chips-architectures",
+      "file": "intel-hot-chips-architectures.jpg",
+      "original_image_url": "https://intelcorp.scene7.com/is/image/intelcorp/hotchipsdmr?dpr=off&qlt=80&ts=1788792881308",
+      "source_page": "https://www.intel.de/content/www/de/de/newsroom/news/client-computing/intel-outlines-architectures-for-agentic-ai-at-hot-chips-2026.html",
+      "credit": "Intel (แหล่งภาพ)",
+      "sha256": "9b116fcee0e3d0afe5149f503df784b84ac9c7dea8c246bfbe320179fc1876d3"
+    },
+    {
+      "source_id": "nemotron-lightning-switchyard",
+      "file": "nemotron-lightning-switchyard.jpg",
+      "original_image_url": "https://blogs.nvidia.com/wp-content/uploads/2026/08/image1.jpeg",
+      "source_page": "https://blogs.nvidia.com/blog/nemotron-lightning-switchyard-rtx-dgx/",
+      "credit": "NVIDIA (แหล่งภาพ)",
+      "sha256": "bb82588996871e2008dee5a12277e867766f06d0fdb24739782bc16c1d7e6858"
+    },
+    {
+      "source_id": "nvidia-jetson-reasoning-guide",
+      "file": "nvidia-jetson-reasoning-guide.webp",
+      "original_image_url": "https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/image2-3.webp",
+      "source_page": "https://developer.nvidia.com/blog/frontier-reasoning-reaches-the-edge-how-to-deploy-and-optimize-models-on-nvidia-jetson/",
+      "credit": "NVIDIA (แหล่งภาพ)",
+      "sha256": "d420bd84c7760d63eb2fa9639fc8888f14bfc52de13c4c510f077571aec8cc8a"
+    },
+    {
+      "source_id": "nvidia-local-ai-ifa",
+      "file": "nvidia-local-ai-ifa.jpg",
+      "original_image_url": "https://blogs.nvidia.com/wp-content/uploads/2026/09/nv-blog-1280x680-1.jpg",
+      "source_page": "https://blogs.nvidia.com/blog/local-ai-ifa-next-gen-agents-nv-pair-rtx-spark/",
+      "credit": "NVIDIA (แหล่งภาพ)",
+      "sha256": "2db424ac8981301b104b4126407c07442d5620da83039336ed0cde0d80e3ba1e"
+    },
+    {
+      "source_id": "rocm-october-engineering",
+      "file": "rocm-october-engineering.png",
+      "original_image_url": "https://rocm.blogs.amd.com/_images/tile-hierarchy.svg",
+      "source_page": "https://rocm.blogs.amd.com/software-tools-optimization/rdna-fp16-gemm/README.html",
+      "credit": "AMD ROCm Blogs (แหล่งภาพ)",
+      "sha256": "32ec860c961c952a6aa283a6c8e64e4c87e6e3eecd83fc32e392c261f698653c"
+    }
+  ]
+}

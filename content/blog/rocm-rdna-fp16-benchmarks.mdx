@@ -1,5 +1,5 @@
 ---
-title: "FP16 วัดอะไรบน RDNA"
+title: "AMD เผยบทสอน FP16 GEMM บน RDNA"
 description: "อ่านบทสอน FP16 GEMM ของ AMD แล้ววาง benchmark สำหรับ AI rig ให้แยกความเร็ว kernel จากเวลาโหลดโมเดลและผลจบงานจริง"
 kind: "news"
 query: "RDNA FP16 GEMM benchmark แทนประสิทธิภาพ AI rig ได้หรือไม่"
@@ -11,7 +11,7 @@ newsDate: "2026-10-16"
 summary: "ผล FP16 GEMM ใช้ศึกษาคอขวดระดับ kernel ได้ แต่การเลือก AI rig ต้องวัดงานของโครงการแยก ทั้งการโหลดโมเดล หน่วยความจำ และคุณภาพผลลัพธ์"
 faq: [{"question":"บทสอนนี้ยืนยันว่าแอป AI ทุกตัวบน Radeon เร็วขึ้นหรือไม่","answer":"ไม่ยืนยัน ต้องทดสอบ runtime รูปแบบตัวเลข และงานของแอปนั้นเอง ไม่ขยายผลจาก kernel หนึ่งชนิดไปทั้งโปรแกรม"},{"question":"นำสูตร MI300X มาอ้างเป็นผล Radeon ได้หรือไม่","answer":"ไม่ได้ เป็นตัวอย่างเซิร์ฟเวอร์คนละฮาร์ดแวร์และ topology ใช้เรียนรู้วิธีตั้งสมมติฐานได้ แต่ใช้แทนผลทดสอบ rig ไม่ได้"}]
 citations: [{"title":"FP16 GEMM Optimization on AMD RDNA™ 3 and RDNA™ 4 Architectures","url":"https://rocm.blogs.amd.com/software-tools-optimization/rdna-fp16-gemm/README.html","publisher":"AMD ROCm Blogs","published":"2026-10-16","accessed":"2026-10-20"},{"title":"Long Context, One Node: Serving GLM-5.3-FP8 on MI300X with DP8+EP8","url":"https://rocm.blogs.amd.com/artificial-intelligence/glm53-mi300x-vllm/README.html","publisher":"AMD ROCm Blogs","published":"2026-10-14","accessed":"2026-10-20"}]
-hero: {"src":"https://assets.mimir.business/assets/sites/aistudioth.com/general/hero.ff15e2bf544a.webp","alt":"ภาพประกอบพื้นที่ทำงานพัฒนา AI ของ AI Studio Thailand","caption":"ภาพประกอบ AI rig สำหรับนักพัฒนา ไม่ใช่ Radeon หรือเครื่อง MI300X ที่ใช้ในบทสอนของ AMD","credit":"Mimir / aistudioth.com","sourceUrl":"https://aistudioth.com/"}
+hero: {"src":"https://assets.mimir.business/assets/sites/aistudioth.com/general/rocm-october-engineering.bc8b2faaea56.png","alt":"แผนภาพตาราง Tile hierarchy แสดงบล็อก 256 × 256 และส่วนข้อมูล A กับ B สำหรับหนึ่ง workgroup","caption":"แผนภาพการแบ่ง tile จากบทสอน FP16 GEMM บน RDNA 3 และ RDNA 4 ของ AMD ROCm Blogs","credit":"AMD ROCm Blogs (แหล่งภาพ)","sourceUrl":"https://rocm.blogs.amd.com/software-tools-optimization/rdna-fp16-gemm/README.html"}
 videos: [{"url":"https://www.youtube.com/watch?v=0LurDa6ERCM","title":"ROCm Open Software for AI: Advanced Insights S2E7","publisher":"AMD","published":"2025-10-22","context":true}]
 ---
 

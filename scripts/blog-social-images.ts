@@ -10,6 +10,8 @@ import {
 import path from "node:path";
 import { parseDocument } from "yaml";
 
+const siteOrigin: string = "https://aistudioth.com";
+
 const contentDir = path.resolve(process.cwd(), "content/blog");
 const mediaDir = path.resolve(process.cwd(), "public/blog-media");
 const maxBytes = 16 * 1024 * 1024;
@@ -20,8 +22,10 @@ const today = new Intl.DateTimeFormat("sv-SE", {
   day: "2-digit",
 }).format(new Date());
 
+type HeroSource = { file: string; referer: string };
+
 function heroes() {
-  const selected = new Map();
+  const selected = new Map<string, HeroSource>();
   for (const filename of readdirSync(contentDir)
     .filter((name) => name.endsWith(".mdx"))
     .sort()) {
@@ -59,10 +63,15 @@ function heroes() {
         );
       }
       const owner = new URL(metadata.hero.sourceUrl);
-      if (owner.protocol !== "https:" || owner.username || owner.password)
-        throw new Error("hero sourceUrl must be HTTPS");
+      if (
+        owner.protocol !== "https:" ||
+        owner.username ||
+        owner.password ||
+        owner.port
+      )
+        throw new Error("hero sourceUrl must be an HTTPS source page");
       if (!selected.has(url.href))
-        selected.set(url.href, { file, referer: owner.origin + "/" });
+        selected.set(url.href, { file, referer: siteOrigin + "/" });
     } catch (error) {
       throw new Error(
         file + ": " + (error instanceof Error ? error.message : String(error)),
@@ -72,7 +81,7 @@ function heroes() {
   return selected;
 }
 
-async function copyHero(url, { file, referer }) {
+async function copyHero(url: string, { file, referer }: HeroSource) {
   const target = path.join(mediaDir, path.basename(new URL(url).pathname));
   if (existsSync(target)) return;
   try {
@@ -89,7 +98,7 @@ async function copyHero(url, { file, referer }) {
       throw new Error("image exceeds 16 MiB");
     if (!response.body) throw new Error("response has no image body");
     const reader = response.body.getReader();
-    const chunks = [];
+    const chunks: Uint8Array[] = [];
     let bytes = 0;
     try {
       while (true) {
