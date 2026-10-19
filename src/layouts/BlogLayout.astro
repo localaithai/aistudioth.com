@@ -3,23 +3,10 @@ import Footer from "@/components/Footer.astro";
 import Navbar from "@/components/Navbar";
 import Base from "@/layouts/Base.astro";
 import type { PageHead } from "@/lib/seo";
-import "@/styles/blog.css";
 
 type Props = { head: PageHead };
 
 const { head } = Astro.props;
-
-const blogTheme = {
-  "--blog-bg": "#fbfbfd",
-  "--blog-surface": "#fff",
-  "--blog-ink": "#1d1d1f",
-  "--blog-muted": "#515157",
-  "--blog-border": "#d6d6db",
-  "--blog-accent": "#06c",
-  "--blog-accent-ink": "#fff",
-  "--blog-tint": "#f0f5ff",
-  "--blog-radius": "16px",
-};
 ---
 
 <Base head={head}>
@@ -30,8 +17,6 @@ const blogTheme = {
     href="/blog/feed.xml"
   />
   <Navbar client:load pathname={Astro.url.pathname} />
-  <div class="mimir-blog" style={blogTheme}>
-    <slot />
-  </div>
+  <slot />
   <Footer />
 </Base>
