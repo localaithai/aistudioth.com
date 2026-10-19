@@ -1,0 +1,45 @@
+---
+title: "FP16 วัดอะไรบน RDNA"
+description: "อ่านบทสอน FP16 GEMM ของ AMD แล้ววาง benchmark สำหรับ AI rig ให้แยกความเร็ว kernel จากเวลาโหลดโมเดลและผลจบงานจริง"
+kind: "news"
+query: "RDNA FP16 GEMM benchmark แทนประสิทธิภาพ AI rig ได้หรือไม่"
+cluster: "/benchmarks/"
+source: "rocm-october-engineering"
+published: "2026-10-20"
+reviewed: "2026-10-20"
+newsDate: "2026-10-16"
+summary: "ผล FP16 GEMM ใช้ศึกษาคอขวดระดับ kernel ได้ แต่การเลือก AI rig ต้องวัดงานของโครงการแยก ทั้งการโหลดโมเดล หน่วยความจำ และคุณภาพผลลัพธ์"
+faq: [{"question":"บทสอนนี้ยืนยันว่าแอป AI ทุกตัวบน Radeon เร็วขึ้นหรือไม่","answer":"ไม่ยืนยัน ต้องทดสอบ runtime รูปแบบตัวเลข และงานของแอปนั้นเอง ไม่ขยายผลจาก kernel หนึ่งชนิดไปทั้งโปรแกรม"},{"question":"นำสูตร MI300X มาอ้างเป็นผล Radeon ได้หรือไม่","answer":"ไม่ได้ เป็นตัวอย่างเซิร์ฟเวอร์คนละฮาร์ดแวร์และ topology ใช้เรียนรู้วิธีตั้งสมมติฐานได้ แต่ใช้แทนผลทดสอบ rig ไม่ได้"}]
+citations: [{"title":"FP16 GEMM Optimization on AMD RDNA™ 3 and RDNA™ 4 Architectures","url":"https://rocm.blogs.amd.com/software-tools-optimization/rdna-fp16-gemm/README.html","publisher":"AMD ROCm Blogs","published":"2026-10-16","accessed":"2026-10-20"},{"title":"Long Context, One Node: Serving GLM-5.3-FP8 on MI300X with DP8+EP8","url":"https://rocm.blogs.amd.com/artificial-intelligence/glm53-mi300x-vllm/README.html","publisher":"AMD ROCm Blogs","published":"2026-10-14","accessed":"2026-10-20"}]
+hero: {"src":"https://assets.mimir.business/assets/sites/aistudioth.com/general/hero.ff15e2bf544a.webp","alt":"ภาพประกอบพื้นที่ทำงานพัฒนา AI ของ AI Studio Thailand","caption":"ภาพประกอบ AI rig สำหรับนักพัฒนา ไม่ใช่ Radeon หรือเครื่อง MI300X ที่ใช้ในบทสอนของ AMD","credit":"Mimir / aistudioth.com","sourceUrl":"https://aistudioth.com/"}
+videos: [{"url":"https://www.youtube.com/watch?v=0LurDa6ERCM","title":"ROCm Open Software for AI: Advanced Insights S2E7","publisher":"AMD","published":"2025-10-22","context":true}]
+---
+
+## GEMM เป็นจุดเริ่มของการวัด
+
+AMD เผยแพร่ [บทสอน FP16 GEMM สำหรับ RDNA 3 และ RDNA 4](https://rocm.blogs.amd.com/software-tools-optimization/rdna-fp16-gemm/README.html) วันที่ 16 ตุลาคม 2026 โดยปรับ kernel เป็นขั้นและวัดเวลา register กับ LDS ผู้เขียนระบุว่าเป็นบทเรียน ไม่ใช่ไลบรารี production จึงไม่ควรใช้ผลนั้นเป็นคะแนนรวมของเครื่องพัฒนา
+
+สำหรับคนประกอบ rig เอง เราเสนอให้ตั้งคำถามก่อนเปิด benchmark ว่าต้องการลดเวลาในขั้นใด หากปัญหาจริงคือโหลดโมเดลนานหรือพื้นที่ไม่พอ คะแนนคูณเมทริกซ์ที่ดีขึ้นยังไม่ตอบโจทย์นั้น เก็บเวลาตั้งแต่เริ่มโปรแกรมถึงได้ผลที่ตรวจผ่าน แล้วค่อยเจาะส่วนที่กินเวลามากที่สุดด้วยเครื่องมือระดับ kernel
+
+## อย่าเทียบข้ามรูปงานโดยไม่บันทึกเงื่อนไข
+
+อีกบทความ [GLM-5.3-FP8 บน MI300X วันที่ 14 ตุลาคม](https://rocm.blogs.amd.com/artificial-intelligence/glm53-mi300x-vllm/README.html) เปรียบเทียบวิธีแบ่งงานบนเซิร์ฟเวอร์แปด GPU และพบว่าทางเลือกที่เหมาะต่างกันตาม workload นี่เป็นตัวอย่างการออกแบบการทดลองบนเซิร์ฟเวอร์ ไม่ใช่หลักฐานประสิทธิภาพ Radeon และสองบทความนี้ไม่ได้ประกาศ ROCm รุ่นใหม่
+
+| ระดับที่วัด | สิ่งที่ต้องตรึง | ค่าที่ควรเก็บ |
+| --- | --- | --- |
+| Kernel | รูปเมทริกซ์ layout และชนิดตัวเลข | เวลาและผลตรวจความถูกต้อง |
+| Runtime | รุ่น driver framework และค่ารัน | การใช้หน่วยความจำกับ error |
+| งานพัฒนา | โมเดล input และเกณฑ์คำตอบ | เวลาจบงานที่ตรวจผ่าน |
+| รอบเปลี่ยนค่า | เปลี่ยนทีละอย่างจากค่าฐาน | ผลต่างพร้อม log ที่สร้างซ้ำได้ |
+
+## ทำชุดทดลองของ rig ที่จะใช้จริง
+
+เริ่มจาก input คงที่ที่ครอบคลุมงานสั้นและยาวของโครงการ บันทึกเวอร์ชัน GPU driver runtime และโมเดลไว้กับผลทุกครั้ง รันรอบอุ่นเครื่องแยกจากรอบที่นำมาสรุป และอย่าทิ้งรอบที่ล้มเหลวออกจากรายงานโดยไม่บอกเหตุผล การเห็นว่าค่าใดทำให้โปรแกรมล้มมีประโยชน์ต่อการเลือกเครื่องพอ ๆ กับรอบที่เร็วที่สุด
+
+ตรวจผลลัพธ์หลังเปลี่ยน precision หรือวิธีคำนวณด้วย กำหนดเกณฑ์ตามงาน เช่น ค่าคำนวณที่ยอมรับได้หรือคำตอบที่ต้องมีหลักฐานครบ ความเร็วที่เพิ่มจากการทำงานไม่ครบหรือคำตอบใช้ไม่ได้ไม่ควรถูกนับเป็นความสำเร็จ หากมีงานที่ไม่ตรงกับบทสอน ให้รายงานว่าเป็นการทดลองอีกชุดหนึ่งพร้อมวิธีของมันเอง
+
+## ใช้บทสอนสร้างวิธีคิด ไม่ใช้แทนผลเครื่อง
+
+[ROCm Open Software for AI: Advanced Insights S2E7](https://www.youtube.com/watch?v=0LurDa6ERCM) ของ AMD เผยแพร่วันที่ 22 ตุลาคม 2025 เป็นวิดีโอพื้นหลังเรื่องระบบซอฟต์แวร์ ไม่ใช่ข่าวเดือนตุลาคม 2026 หรือวิดีโอทดสอบ FP16 ในสองบทความข้างต้น
+
+ข้อเสนอของเราคือเก็บ benchmark สั้นที่รันซ้ำได้ไว้กับงานจริงหนึ่งชุดก่อนเปลี่ยน stack บทความนี้ไม่มีผลทดสอบจาก AI Studio Thailand และไม่ยืนยัน compatibility ของ build ใด นำรูปงานกับค่าฐานที่เก็บได้ไปเทียบในหน้า [Benchmarks สำหรับ AI Rig](/benchmarks/)
