@@ -7,6 +7,7 @@ Static Astro 7 site for aistudioth.com, the hardware line's developer door: one 
 - Package manager: `pnpm@10.33.0` (`pnpm-lock.yaml` is the committed lockfile)
 - Develop: `pnpm dev` at `http://localhost:15005`; `pnpm preview` serves the built `dist/` on the same port
 - Verification: `pnpm lint && pnpm typecheck && pnpm build` (static build writes `dist/`)
+- Live SEO/AEO check after a deploy: `pnpm seo:audit` (fetches https://aistudioth.com, or `SITE_URL` when set; run it, do not theorise)
 - Before changing routes, navigation, headings, metadata, copy, internal links, structured data, robots, sitemap, or `llms.txt`, read [SEO, AEO, and sitelink maintenance](docs/reference/seo-aeo-maintenance.md).
 - No automated test suite. Lint, `astro check` and the static build are the gates.
 
@@ -24,15 +25,17 @@ Before writing copy, CTAs, footer disclosures, or cross-links, read:
 - The buyer is the person who will sit at the machine. Voice is spec-led and geeky: VRAM versus model tables, bench numbers, build guides. `aiworkstationthailand.com` is the procurement-facing sibling; never paste from it.
 - `src/lib/site.ts` is the only place a brand value is written: name, URL, CTA, Mimir role, legal disclosure. `src/lib/rig-data.ts` owns build tiers, model fit and bench figures. Pages read from both; they never restate a value inline.
 - Contact channels (email, LINE, phone) and the lead form come from omni's `cta.js` via `data-cta` attributes; never hardcode them in components.
-- Fully static build (`output: "static"`, `build.format: "preserve"` in `astro.config.ts`). Pages keep slashless URLs and files (`/builds` is `builds.html`); the blog keeps `/blog/` and `/blog/<slug>/` as `index.html` files, the layout the Next.js export published. No adapter, API routes, middleware or request-time rendering. Non-page routes are prerendered endpoints under `src/pages/`: `robots.txt.ts`, `sitemap.xml.ts`, `llms.txt.ts`, `manifest.webmanifest.ts`, `blog/feed.xml.ts` and the extensionless `opengraph-image.ts` (satori and resvg at build time). No host configuration is committed.
+- Fully static build (`output: "static"`, `build.format: "preserve"` in `astro.config.ts`). Pages keep slashless URLs and files (`/builds` is `builds.html`); the blog keeps `/blog/` and `/blog/<slug>/` as `index.html` files, the layout the Next.js export published. No adapter, API routes, middleware or request-time rendering. Non-page routes are prerendered endpoints under `src/pages/`: `robots.txt.ts`, `sitemap.xml.ts`, `llms.txt.ts`, `manifest.webmanifest.ts`, `blog/feed.xml.ts` and the extensionless `opengraph-image.ts` (satori and resvg at build time). No host configuration is committed, and the domain has no DNS yet (checked 2026-10-21), so a push to `main` deploys nowhere.
 - `metadataFor()` in `src/lib/site-data.ts` builds each page head and `src/layouts/Base.astro` renders it. Page `<title>`s are the bare route titles, the social titles carry the suffix, and the favicon and not-found og:image keep the cache-busting query strings the Next.js build published.
 - Pages, layouts and static sections (`Hero`, `Partners`, `Contact`, `Footer`, `SitelinkTrail`) are `.astro` and ship no JS. React stays only for islands: `PageTransition` and `Navbar` (`client:load`), the toaster (`client:idle`), and the framer-motion sections (`client:visible`, or `client:load` when the section opens the page), plus server-only rendering of the blog MDX through `RenderNode`. Astro drops a `class` prop on React components, so pass `className`. A `client:visible` island must server-render an element, or it never hydrates.
 - Primary CTA is "Configure your studio" into the contact form. "Visit Mimir Suites" is never the primary CTA; "Powered by Mimir Suites" is fine.
 - `site.legalDisclosure` stays `null` until the operating entity is named. Render nothing, never a placeholder.
 - Copy is Thai-first with English technical nouns inline (GPU, VRAM, quantisation, runtime). Bai Jamjuree carries both scripts; keep Thai line heights.
 - Motion uses framer-motion for section entrances and React Bits `ScrambledText` with GSAP for Latin-only build memory capacities. The user's React Bits request supersedes the former framer-motion-only rule. Keep real text in server HTML, Thai outside the scramble boundary, the hero visible, and reduced motion static; see `docs/decisions/design/log-2026-10-15.md`.
+- Styling is Tailwind utilities in markup, with tokens in `src/styles/global.css`: element defaults in `@layer base`, shared roles as `@utility` definitions, `@theme` blocks for tokens. Never add plain CSS rules or `<style>` blocks; an unlayered rule silently beats every utility.
 - Use the `@/*` alias. TypeScript is strict; do not weaken types or add broad suppressions.
 - Preserve WCAG 2.2 AA behavior: semantic structure, keyboard access, visible focus, contrast and touch targets.
+- `vendor/mimir-blog/` is generated from `../../blog` by its `pnpm sync`; never edit it here. `pnpm build` runs `vendor/mimir-blog/verify.mjs` (fails on any edited, missing or extra file), then `vendor/mimir-blog/social-images.mjs`, which copies each published article's hero from the asset host into `public/blog-media/` for the social card. Commit any new file it writes there with the article.
 
 ## Shared image assets
 
