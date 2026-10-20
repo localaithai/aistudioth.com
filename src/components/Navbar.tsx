@@ -92,7 +92,7 @@ export default function Navbar({ pathname = "/" }: { pathname?: string }) {
 
   return (
     <nav
-      className="site-nav sticky top-0 z-50"
+      className="sticky top-0 z-50 transition-[background-color,box-shadow,transform] duration-[.5s,.5s,.6s] ease-glide data-hidden:[transform:translateY(-100%)] data-[state=solid]:bg-[rgb(255_255_255/0.78)] data-[state=solid]:shadow-[inset_0_-1px_0_rgb(0_0_0/0.07),0_10px_30px_-18px_rgb(29_29_31/0.3)] data-[state=solid]:backdrop-blur-[18px] data-[state=solid]:backdrop-saturate-[1.8]"
       data-state={atTop && !open ? "top" : "solid"}
       data-hidden={hidden && !open ? "" : undefined}
       onFocus={() => setHidden(false)}
@@ -110,12 +110,15 @@ export default function Navbar({ pathname = "/" }: { pathname?: string }) {
               key={link.href}
               href={link.href}
               aria-current={isCurrent(pathname, link.href) ? "page" : undefined}
-              className="nav-link"
+              className="relative inline-flex min-h-11 items-center px-3 text-[.875rem] font-medium text-[#1d1d1f] transition-[color] duration-350 ease-glide after:absolute after:right-3 after:bottom-[0.55rem] after:left-3 after:h-px after:origin-[right] after:bg-current after:[transform:scaleX(0)] after:transition-[transform] after:duration-450 after:ease-glide hover:text-[#06c] hover:after:origin-[left] hover:after:[transform:scaleX(1)] aria-[current=page]:font-semibold aria-[current=page]:text-[#06c] aria-[current=page]:after:origin-[left] aria-[current=page]:after:[transform:scaleX(1)]"
             >
               {link.label}
             </a>
           ))}
-          <a href="/contact" className="btn-primary ml-4 px-5 py-2.5 text-sm">
+          <a
+            href="/contact"
+            className="ml-4 inline-flex items-center justify-center gap-[0.6rem] rounded-[980px] bg-[#1d1d1f] px-5 py-2.5 text-sm font-medium text-white transition-[background-color,color,border-color,transform] duration-350 ease-glide hover:bg-black active:[transform:scale(0.98)]"
+          >
             {site.primaryCta.label}
           </a>
         </div>
@@ -146,7 +149,7 @@ export default function Navbar({ pathname = "/" }: { pathname?: string }) {
                     isCurrent(pathname, link.href) ? "page" : undefined
                   }
                   onClick={() => setOpen(false)}
-                  className="menu-link menu-rise"
+                  className="flex min-h-13 items-center text-[clamp(1.75rem,7.5vw,2.25rem)] leading-[1.3] font-semibold tracking-[-0.02em] text-[#1d1d1f] transition-[color] duration-350 ease-glide hover:text-[#06c] aria-[current=page]:text-[#06c] motion-safe:animate-menu-rise"
                   style={{ "--i": index } as CSSProperties}
                 >
                   {link.label}
@@ -154,7 +157,7 @@ export default function Navbar({ pathname = "/" }: { pathname?: string }) {
               ))}
             </div>
             <div
-              className="menu-rise grid gap-4 border-t border-black/[0.08] pt-6"
+              className="grid gap-4 border-t border-black/[0.08] pt-6 motion-safe:animate-menu-rise"
               style={{ "--i": links.length } as CSSProperties}
             >
               <a

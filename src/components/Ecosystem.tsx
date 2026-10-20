@@ -29,8 +29,7 @@ export default function Ecosystem() {
               height={48}
               loading="lazy"
               decoding="async"
-              className="mb-6 h-12 w-auto object-contain"
-              style={{ color: "transparent" }}
+              className="mb-6 h-12 w-auto object-contain text-transparent"
             />
             <h2 className="text-2xl font-semibold text-white mb-4">
               Mimir Suites Local บน rig ของคุณ

@@ -61,8 +61,7 @@ export default function BuildsSection() {
                   height={option.height}
                   loading="lazy"
                   decoding="async"
-                  className="h-24 w-full rounded-xl object-contain sm:h-36"
-                  style={{ color: "transparent" }}
+                  className="h-24 w-full rounded-xl object-contain text-transparent sm:h-36"
                 />
                 <figcaption className="mt-3 text-sm font-semibold text-[#1d1d1f]">
                   {option.name}
@@ -94,8 +93,7 @@ export default function BuildsSection() {
                     height={580}
                     loading="lazy"
                     decoding="async"
-                    className="h-auto w-full rounded-xl"
-                    style={{ color: "transparent" }}
+                    className="h-auto w-full rounded-xl text-transparent"
                   />
                   <figcaption className="mt-3 text-sm text-[#6e6e73]">
                     ภาพจริงของ NVIDIA DGX Spark

@@ -23,21 +23,12 @@ export default function AnimatedLogo({ className = "" }: { className?: string })
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
-        className="text-[40px] sm:text-[72px] md:text-[88px] font-bold tracking-[-0.04em] leading-none relative"
-        style={{
-          background: "linear-gradient(135deg, #e8590c 0%, #d4a017 50%, #e8590c 100%)",
-          backgroundSize: "200% 100%",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-          backgroundClip: "text",
-          animation: reduceMotion ? "none" : "gradientShift 4s ease-in-out infinite",
-        }}
+        className="text-[40px] sm:text-[72px] md:text-[88px] font-bold tracking-[-0.04em] leading-none relative bg-[linear-gradient(135deg,#e8590c_0%,#d4a017_50%,#e8590c_100%)] bg-[length:200%_100%] bg-clip-text [-webkit-text-fill-color:transparent] motion-safe:animate-gradient-shift"
       >
         Studio
         {/* Underline */}
         <motion.div
-          className="absolute bottom-[-4px] left-0 right-0 h-[3px] rounded-full origin-left"
-          style={{ background: "linear-gradient(90deg, #e8590c, #d4a017)" }}
+          className="absolute bottom-[-4px] left-0 right-0 h-[3px] rounded-full origin-left bg-[linear-gradient(90deg,#e8590c,#d4a017)]"
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ delay: 0.9, duration: 0.6, ease: "easeOut" }}
@@ -60,14 +51,6 @@ export default function AnimatedLogo({ className = "" }: { className?: string })
           />
         )}
       </motion.div>
-
-      {/* CSS animation for gradient shift */}
-      <style>{`
-        @keyframes gradientShift {
-          0%, 100% { background-position: 0% center; }
-          50% { background-position: 100% center; }
-        }
-      `}</style>
     </div>
   );
 }

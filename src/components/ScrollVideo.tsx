@@ -1,5 +1,5 @@
 import { studioFrameUrls } from "@/lib/assets";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { type CSSProperties, useEffect, useRef, useState, useCallback } from "react";
 
 const TOTAL_FRAMES = 180;
 const WIDTH = 1920;
@@ -84,13 +84,8 @@ export default function ScrollVideo() {
         {/* Progress bar */}
         <div className="absolute top-0 left-0 right-0 h-[4px] sm:h-[3px] bg-[#e5e5ea] z-20">
           <div
-            className="h-full"
-            style={{
-              width: `${progress * 100}%`,
-              background:
-                "linear-gradient(90deg, #1d1d1f, #6e6e73, #1d1d1f)",
-              transition: "none",
-            }}
+            className="h-full w-(--progress) bg-[linear-gradient(90deg,#1d1d1f,#6e6e73,#1d1d1f)] transition-none"
+            style={{ "--progress": `${progress * 100}%` } as CSSProperties}
           />
         </div>
 
@@ -99,13 +94,8 @@ export default function ScrollVideo() {
           ref={canvasRef}
           width={WIDTH}
           height={HEIGHT}
-          className="sm:object-contain object-cover"
-          style={{
-            width: `min(100vw, ${(100 * WIDTH) / HEIGHT}vh)`,
-            height: `min(100vh, ${(100 * HEIGHT) / WIDTH}vw)`,
-            opacity: loaded ? 1 : 0,
-            transition: "opacity 0.5s",
-          }}
+          data-loaded={loaded || undefined}
+          className="sm:object-contain object-cover h-[min(100vh,calc(100vw*9/16))] w-[min(100vw,calc(100vh*16/9))] opacity-0 transition-opacity duration-500 ease-[ease] data-loaded:opacity-100"
         />
 
         {/* Loading spinner */}
@@ -123,8 +113,8 @@ export default function ScrollVideo() {
         {/* Scroll hint at start */}
         {progress < 0.03 && loaded && (
           <div
-            className="absolute inset-0 z-20 flex flex-col items-center justify-end pb-12 text-center px-6"
-            style={{ opacity: 1 - progress * 33 }}
+            className="absolute inset-0 z-20 flex flex-col items-center justify-end pb-12 text-center px-6 opacity-(--hint-opacity)"
+            style={{ "--hint-opacity": 1 - progress * 33 } as CSSProperties}
           >
             <div className="flex flex-col items-center gap-2 animate-bounce">
               <div className="w-6 h-10 rounded-full border-2 border-[#1d1d1f]/20 flex justify-center pt-2">
