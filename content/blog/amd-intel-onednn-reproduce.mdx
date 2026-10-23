@@ -1,0 +1,40 @@
+---
+title: "AMD กับ Intel วางแผนรวม oneDNN"
+description: "เทียบ CPU ด้วย input โมเดล precision และจำนวน thread เดิม พร้อมบันทึกแพ็กเกจและ warm-up เพื่อให้ผลของ rig ทำซ้ำได้"
+kind: "news"
+query: "oneDNN รวม ZenDNN developer ควรเทียบ CPU แบบทำซ้ำอย่างไร"
+cluster: "/models/"
+source: "amd-intel-onednn-pytorch"
+published: "2026-10-23"
+reviewed: "2026-10-23"
+newsDate: "2026-10-20"
+summary: "เทียบ CPU ด้วย input โมเดล precision และจำนวน thread เดิม พร้อมบันทึกแพ็กเกจและ warm-up เพื่อให้ผลของ rig ทำซ้ำได้"
+faq: [{"question":"เทียบ CPU ด้วยค่าตั้งต้นทุกอย่างได้ไหม","answer":"ควรบันทึกค่าที่มีผลให้ครบ ค่าตั้งต้นอาจต่างกันระหว่างแพ็กเกจหรือเครื่องจนผลที่เทียบตอบคนละคำถาม"},{"question":"ผลต่างรอบเดียวพอสรุปไหม","answer":"ควรรันซ้ำด้วยวิธีเดิม ดูความแกว่ง และแยกเวลาเริ่มต้นกับช่วงทำงานต่อเนื่องก่อนสรุป"}]
+citations: [{"title":"AMD and Intel Collaborate to Simplify AI Development on x86 CPUs with PyTorch","url":"https://newsroom.amd.com/news/amd-intel-collaborate-simplify-ai-development-on-x86-cpus-pytorch/","publisher":"AMD","published":"2026-10-20","accessed":"2026-10-23"},{"title":"Intel oneAPI Deep Neural Network Library Release Notes and System Requirements","url":"https://www.intel.com/content/www/us/en/developer/articles/release-notes/onednn/2026.html","publisher":"Intel","published":"2026-05-01","accessed":"2026-10-23"}]
+hero: {"src":"https://assets.mimir.business/assets/sites/aistudioth.com/generated/runtime-bench.95d0dcb533a4.webp","alt":"ภาพสร้างด้วย AI ของคอมพิวเตอร์ตั้งโต๊ะ แล็ปท็อป และสมุดบนโต๊ะ","credit":"AI Studio TH / Mimir, AI-generated illustration","sourceUrl":"https://aistudioth.com/benchmarks","caption":"ภาพประกอบการทดสอบ runtime ที่สร้างด้วย AI ไม่ใช่ภาพงานประกาศหรือผล benchmark ของผู้ผลิต"}
+videos: [{"url":"https://www.youtube.com/watch?v=crEztVjfAPM","title":"Advancing AI 2026 | Build What's Next with @AMD","publisher":"AMD","published":"2026-07-23","context":true}]
+draft: false
+---
+
+## ข่าวนี้เกี่ยวกับการทดลองอย่างไร
+
+[AMD วันที่ 20 ตุลาคม](https://newsroom.amd.com/news/amd-intel-collaborate-simplify-ai-development-on-x86-cpus-pytorch/) วางแผนรวม ZenDNN เข้า oneDNN สำหรับ PyTorch CPU และวาง ACE ไว้ในอนาคต จึงต้องแยกแผนนี้ออกจากแพ็กเกจที่ rig ใช้อยู่
+
+ข้อวิเคราะห์คือชื่อไลบรารีไม่ใช่รายละเอียด benchmark ต้องรู้ว่าโค้ดเลือก backend ใดและติดตั้งอะไรจริง อ่าน[release notes ของ oneDNN](https://www.intel.com/content/www/us/en/developer/articles/release-notes/onednn/2026.html) แล้วเก็บข้อจำกัดที่เกี่ยวข้องกับ environment ไม่เปลี่ยนหลายค่าเพื่อไล่ตัวเลขที่สวยกว่า
+
+## บันทึกอะไรไว้ในผลการทดลอง
+
+แบบบันทึกนี้ช่วยให้คนอื่นรันงานเดิมได้ โดยไม่ได้ตั้งผลที่คาดหวังให้ CPU ยี่ห้อใด
+
+| สิ่งที่ตรึง | สิ่งที่ต้องเขียน | เหตุที่ต้องเก็บ |
+| --- | --- | --- |
+| Input และโมเดล | รุ่น ไฟล์ precision | แยกคุณภาพจากความเร็ว |
+| Runtime | แพ็กเกจและ backend จริง | รู้ว่าเส้นทางใดทำงาน |
+| CPU | Thread กับงานเบื้องหลัง | ลดตัวแปรระหว่างรอบ |
+| วิธีวัด | Warm-up และรอบจริง | ไม่ปนเวลาเริ่มระบบ |
+
+## จะใช้ผลปรับสเปก rig อย่างไร
+
+บันทึกทั้งงานที่ผ่านและข้อผิดพลาด ถ้าต้องเปลี่ยนแพ็กเกจให้เก็บผลก่อนและหลังแยกกัน ตัดสินจากโปรเจกต์ที่คุณต้องทำ ไม่ใช่ kernel ตัวเดียว
+
+ใช้[ตารางโมเดลกับหน่วยความจำ](/models/) กำหนดงาน แล้วแนบ lockfile และคำสั่งรันเมื่อคุยเรื่องอัปเกรด rig

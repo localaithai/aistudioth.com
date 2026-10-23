@@ -1,0 +1,40 @@
+---
+title: "Recursive เปิดโมเดลโค้ด Flint"
+description: "ทดสอบโมเดลโค้ดบน rig ด้วย repository และ tests เดิม บันทึก engine น้ำหนัก บริบท และเวลาจบทั้งงาน เพื่อไม่ปนความเร็ว decode กับคุณภาพงาน"
+kind: "news"
+query: "Recursive Flint benchmark coding local rig ให้ทำซ้ำอย่างไร"
+cluster: "/benchmarks/"
+source: "recursive-flint-local-coding"
+published: "2026-10-23"
+reviewed: "2026-10-23"
+newsDate: "2026-10-21"
+summary: "ทดสอบโมเดลโค้ดบน rig ด้วย repository และ tests เดิม บันทึก engine น้ำหนัก บริบท และเวลาจบทั้งงาน เพื่อไม่ปนความเร็ว decode กับคุณภาพงาน"
+faq: [{"question":"วัดเวลาเฉพาะตอนพิมพ์คำตอบพอไหม","answer":"ควรแยกโหลดโมเดล ประมวลผล prompt เรียกเครื่องมือ รัน tests และแก้ซ้ำ แล้วเก็บเวลารวมที่ผู้ใช้ต้องรอด้วย"},{"question":"ควรเริ่มทดลอง agent กับโปรเจกต์จริงเลยไหม","answer":"เริ่มในสำเนาโปรเจกต์ที่ไม่มีข้อมูลสำคัญ กำหนดขอบเขตไฟล์กับคำสั่ง และให้ตรวจ diff ก่อนนำผลกลับมาใช้งาน"}]
+citations: [{"title":"Introducing Flint","url":"https://recursive.com/updates/introducing-recursive-flint","publisher":"Recursive Superintelligence","published":"2026-10-21","accessed":"2026-10-23"},{"title":"Recursive updates: Introducing Flint, Oct21,2026","url":"https://recursive.com/updates","publisher":"Recursive Superintelligence","published":"2026-10-21","accessed":"2026-10-23"}]
+hero: {"src":"https://assets.mimir.business/assets/sites/aistudioth.com/generated/runtime-bench.95d0dcb533a4.webp","alt":"ภาพสร้างด้วย AI ของคอมพิวเตอร์ตั้งโต๊ะ แล็ปท็อป และสมุดบนโต๊ะ","credit":"Mimir, AI-generated illustration","sourceUrl":"https://mimir.business/","caption":"ภาพประกอบการทดสอบ runtime ที่สร้างด้วย AI ไม่ใช่ผล benchmark หรือหน้าจอของ Recursive Flint"}
+videos: [{"url":"https://www.youtube.com/watch?v=v-NGxyPjcrE","title":"NVIDIA GTC Berlin 2026 Keynote With CEO Jensen Huang","publisher":"NVIDIA","published":"2026-10-23","context":true}]
+draft: false
+---
+
+## ข่าว Flint ให้จุดเริ่ม benchmark อะไร
+
+[Recursive เปิด Flint](https://recursive.com/updates/introducing-recursive-flint) วันที่ 21 ตุลาคม เป็น MoE รวม 40B และ active 2.5B ต่อ token โดยให้ weights แบบ Apache 2.0 ตาม[รายการข่าวทางการ](https://recursive.com/updates) ตัวเลขความเร็วในบทความเป็นผลผู้ผลิตที่ผูกกับเครื่องและ inference engine ของตน
+
+ข้อวิเคราะห์สำหรับ developer rig คือเริ่มจาก environment ที่ทำซ้ำได้ อย่าใช้ขนาด active แทนพื้นที่น้ำหนักที่ต้องโหลด และอย่าเอาผล decode สั้น ๆ ไปแทนเวลาแก้โปรเจกต์ที่มีการอ่านไฟล์และรันเครื่องมือ
+
+## Bench log ควรมีอะไรให้คนอื่นทำซ้ำ
+
+ตารางนี้เป็นแม่แบบบันทึกที่เสนอให้ใช้กับทุกโมเดล ไม่ใช่ผลทดลอง Flint ที่วัดแล้ว
+
+| รายการ | ค่าที่ต้องเก็บ | แยกผลเพื่ออะไร |
+| --- | --- | --- |
+| น้ำหนัก | รุ่น quantization และไฟล์ | รู้ว่ากำลังเทียบอะไร |
+| Engine | รุ่น build กับคำสั่งเริ่ม | เห็นผลของ implementation |
+| งานโค้ด | Commit โจทย์ และบริบท | คุมความยากให้เท่ากัน |
+| ผลสุดท้าย | Tests diff และเวลารวม | เทียบงานสำเร็จแทน token ล้วน |
+
+## จะตัดสินว่าควรใช้บน rig นี้อย่างไร
+
+ลองงานเล็กที่ตรวจถูกผิดได้ก่อน เก็บรอบที่ล้มเหลวและเวลาที่คุณต้องแทรกแซงด้วย หากต้องลดบริบทหรือเปลี่ยนน้ำหนักเพื่อให้พอดี ให้รันโจทย์เดิมใหม่ และอย่าสรุปแทนทุก repository จากงานเดียว
+
+เริ่มจาก[แนวทางบันทึก benchmark ของ rig](/benchmarks/) แล้วเก็บคำสั่งกับผล tests คู่กัน วิดีโอ GTC ที่แนบเป็นบริบทฮาร์ดแวร์ ไม่ใช่ผลทดสอบโค้ดชุดนี้

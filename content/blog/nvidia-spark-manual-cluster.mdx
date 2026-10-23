@@ -1,0 +1,40 @@
+---
+title: "NVIDIA เพิ่มทางต่อ Spark"
+description: "ทดลองคลัสเตอร์ด้วยไฟล์ตั้งค่าและงานที่ทำซ้ำได้ แยกปัญหาลิงก์เครือข่ายออกจากปัญหาแบ่งโมเดลก่อนเพิ่มจำนวนเครื่อง"
+kind: "news"
+query: "DGX Spark manual cluster แปดเครื่องทดสอบซ้ำอย่างไร"
+cluster: "/builds/"
+source: "nvidia-spark-gtc-october"
+published: "2026-10-23"
+reviewed: "2026-10-23"
+newsDate: "2026-10-21"
+summary: "ทดลองคลัสเตอร์ด้วยไฟล์ตั้งค่าและงานที่ทำซ้ำได้ แยกปัญหาลิงก์เครือข่ายออกจากปัญหาแบ่งโมเดลก่อนเพิ่มจำนวนเครื่อง"
+faq: [{"question":"ลิงก์เครือข่ายผ่านแล้วแปลว่ารันโมเดลผ่านไหม","answer":"ต้องทดสอบ runtime การแบ่งโมเดล และการตอบคำขอแยกจากการตรวจลิงก์ พร้อมเก็บ log แต่ละขั้น"},{"question":"ควรเก็บอะไรไว้ให้ทดลองซ้ำได้","answer":"เก็บผังการต่อ รุ่นระบบ ไฟล์ตั้งค่า คำสั่งเริ่มงาน โมเดล precision และ input ที่ไม่มีข้อมูลสำคัญ"}]
+citations: [{"title":"Bringing the Spark to Europe: Local Intelligence Powers Next Wave of Agents","url":"https://blogs.nvidia.com/blog/local-ai-gtc-rtx-dgx-spark-station-sync/","publisher":"NVIDIA","published":"2026-10-21","accessed":"2026-10-23"},{"title":"NVIDIA DGX Spark 64GB Gives Developers More Ways to Build and Scale Local AI","url":"https://blogs.nvidia.com/blog/local-ai-dgx-spark-64gb-sync/","publisher":"NVIDIA","published":"2026-10-02","accessed":"2026-10-23"}]
+hero: {"src":"https://assets.mimir.business/assets/sites/mimir.business/presentations/nvidia-dgx-spark.8d2f40a53de1.jpg","alt":"เครื่อง DGX Spark วางข้างแล็ปท็อปบนพื้นหลังสีดำ พร้อมไอคอนงาน AI","caption":"ภาพผลิตภัณฑ์ DGX Spark จาก NVIDIA ใช้ประกอบข่าวแพลตฟอร์ม ไม่ใช่ภาพคลัสเตอร์แปดเครื่องหรือการยืนยันรุ่น 64GB","credit":"NVIDIA, ภาพผลิตภัณฑ์ผ่านคลังภาพ Mimir","sourceUrl":"https://mimir.business/"}
+videos: [{"url":"https://www.youtube.com/watch?v=v-NGxyPjcrE","title":"NVIDIA GTC Berlin 2026 Keynote With CEO Jensen Huang","publisher":"NVIDIA","published":"2026-10-23","context":true}]
+draft: false
+---
+
+## นักพัฒนาได้ทางเลือกอะไรเพิ่ม
+
+NVIDIA ระบุการต่อ Spark แปดเครื่องแบบ manual ใน[ข่าว 21 ตุลาคม](https://blogs.nvidia.com/blog/local-ai-gtc-rtx-dgx-spark-station-sync/) ส่วน[พื้นหลังวันที่ 2 ตุลาคม](https://blogs.nvidia.com/blog/local-ai-dgx-spark-64gb-sync/) อธิบาย ConnectX-7 และรุ่น 64GB
+
+สำหรับคนประกอบ rig การทดลองควรมีจุดหยุด ก่อนแตะเครือข่ายให้เก็บค่าที่ใช้อยู่และวิธีกลับสภาพเดิมไว้ อย่าเปลี่ยนจำนวนเครื่อง รุ่น runtime และโมเดลพร้อมกันจนแยกสาเหตุไม่ออก
+
+## บันทึกการทดลองให้หาสาเหตุได้อย่างไร
+
+แบบบันทึกนี้แยกชั้นของงาน เพื่อให้การเพิ่มเครื่องมีหลักฐานมากกว่าภาพว่าโปรเซสเริ่มแล้ว
+
+| ชั้นที่ทดลอง | ค่าที่ตรึงไว้ | สิ่งที่เก็บกลับมา |
+| --- | --- | --- |
+| เครือข่าย | ผังสายกับค่าพอร์ต | ผลตรวจลิงก์และข้อผิดพลาด |
+| ระบบ | OS กับแพ็กเกจ | รายการติดตั้งแต่ละเครื่อง |
+| Runtime | วิธีแบ่งงานกับคำสั่ง | Log และหน่วยความจำสูงสุด |
+| โมเดล | รุ่น precision และ input | เวลาจบกับคุณภาพคำตอบ |
+
+## ควรเพิ่มเครื่องเมื่อใด
+
+เพิ่มเมื่อรู้ว่าข้อจำกัดเดิมอยู่ที่ไหนและวัดผลการเปลี่ยนแปลงได้ ถ้ารันครั้งแรกยังทำซ้ำไม่ได้ ให้แก้ environment ก่อน แล้วจึงดูว่างานได้ประโยชน์จากการกระจายหรือไม่
+
+ใช้[แนวทางเลือก build สำหรับ local AI](/builds/) วางรายการอุปกรณ์ พร้อมแนบไฟล์ตั้งค่าที่ใช้ได้จริงในการขอปรับสเปก
