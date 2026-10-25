@@ -1,0 +1,47 @@
+---
+title: "NVIDIA เปิด Bolt E4B ชูเวลาเริ่มตอบ"
+description: "เทียบ TTFT ของ Bolt ด้วยรุ่นโมเดล runtime prompt cache และ precision เดียวกัน แยกเวลาเริ่มตอบจากเวลาจบงานและความถูกต้องของ tool call"
+kind: "news"
+query: "จะเปรียบเทียบ TTFT ของ Bolt โดยไม่ปน cache และ precision ได้อย่างไร"
+cluster: "/benchmarks/"
+source: "nvidia-nemotron-bolt-e4b-4gb"
+published: "2026-10-25"
+reviewed: "2026-10-25"
+newsDate: "2026-10-23"
+summary: "เปรียบเทียบ Bolt โดยตรึง model artifact, runtime, prompt, cache และ precision แยกเวลารอคำแรกออกจากเวลาจบงาน พร้อมตรวจผลลัพธ์และ tool call ก่อนจัดอันดับ"
+faq: [{"question":"TTFT ต่ำพอพิสูจน์ว่า agent ทำงานเสร็จเร็วไหม","answer":"ต้องวัดเวลาจบงานและจำนวนรอบเรียกเครื่องมือด้วย คำตอบแรกอาจมาเร็วแต่ยังต้องแก้หรือรอขั้นตอนอื่นก่อนงานสำเร็จ"},{"question":"เทียบรอบที่มี cache กับรอบใหม่ได้หรือไม่","answer":"ควรแยกผลเป็นคนละกลุ่มและบันทึกวิธีเตรียม cache ให้ชัด ถ้าต้องการเทียบการเปลี่ยนค่าเดียว ค่าที่เหลือรวมทั้ง prompt ต้องเหมือนกัน"}]
+citations: [{"title":"NVIDIA Nemotron 3.5 Bolt E4B 4GB","url":"https://research.nvidia.com/labs/nemotron/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB/","publisher":"NVIDIA Research","published":"2026-10-23","accessed":"2026-10-25"},{"title":"NVIDIA-Nemotron-3.5-Bolt-E4B-4GB model card","url":"https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB","publisher":"NVIDIA on Hugging Face","published":"2026-10-23","accessed":"2026-10-25"}]
+hero: {"src":"https://assets.mimir.business/assets/shared/general/nemotron-bolt-ttft.120a83c0a6a2.png","alt":"กราฟ NVIDIA เปรียบเทียบคะแนนทดสอบกับเวลาเริ่มตอบ โดยขนาดวงกลมแทนการใช้ VRAM","caption":"กราฟจาก NVIDIA ภายใต้เงื่อนไขทดสอบที่ผู้พัฒนาระบุ ไม่ใช่ผลวัดของ Mimir หรือคำรับรองหน่วยความจำทุกงาน","credit":"NVIDIA Research","sourceUrl":"https://research.nvidia.com/labs/nemotron/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB/"}
+videos: [{"url":"https://www.youtube.com/watch?v=v-NGxyPjcrE","title":"NVIDIA GTC Berlin 2026 Keynote With CEO Jensen Huang","publisher":"NVIDIA","published":"2026-10-23","context":true}]
+draft: false
+---
+
+## ข่าว Bolt บอกเงื่อนไขวัดเวลาอย่างไร
+
+[NVIDIA เปิด Bolt E4B 4GB วันที่ 23 ตุลาคม](https://research.nvidia.com/labs/nemotron/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB/) พร้อมกราฟคุณภาพเทียบ TTFT ภายใต้เงื่อนไขที่ผู้พัฒนาระบุ กราฟนั้นจึงเป็นผลของชุดทดสอบผู้ผลิต ไม่ใช่ผลของ rig ทุกแบบ
+
+[Model card](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB) แยก precision และตัวเลือก drafter ไว้ การเลือกคะแนนคุณภาพของ precision หนึ่งมาใช้คู่กับเวลาของอีก precision ต้องระบุเงื่อนไขให้ชัด
+
+## จะเขียน latency recipe ที่ทำซ้ำได้อย่างไร
+
+ข้อวิเคราะห์สำหรับ developer คือให้ไฟล์บันทึกตอบได้ว่ารอบไหนเปลี่ยนอะไร กำหนดขอบเขตจับเวลาตั้งแต่ client และเก็บ output เดิมไว้ด้วย แทนการจดเพียงค่าที่ดีที่สุดจากหลายรอบ
+
+| ตัวแปร | สิ่งที่ตรึง | สิ่งที่รายงานแยก |
+| --- | --- | --- |
+| โมเดล | Revision ไฟล์และ precision | ผลเมื่อเปลี่ยน artifact |
+| Runtime | รุ่น build และคำสั่งเปิด | มีหรือไม่มี drafter |
+| Prompt | ข้อความ template และขนาด output | กลุ่มบริบทสั้นกับยาว |
+| Cache | ขั้นตอนเริ่มใหม่หรือเตรียมใช้ซ้ำ | Cold request กับ warm request |
+| เกณฑ์งาน | คำตอบและ tool call ที่ต้องถูก | TTFT เวลาจบงาน และงานที่ไม่ผ่าน |
+
+ใช้ prompt ชุดเดิมเมื่อเทียบสอง configuration และระบุว่ามีคิวหรืองานอื่นรันร่วมอยู่หรือไม่ ถ้าจะวัดเฉพาะตัว engine ให้แยกผลจากการวัดผ่านแอปที่มีขั้นตอนรับส่งข้อมูลของตนเอง
+
+## จะใช้ผล bench ปรับ rig อย่างไร
+
+### เปลี่ยนทีละตัวแล้วเก็บผลที่ไม่ผ่านด้วย
+
+ตรวจความถูกต้องก่อนจับเวลา โดยเฉพาะงานที่ต้องคืนข้อมูลเป็นโครงสร้างหรือเรียกเครื่องมือ จากนั้นรันหลายรอบด้วยวิธีเดิมแล้วดูการกระจาย ไม่เลือกเพียงรอบที่เร็วที่สุด
+
+เมื่อลองเพิ่มบริบทหรือเปิด drafter ให้บันทึกหน่วยความจำและคุณภาพตามไปด้วย หากเวลาเริ่มตอบดีขึ้นแต่เวลาจบงานหรือความถูกต้องแย่ลง ให้แสดงผลนั้นเป็นข้อแลกเปลี่ยน
+
+ใช้[แนวทาง benchmark สำหรับ AI rig](/benchmarks/) แนบ recipe กับผล เพื่อให้กลับมารันซ้ำหลังเปลี่ยนไดรเวอร์ได้ บทความนี้ไม่ได้ยืนยันความเร็วหรือความสามารถภาษาไทยของ Bolt บนเครื่องที่ยังไม่ทดสอบ

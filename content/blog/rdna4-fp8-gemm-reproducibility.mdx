@@ -1,0 +1,47 @@
+---
+title: "AMD เผย FP8 GEMM บน RDNA 4"
+description: "อ่านผล FP8 GEMM โดยตรวจ scaling ความถูกต้องและ precision ก่อนจับเวลา แยก kernel ทดลองบน RDNA 4 ออกจากความเร็วโมเดลทั้งงาน"
+kind: "news"
+query: "ผล FP8 GEMM ที่ยังไม่มี scale ใช้ตัดสินโมเดล quantized ได้หรือไม่"
+cluster: "/benchmarks/"
+source: "amd-rdna4-fp8-gemm"
+published: "2026-10-25"
+reviewed: "2026-10-25"
+newsDate: "2026-10-23"
+summary: "ใช้ผล FP8 GEMM เป็นจุดเริ่มต้นทดลอง kernel โดยตรวจการแปลงค่า scaling และความถูกต้องก่อนวัดเวลา แล้วทดสอบโมเดลทั้งงานแยกต่างหาก"
+faq: [{"question":"kernel FP8 เร็วขึ้นแปลว่าโมเดล quantized เร็วขึ้นเท่ากันไหม","answer":"ยังสรุปไม่ได้ ต้องรวมต้นทุนแปลงค่า scaling การโหลดข้อมูลและส่วนอื่นของโมเดล พร้อมตรวจคุณภาพผลลัพธ์ที่ precision เดียวกัน"},{"question":"เปลี่ยน ROCm แล้วเทียบกับผลเดิมได้ทันทีหรือไม่","answer":"ควรเก็บผลเป็นอีก environment ระบุรุ่นแพ็กเกจและคำสั่งเดิม แล้วตรวจความถูกต้องก่อนจับเวลา เพื่อไม่ปนผลของซอฟต์แวร์กับการแก้ kernel"}]
+citations: [{"title":"FP8 GEMM Optimization on AMD RDNA 4 Architecture","url":"https://rocm.blogs.amd.com/software-tools-optimization/rdna-fp8-gemm/README.html","publisher":"AMD ROCm Blogs","published":"2026-10-23","accessed":"2026-10-25"},{"title":"FP16 GEMM Optimization on AMD RDNA 3 and RDNA 4 Architectures","url":"https://rocm.blogs.amd.com/software-tools-optimization/rdna-fp16-gemm/README.html","publisher":"AMD ROCm Blogs","published":"2026-10-16","accessed":"2026-10-25"}]
+hero: {"src":"https://assets.mimir.business/assets/sites/aistudioth.com/general/amd-rdna4-fp8-gemm.689f604384f7.webp","alt":"ภาพประกอบลูกบาศก์เรืองแสงและลูกศรบนแผงวงจร","caption":"ภาพประกอบแนวคิดจาก AMD ไม่ใช่ภาพฮาร์ดแวร์หรือผลทดสอบที่ Mimir วัด","credit":"AMD","sourceUrl":"https://rocm.blogs.amd.com/software-tools-optimization/rdna-fp8-gemm/README.html"}
+videos: [{"url":"https://www.youtube.com/watch?v=crEztVjfAPM","title":"Advancing AI 2026 | Build What's Next with @AMD","publisher":"AMD","published":"2026-07-23","context":true}]
+draft: false
+---
+
+## Part 2 ของ AMD เพิ่มอะไรจาก FP16
+
+[AMD เผยบทสอน FP8 GEMM วันที่ 23 ตุลาคม](https://rocm.blogs.amd.com/software-tools-optimization/rdna-fp8-gemm/README.html) ทดลองบน RX 9070 XT ด้วย ROCm 10.0 โดยใช้ E4M3 สะสมผลเป็น FP32 และยังไม่ใส่ per-tensor หรือ per-row scale จึงเป็นฐาน kernel สำหรับพัฒนาต่อ ไม่ใช่ inference quantized ที่ครบทั้งเส้นทาง
+
+[Part 1 วันที่ 16 ตุลาคม](https://rocm.blogs.amd.com/software-tools-optimization/rdna-fp16-gemm/README.html) เป็นพื้นฐาน FP16 ที่ต่อยอดมา ประเด็นใหม่ของรอบนี้คือรูปแบบข้อมูลและข้อจำกัดเรื่อง scale ไม่ใช่การประกาศ ROCm รุ่นใหม่
+
+## จะทำบันทึกทดลอง FP8 อย่างไร
+
+ข้อวิเคราะห์สำหรับคนเขียน kernel คือกำหนดสิ่งที่ผลทดสอบพิสูจน์ได้ตั้งแต่ต้น การคูณเมทริกซ์ถูกต้องในชุดข้อมูลทดลองหนึ่งยังไม่พิสูจน์ว่าการ quantize น้ำหนักโมเดลรักษาคุณภาพงานปลายทาง
+
+| ชั้นที่ตรวจ | สิ่งที่ระบุในบันทึก | ผ่านเมื่อใด |
+| --- | --- | --- |
+| Input | ช่วงค่า shape และรูปแบบจัดเก็บ | สร้างชุดเดิมได้อีกครั้ง |
+| Precision | ชนิด input accumulator และ output | เทียบ reference ที่ตรงเงื่อนไข |
+| Scaling | มีหรือไม่มี scale และใช้ตรงไหน | ค่าที่คืนมาตรงนิยามของการทดลอง |
+| ความถูกต้อง | วิธีเทียบและ tolerance ที่มีเหตุผล | ผ่านก่อนนำเวลาไปจัดอันดับ |
+| เวลา | Warm-up รอบวัดและต้นทุนแปลงค่า | แยกเวลา kernel จากเวลาทั้งงาน |
+
+เก็บกรณีที่ค่าเล็กมาก ใหญ่มาก หรือใกล้ขอบเขตของรูปแบบข้อมูลด้วย หากต้องเพิ่มขั้นตอนแปลงหรือจัด layout ให้คิดเวลาและหน่วยความจำของขั้นตอนนั้นแยกไว้ ไม่ซ่อนต้นทุนไว้ก่อนเริ่มจับเวลา
+
+## จะเชื่อม kernel bench กับโมเดลจริงอย่างไร
+
+### ขยายขอบเขตทีละชั้น
+
+หลังผลเชิงตัวเลขผ่าน ให้ทดลอง operator ในโมเดลที่ใช้จริง แล้วค่อยวัดทั้งคำขอด้วย input ที่กำหนดไว้ ถ้าต้องเปลี่ยน quantization หรือ scale ให้ตรวจคุณภาพงานใหม่ ไม่ใช้ผลของอีก precision เป็นตัวแทน
+
+รักษา environment เดิมระหว่างแก้ kernel และบันทึกการเปลี่ยนแพ็กเกจเป็นคนละรอบ ควรเก็บผลที่ไม่ดีขึ้นด้วย เพราะช่วยบอกว่า shape ใดต้องใช้ทางเลือกอื่น
+
+อ่าน[แนวทางบันทึก benchmark ของ AI rig](/benchmarks/) เพื่อจัดผลก่อนและหลังให้คนอื่นทำซ้ำได้ บทความนี้ไม่ได้รายงานการวัดบนเครื่องของ Mimir หรือยืนยันความเร็ว LLM จากเวลา GEMM เพียงอย่างเดียว

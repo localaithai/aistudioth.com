@@ -1,0 +1,47 @@
+---
+title: "ASUS ขาย B70 แบบสองสล็อต"
+description: "วาง rig หลายการ์ด B70 จากสล็อตจริง เลน PCIe สายไฟและทางลม ตรวจอุปกรณ์ร่วมบนเมนบอร์ดก่อนสรุปว่าใส่การ์ดเพิ่มได้"
+kind: "news"
+query: "ASUS B70 หลายการ์ด PCIe lanes power cooling rig"
+cluster: "/builds/"
+source: "asus-ugen-b70-dach"
+published: "2026-10-25"
+reviewed: "2026-10-25"
+newsDate: "2026-10-23"
+summary: "ก่อนเพิ่ม B70 ใน rig ให้ตรวจระยะสล็อต แผนเลน PCIe สายไฟและทางลมจากชิ้นส่วนจริง แล้วทดลองทีละขั้น พร้อมบันทึกเมื่ออุปกรณ์ร่วมแย่งทรัพยากรกัน"
+faq: [{"question":"ช่องยาวบนเมนบอร์ดหมายถึงมีเลนเต็มทุกช่องไหม","answer":"ต้องอ่านคู่มือเมนบอร์ดตาม CPU และอุปกรณ์ที่ติดตั้ง ช่องที่มีขนาดเท่ากันอาจใช้เลนต่างกันหรือแบ่งทรัพยากรร่วมกับอุปกรณ์อื่น"},{"question":"นำกำลังไฟของการ์ดมาคูณแล้วเลือก PSU ได้เลยไหม","answer":"ยังต้องรวม CPU ไดรฟ์และอุปกรณ์อื่น ตรวจหัวต่อและสายตามคู่มือ และเผื่อการใช้งานตามข้อกำหนดของชุดเครื่อง ไม่ใช้ค่าการ์ดแทนกำลังไฟทั้งระบบ"}]
+citations: [{"title":"ASUS Announces UGen Intel Arc Pro B70 32GB AI Accelerator Cards","url":"https://www.mynewsdesk.com/de/asus-dach/pressreleases/eng-asus-announces-ugen-intel-arc-pro-b70-32gb-ai-accelerator-cards-3474064","publisher":"ASUS Computer GmbH","published":"2026-10-23","accessed":"2026-10-25"},{"title":"Intel Core Ultra Series 3 with Intel vPro Powers Next Generation of Commercial PCs Built on Intel 18A","url":"https://www.intel.com/content/www/us/en/newsroom/news/client-computing/intel-core-ultra-series-3-with-vpro-powers-next-gen-pcs-on-18a.html","publisher":"Intel","published":"2026-03-25","accessed":"2026-10-25"}]
+hero: {"src":"https://assets.mimir.business/assets/shared/general/asus-ugen-b70.9c5dc6ceb58b.jpg","alt":"ภาพการ์ด ASUS UGen Intel Arc Pro B70 พร้อมข้อความระบุหน่วยความจำ 32GB","caption":"ภาพผลิตภัณฑ์จาก ASUS ประกอบประกาศขายในเยอรมนี ออสเตรีย และสวิตเซอร์แลนด์ ไม่ใช่หลักฐานสต็อกในไทย","credit":"ASUS Computer GmbH","sourceUrl":"https://www.mynewsdesk.com/de/asus-dach/pressreleases/eng-asus-announces-ugen-intel-arc-pro-b70-32gb-ai-accelerator-cards-3474064"}
+videos: [{"url":"https://www.youtube.com/watch?v=x2La7GE8REI","title":"Intel Arc Pro and Core Ultra Combine for AI-Enhanced PCB Inspection","publisher":"Intel Technology","published":"2026-06-05","context":true}]
+draft: false
+---
+
+## ASUS B70 รุ่นนี้เกี่ยวอะไรกับพื้นที่ใน rig
+
+[ASUS ประกาศวันที่ 23 ตุลาคม](https://www.mynewsdesk.com/de/asus-dach/pressreleases/eng-asus-announces-ugen-intel-arc-pro-b70-32gb-ai-accelerator-cards-3474064) ขาย UGen B70 ในเยอรมนี ออสเตรีย และสวิตเซอร์แลนด์ โดย[หน้าสินค้า ASUS](https://www.asus.com/motherboards-components/ai-accelerator/ugen/ugen-arc-pro-b70-32g/) ระบุโครงสองสล็อต แบบ blower และกำลังไฟ 310W
+
+[ประกาศ Intel เมื่อ 25 มีนาคม](https://www.intel.com/content/www/us/en/newsroom/news/client-computing/intel-core-ultra-series-3-with-vpro-powers-next-gen-pcs-on-18a.html) เป็นบริบทชิปที่มีอยู่ก่อนแล้ว ข่าวขายครั้งนี้ยังไม่ใช่ผลทดสอบว่าเมนบอร์ดหรือเคสของคุณรองรับหลายการ์ด
+
+## ต้องวาดแผนก่อนเสียบการ์ดอย่างไร
+
+ตารางนี้เป็นข้อวิเคราะห์สำหรับทำ build sheet ให้เปิดคู่มือของเมนบอร์ด เคส PSU และการ์ดรุ่นที่จะใช้ แล้วเขียนตำแหน่งจริงก่อนซื้อชิ้นส่วนเพิ่ม อย่าตัดสินจากจำนวนช่องที่มองเห็นเพียงอย่างเดียว
+
+| ส่วนที่ตรวจ | บันทึกลง build sheet | สิ่งที่ลองบนเครื่องจริง |
+| --- | --- | --- |
+| ระยะและสล็อต | ตำแหน่งการ์ดกับพื้นที่หัวต่อ | ไม่ชนอุปกรณ์และยังถอดซ่อมได้ |
+| เลน PCIe | ผังแบ่งเลนตาม CPU และคู่มือบอร์ด | ตรวจ link ที่ได้หลังใส่ครบ |
+| อุปกรณ์ร่วม | NVMe การ์ดเครือข่าย และช่องที่ใช้ร่วม | ทุกอุปกรณ์ยังถูกตรวจพบ |
+| ไฟ | รุ่น PSU สาย และหัวต่อตามคู่มือ | สายไม่ตึงและไม่มีโหลดเกินขอบเขต |
+| ทางลม | ช่องรับลม ทางออก และระยะรอบเครื่อง | อุณหภูมิกับความถี่ระหว่างโหลดต่อเนื่อง |
+
+เริ่มจากการ์ดเดียว เก็บรายการอุปกรณ์และผลของงานเดิม แล้วเพิ่มอีกการ์ดโดยยังไม่เปลี่ยน runtime พร้อมกัน วิธีนี้ช่วยแยกปัญหาประกอบเครื่องออกจากปัญหาการแบ่งงานของโปรแกรม
+
+## จะรู้ได้อย่างไรว่า build พร้อมใช้งาน
+
+### เก็บผลทั้งก่อนและหลังใส่อุปกรณ์ครบ
+
+ทดสอบหลังใส่ไดรฟ์และการ์ดเสริมครบแล้วด้วย หากตอน bench ถอดอุปกรณ์ออก ให้เขียนไว้ เพราะจำนวนเลนหรือช่องทางลมอาจต่างจากเครื่องใช้งานจริง ตรวจขณะเครื่องทำงานต่อเนื่องและดูความแกว่ง ไม่สรุปจากช่วงแรกที่ยังเย็น
+
+หลายการ์ดไม่ได้ทำให้ทุกโปรแกรมเห็นหน่วยความจำก้อนเดียว ต้องระบุวิธีแบ่งงานของ runtime แยกในสมุด build ผลทดสอบบนบอร์ดหนึ่งจึงยังใช้รับรองอีกบอร์ดไม่ได้
+
+ใช้[แนวทางประกอบ AI rig](/builds/) ทำรายการชิ้นส่วนและเงื่อนไขติดตั้งก่อนคุยเรื่องขยายเครื่อง ข่าวนี้ไม่ได้ยืนยันสต็อกไทยหรือความเข้ากันได้ของชิ้นส่วนที่ยังไม่ได้ทดลอง

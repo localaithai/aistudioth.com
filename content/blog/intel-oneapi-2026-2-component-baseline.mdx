@@ -1,0 +1,47 @@
+---
+title: "Intel อัปเดต oneAPI รุ่น 2026.2"
+description: "อัปเดต oneAPI โดยเก็บ manifest ของ compiler ไลบรารี driver และ OS ตรวจผลเชิงตัวเลขก่อนจับเวลา เพื่อให้ benchmark ก่อนหลังเทียบกันได้"
+kind: "news"
+query: "จะอัปเดต oneAPI โดยเก็บผล benchmark ที่เทียบกันได้อย่างไร"
+cluster: "/benchmarks/"
+source: "intel-oneapi-2026-2"
+published: "2026-10-25"
+reviewed: "2026-10-25"
+newsDate: "2026-10-23"
+summary: "ก่อนอัปเดต oneAPI ให้เก็บรายการ component และผลที่ผ่านไว้ แล้วสร้าง environment ใหม่แยก ตรวจความถูกต้องก่อนวัดเวลา และบันทึกทุกส่วนที่เปลี่ยน"
+faq: [{"question":"เลข Toolkit เดียวพอระบุ environment หรือไม่","answer":"ควรบันทึกรุ่น compiler ไลบรารี driver OS และวิธีติดตั้งด้วย เพราะ component แต่ละตัวมีรุ่นของตนและอาจต้องติดตั้งแยก"},{"question":"ถ้ารอบใหม่เร็วขึ้นแต่ผลเชิงตัวเลขต่าง ควรสรุปอย่างไร","answer":"ให้ตรวจความต่างเทียบเกณฑ์ของงานก่อน แยกผลที่ยังไม่ผ่านออกจากคะแนนความเร็ว แล้วหาว่าส่วนใดของ environment ทำให้ผลเปลี่ยน"}]
+citations: [{"title":"Intel oneAPI Toolkit Release Notes","url":"https://www.intel.com/content/www/us/en/developer/articles/release-notes/oneapi-toolkit/2026.html","publisher":"Intel","published":"2026-10-22","accessed":"2026-10-25"},{"title":"Intel oneAPI Deep Neural Network Library Release Notes and System Requirements","url":"https://www.intel.com/content/www/us/en/developer/articles/release-notes/onednn/2026.html","publisher":"Intel","published":"2026-10-15","accessed":"2026-10-25"}]
+hero: {"src":"https://assets.mimir.business/assets/sites/aistudioth.com/generated/runtime-bench.95d0dcb533a4.webp","alt":"ภาพสร้างด้วย AI ของคอมพิวเตอร์ตั้งโต๊ะ แล็ปท็อป และสมุดบนโต๊ะ","credit":"Mimir, ภาพประกอบที่สร้างด้วย AI","sourceUrl":"https://aistudioth.com/benchmarks","caption":"ภาพประกอบโต๊ะทดสอบที่สร้างด้วย AI ไม่ใช่เครื่องของผู้ผลิตหรือผล benchmark ในข่าว"}
+videos: [{"url":"https://www.youtube.com/watch?v=vMZNYP4e2xo","title":"Introducing the oneAPI Basics Training Series | Intel Software","publisher":"Intel Devs","published":"2021-11-11","context":true}]
+draft: false
+---
+
+## oneAPI 2026.2 เปลี่ยนฐานทดลองอะไร
+
+[Intel ระบุวันออก Toolkit 2026.2 เป็น 23 ตุลาคม](https://www.intel.com/content/www/us/en/developer/articles/release-notes/oneapi-toolkit/2026.html) ตาราง component จับคู่ compiler 2026.2 กับ oneDNN 2026.1 ที่ต้องดาวน์โหลดแยก จึงไม่ควรใช้เลข Toolkit แทนรุ่นทุกไลบรารี
+
+[Release notes ของ oneDNN](https://www.intel.com/content/www/us/en/developer/articles/release-notes/onednn/2026.html) ระบุรุ่น 2026.1 วันที่ 15 ตุลาคมและมีรายการแก้ความถูกต้อง เป็นข้อมูลตรวจ regression ประกอบการอัปเดต ไม่ใช่ผลยืนยันว่าโค้ดของเราจะเร็วขึ้น
+
+## เก็บ component manifest อย่างไร
+
+ข้อวิเคราะห์สำหรับคนทำ bench คือเก็บฐานที่ยังรันผ่านก่อนเปลี่ยนระบบ ถ้าแก้ compiler ไลบรารี และตัวเลือก build พร้อมกัน จะระบุสาเหตุของผลต่างได้ยาก แยก environment เดิมกับชุดใหม่แทนการเขียนทับ
+
+| สิ่งที่บันทึก | รายละเอียดที่เก็บ | เหตุที่ต้องแยก |
+| --- | --- | --- |
+| Source | Commit กับตัวเลือก build | รู้ว่าโค้ดและเส้นทางคำนวณเดิมหรือไม่ |
+| Compiler | รุ่นและคำสั่งเรียกจริง | ไม่เผลอใช้ binary จากอีก environment |
+| ไลบรารี | รุ่น แหล่งแพ็กเกจ และที่โหลด | แยกของติดตั้งเพิ่มกับของในชุด |
+| เครื่อง | OS driver และการตั้งค่าอุปกรณ์ | ไม่ให้การอัปเดตระบบซ่อนอยู่ในผล |
+| ชุดทดสอบ | Input, precision และเกณฑ์ความถูกต้อง | เปรียบเทียบงานที่มีนิยามเดียวกัน |
+
+เก็บ output ของการตรวจความถูกต้องกับเวลาของแต่ละรอบไว้ด้วยกัน หากต้องเปลี่ยน tolerance ให้เขียนเหตุผลของงาน ไม่ขยายเกณฑ์เพื่อให้รอบที่เร็วกว่าได้ผ่าน
+
+## จะวัดก่อนหลังโดยไม่ปนค่าได้อย่างไร
+
+### ผ่านความถูกต้องแล้วจึงเริ่มจับเวลา
+
+สร้าง binary ของแต่ละชุดจากคำสั่งที่บันทึกไว้ รัน input เดิมก่อน แล้วค่อยวัดเวลาโดยใช้ warm-up และจำนวนรอบเดียวกัน แยกเวลา compile เวลาเตรียมข้อมูล และเวลา kernel ออกตามคำถามที่ต้องการตอบ
+
+ถ้า regression เกิดในบาง shape ให้เก็บกรณีนั้นเป็นตัวอย่างสั้นที่ทำซ้ำได้ แล้วลองเปลี่ยน component ทีละตัวใน environment แยก การย้อนกลับควรคืนได้ทั้งแพ็กเกจและค่าตั้ง ไม่ใช่เพียงเปลี่ยนเลขเวอร์ชันในบันทึก
+
+ใช้[รูปแบบบันทึก benchmark ของ rig](/benchmarks/) แนบ manifest และคำสั่งรันกับผลก่อนหลัง บทความนี้เป็นแนวทางทดลอง ไม่มีผลวัด oneAPI บนเครื่องของ Mimir
