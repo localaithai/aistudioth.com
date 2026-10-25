@@ -101,9 +101,9 @@ export default function BuildsSection() {
                 </figure>
               )}
               <dl className="space-y-4 text-sm">
-                <div className="flex gap-3"><Cpu className="text-[#06c] shrink-0" size={18} /><div><dt className="font-semibold text-[#1d1d1f]">GPU</dt><dd>{tier.hardware}</dd></div></div>
-                <div className="flex gap-3"><MemoryStick className="text-[#06c] shrink-0" size={18} /><div><dt className="font-semibold text-[#1d1d1f]">หน่วยความจำ</dt><dd><MemoryReadout memory={tier.memory} /></dd><dd className="text-xs mt-1">{tier.systemMemory}</dd></div></div>
-                <div className="flex gap-3"><HardDrive className="text-[#06c] shrink-0" size={18} /><div><dt className="font-semibold text-[#1d1d1f]">Storage</dt><dd>{tier.storage}</dd></div></div>
+                <div><dt className="relative pl-[30px] font-semibold text-[#1d1d1f]"><Cpu aria-hidden="true" className="absolute left-0 top-0 text-[#06c]" size={18} />GPU</dt><dd className="pl-[30px]">{tier.hardware}</dd></div>
+                <div><dt className="relative pl-[30px] font-semibold text-[#1d1d1f]"><MemoryStick aria-hidden="true" className="absolute left-0 top-0 text-[#06c]" size={18} />หน่วยความจำ</dt><dd className="pl-[30px]"><MemoryReadout memory={tier.memory} /></dd><dd className="mt-1 pl-[30px] text-xs">{tier.systemMemory}</dd></div>
+                <div><dt className="relative pl-[30px] font-semibold text-[#1d1d1f]"><HardDrive aria-hidden="true" className="absolute left-0 top-0 text-[#06c]" size={18} />Storage</dt><dd className="pl-[30px]">{tier.storage}</dd></div>
               </dl>
               <p className="mt-6 pt-5 border-t border-black/[0.06] text-sm text-[#1d1d1f]"><span className="font-semibold">รันอะไรได้:</span> {tier.whatRuns}</p>
               {tier.note && <p className="mt-3 text-xs text-[#6e6e73]">{tier.note}</p>}

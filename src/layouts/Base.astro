@@ -89,7 +89,8 @@ const bingVerification = import.meta.env.PUBLIC_BING_SITE_VERIFICATION;
       type="image/x-icon"
     />
     <script type="application/ld+json" set:html={JSON.stringify(siteGraph())} />
-    <Font cssVariable="--font-bai" preload />
+    <link rel="preconnect" href="https://assets.mimir.business" />
+    <Font cssVariable="--font-bai" preload={[{ weight: 400 }, { weight: 600 }]} />
   </head>
   <body
     class:list={[

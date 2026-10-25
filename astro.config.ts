@@ -10,7 +10,7 @@ import { site } from "./src/lib/site";
 export default defineConfig({
   site: site.url,
   output: "static",
-  build: { format: "preserve" },
+  build: { format: "preserve", inlineStylesheets: "always" },
   devToolbar: { enabled: false },
   integrations: [react()],
   fonts: [
