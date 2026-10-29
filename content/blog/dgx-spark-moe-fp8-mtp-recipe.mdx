@@ -1,0 +1,43 @@
+---
+title: "NVIDIA เผยสูตร FP8 และ MTP บน Spark"
+description: "อ่านข้อควรตรวจเมื่อใช้ FP8 LM head ร่วมกับ MTP บน DGX Spark: แชร์โมดูลให้ถูก ตรวจ accept length และเก็บ baseline ก่อนเชื่อผลความเร็ว"
+kind: "news"
+query: "DGX Spark เปิด FP8 และ MTP พร้อมกันแล้วช้าลงเพราะอะไร"
+cluster: "/benchmarks/"
+source: "nvidia-spark-moe-october"
+published: "2026-10-30"
+reviewed: "2026-10-30"
+newsDate: "2026-10-27"
+summary: "การเปิด FP8 และ MTP พร้อมกันอาจทำให้ช้าลงหาก draft ใช้ LM head ไม่ตรงกับ target ควรตรวจการเปิดใช้งานจริงและ accept length ก่อนวัดผลบน AI rig"
+citations: [{"title": "NVIDIA: MoE Inference on DGX Spark", "url": "https://developer.nvidia.com/blog/3-ways-to-boost-moe-inference-on-nvidia-dgx-spark/", "publisher": "NVIDIA", "published": "2026-10-27", "accessed": "2026-10-30"}, {"title": "NVIDIA: DGX Spark 64GB and Sync", "url": "https://blogs.nvidia.com/blog/local-ai-dgx-spark-64gb-sync/", "publisher": "NVIDIA", "published": "2026-10-02", "accessed": "2026-10-30"}]
+hero: {"src": "https://assets.mimir.business/assets/sites/mimir.business/presentations/nvidia-dgx-spark.8d2f40a53de1.jpg", "alt": "เครื่อง DGX Spark วางข้างแล็ปท็อปบนพื้นหลังสีดำ พร้อมไอคอนงาน AI", "caption": "ภาพผลิตภัณฑ์ DGX Spark จาก NVIDIA ใช้ประกอบบริบทแพลตฟอร์ม ไม่ใช่ภาพผลทดสอบในข่าว", "credit": "NVIDIA, ภาพผลิตภัณฑ์ผ่านคลังภาพ Mimir", "sourceUrl": "https://mimir.business/"}
+videos: [{"url": "https://www.youtube.com/watch?v=v-NGxyPjcrE", "title": "NVIDIA GTC Berlin 2026 Keynote With CEO Jensen Huang", "publisher": "NVIDIA", "published": "2026-10-23", "context": true}]
+faq: [{"question": "เปิดแฟล็กครบแล้วถือว่าใช้สูตรครบหรือยัง", "answer": "ยังควรตรวจ startup log และสถานะโมดูลจริง เพราะชื่อ configuration ไม่พิสูจน์ว่า runtime ใช้เส้นทางที่ตั้งใจไว้"}, {"question": "accept length สูงแปลว่าคำขอจบเร็วเสมอไหม", "answer": "ต้องดูต้นทุน draft และ verification รวมด้วย และวัดคำขอจนจบกับข้อมูลจริง"}]
+draft: false
+---
+
+ถ้าเพิ่ม optimization แล้ว rig ช้าลง ให้เริ่มตรวจเส้นทางที่ runtime ใช้จริงก่อนเปลี่ยนฮาร์ดแวร์ การตั้งชื่อโปรไฟล์ว่า FP8 พร้อม MTP ไม่ได้พิสูจน์ว่าทั้งสองส่วนทำงานร่วมกันถูกต้อง
+
+## NVIDIA พบจุดต่อที่ต้องระวังอะไร
+
+NVIDIA เผยแนวทาง DGX Spark วันที่ 27 ตุลาคม 2026 โดยระบุว่า FP8 LM head ร่วมกับ NEXTN ต้องแชร์ LM-head module ทั้งชุดระหว่าง draft และ target การแชร์เพียง weights ทำให้เส้นทางทดสอบถอยไปสู่ผลที่แย่กว่า baseline ได้ ส่วนข่าว Spark ก่อนหน้าเป็นบริบทเครื่อง ไม่ใช่การทดสอบสูตรนี้ซ้ำ
+
+## จะแยกปัญหาโดยไม่เปลี่ยนหลายอย่างพร้อมกันอย่างไร
+
+รายการต่อไปนี้เป็นแนวทางทดลองสำหรับนักพัฒนา ควรเก็บแต่ละรอบเป็นผลคนละชุด
+
+| รอบทดลอง | สิ่งที่เปลี่ยน | สิ่งที่ต้องสังเกต |
+| --- | --- | --- |
+| Baseline | ยังไม่เพิ่มสูตร | เวลา decode และคำตอบอ้างอิง |
+| Backend | เปลี่ยนตัวคำนวณ MoE เท่านั้น | startup log และเวลาต่อ token |
+| LM head | เพิ่มเส้นทาง FP8 | dtype และเกณฑ์ตรวจคำตอบ |
+| MTP | เพิ่ม draft และ verification | accept length กับเวลาเสร็จจริง |
+| ใช้ร่วมกัน | ตรวจ module ที่ใช้ร่วม | การตกไปใช้เส้นทางสำรองและความผิดพลาด |
+
+## จะเก็บหลักฐานของสูตรที่ใช้ได้อย่างไร
+
+ผูกชื่อโปรไฟล์กับ model revision, runtime commit และค่าที่เปิดจริง แยก log การสร้าง kernel ครั้งแรกจากรอบ inference ที่ใช้เทียบความเร็ว เพื่อไม่ให้ cache ทำให้เข้าใจผลผิด
+
+หลังแก้จุดต่อได้แล้ว ลองข้อมูลที่คำตอบและความยาวไม่เหมือนชุดจำลอง การได้ accept length ดีในข้อความซ้ำง่ายไม่ได้พิสูจน์ผลกับงาน coding หรือเอกสารของตนเอง และไม่ควรเปลี่ยนความเร็วที่วัดได้เป็นคำรับรองรุ่นหน่วยความจำอื่น
+
+ดู [รูปแบบบันทึก benchmark ของ AI rig](/benchmarks/) เพื่อเตรียมชุดเทียบก่อนและหลัง วิดีโอ NVIDIA ที่แนบอธิบายบริบทแพลตฟอร์ม ไม่ใช่ภาพรัน notebook นี้

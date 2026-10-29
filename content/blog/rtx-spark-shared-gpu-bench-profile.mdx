@@ -1,0 +1,43 @@
+---
+title: "NVIDIA เผยโหมดแบ่ง GPU บน RTX Spark"
+description: "ทำ benchmark โปรไฟล์ RTX Spark ที่ใช้แอปกับ Agent พร้อมกันให้ทำซ้ำได้ โดยเก็บ NVIDIA App policy สถานะ HAGS โมเดล และภาระด้านหน้าในแต่ละรอบ"
+kind: "news"
+query: "เก็บโปรไฟล์ benchmark RTX Spark ที่รัน Agent กับแอปพร้อมกันอย่างไร"
+cluster: "/benchmarks/"
+source: "nvidia-rtx-spark-resource-controls"
+published: "2026-10-30"
+reviewed: "2026-10-30"
+newsDate: "2026-10-28"
+summary: "ก่อนเทียบ benchmark บน RTX Spark ควรเก็บ NVIDIA App policy และสถานะ HAGS พร้อมโมเดลกับภาระแอปด้านหน้า เพื่อไม่ให้ผลเปลี่ยนเพราะโหมดจัดสรร GPU ต่างกัน"
+citations: [{"title": "NVIDIA: RTX Spark Models and Resource Controls", "url": "https://blogs.nvidia.com/blog/local-ai-rtx-spark-laptops-updates-models-agents-games/", "publisher": "NVIDIA", "published": "2026-10-28", "accessed": "2026-10-30"}, {"title": "NVIDIA: RTX Spark PCs Availability", "url": "https://nvidianews.nvidia.com/news/nvidia-rtx-spark-pcs-available-today-a-new-beginning-for-windows-pcs", "publisher": "NVIDIA", "published": "2026-10-16", "accessed": "2026-10-30"}]
+hero: {"src": "https://assets.mimir.business/assets/shared/general/nvidia-rtx-spark-october.2733175f372b.jpg", "alt": "ภาพเรนเดอร์แล็ปท็อปสองเครื่องแบบแยกชั้น แสดงชิปและวงจรภายใน", "caption": "ภาพประชาสัมพันธ์แพลตฟอร์ม RTX Spark จาก NVIDIA ไม่ใช่หน้าจอเครื่องมือควบคุมทรัพยากรในข่าว", "credit": "NVIDIA (แหล่งภาพ)", "sourceUrl": "https://nvidianews.nvidia.com/news/nvidia-rtx-spark-pcs-available-today-a-new-beginning-for-windows-pcs"}
+videos: [{"url": "https://www.youtube.com/watch?v=v-NGxyPjcrE", "title": "NVIDIA GTC Berlin 2026 Keynote With CEO Jensen Huang", "publisher": "NVIDIA", "published": "2026-10-23", "context": true}]
+faq: [{"question": "ต้องจด HAGS ด้วยหรือไม่", "answer": "ควรจด เพราะคุณสมบัติที่ข่าวอธิบายต้องเปิด hardware-accelerated GPU scheduling และสถานะนี้เป็นส่วนหนึ่งของ environment"}, {"question": "โปรไฟล์ที่เน้น Agent ใช้แทนผลแอปปกติได้ไหม", "answer": "ควรแยกผล เพราะการจัดลำดับทรัพยากรอาจเปลี่ยนเวลาของแต่ละงาน ต้องรายงานภาระร่วมและโหมดที่ใช้"}]
+draft: false
+---
+
+เพิ่ม policy การใช้ GPU เข้าไปในชื่อโปรไฟล์ทดสอบของ rig ด้วย มิฉะนั้นการเปลี่ยนค่าแอปอาจทำให้ดูเหมือน runtime หรือฮาร์ดแวร์เร็วขึ้นทั้งที่เงื่อนไขงานเปลี่ยน
+
+## อัปเดตที่ NVIDIA อธิบายคืออะไร
+
+NVIDIA เผยรายละเอียดวันที่ 28 ตุลาคม 2026 ว่า NVIDIA App บน RTX Spark เลือกให้ความสำคัญกับแอปด้านหน้าหรือ Agent เบื้องหลังได้จาก System > Advanced และต้องเปิด HAGS ใน Windows ส่วนข่าวเปิดแพลตฟอร์มก่อนหน้าใช้เป็นพื้นหลังเท่านั้น
+
+## ควรแยกโปรไฟล์ทดลองแบบใด
+
+รูปแบบต่อไปนี้เป็นข้อเสนอการบันทึกผล ไม่ใช่ค่าที่ผู้ผลิตกำหนดให้ทุกเครื่อง
+
+| ชื่อโปรไฟล์ | เก็บร่วมกับผล | คำถามที่ต้องตอบ |
+| --- | --- | --- |
+| แอปเดี่ยว | ไฟล์งานและขั้นตอน | แอปช้าเองหรือเพราะภาระร่วม |
+| Agent เดี่ยว | โมเดลและ prompt revision | งานเบื้องหลังใช้เวลาตั้งต้นเท่าใด |
+| เน้น foreground | App policy และ HAGS | แอปดีขึ้นแลกกับงานค้างเท่าใด |
+| เน้น background | ภาระด้านหน้าเหมือนรอบก่อน | Agent จบเร็วขึ้นจริงหรือไม่ |
+| หลังอัปเดต | driver runtime และ policy ใหม่ | ทำซ้ำพฤติกรรมเดิมได้หรือไม่ |
+
+## จะแปลผลโดยไม่หลงกับรอบเร็วที่สุดอย่างไร
+
+รันทั้งสองโหมดด้วยงานคู่เดิม แล้วดูความล่าช้าช่วงท้ายของแต่ละงานด้วย ควรเก็บเวลาที่เริ่มพร้อมกันและเวลาที่แต่ละงานเสร็จ เพื่อแยกว่าได้ประโยชน์จากการสลับคิวหรือจากความเร็วการคำนวณ
+
+อย่าอธิบาย priority ว่าเป็น VRAM เพิ่มหรือการแยกความปลอดภัย และอย่านำรายการอัปเดตทั้งหมดในข่าวมาเขียนว่าพร้อมใช้แล้ว เพราะบทความต้นทางผสมรายการที่พร้อมกับรายการที่กำลังมา
+
+ใช้ [รายการ benchmark ของ AI Studio TH](/benchmarks/) เป็นจุดตั้งต้นในการเก็บผลก่อนปรับโปรไฟล์ ภาพและวิดีโอที่แนบเป็นบริบท RTX Spark ไม่ใช่ภาพหน้าจอหรือหลักฐานการวัดของเรา

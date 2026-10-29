@@ -1,0 +1,43 @@
+---
+title: "NVIDIA เผยวิธีเก็บผลจูน TensorRT"
+description: "อ่านแนวทาง TensorRT Global Performance Tuner พร้อมรายการที่ต้องเก็บเพื่อทำซ้ำผลบน AI rig: โมเดล shapes เกณฑ์ความแม่นยำ build route และเวลาในการจูน"
+kind: "news"
+query: "TensorRT จูนเร็วขึ้นแล้วทำซ้ำผลบน AI rig อย่างไร"
+cluster: "/benchmarks/"
+source: "nvidia-tensorrt-global-tuner-october"
+published: "2026-10-30"
+reviewed: "2026-10-30"
+newsDate: "2026-10-23"
+summary: "ผลจูน TensorRT ใช้ตัดสิน AI rig ได้เมื่อเก็บโมเดล รูปร่างข้อมูล GPU เกณฑ์ความคลาดเคลื่อน และ build route ไว้ครบ พร้อมวัด engine ที่เลือกกับงานเดิมอีกครั้ง"
+citations: [{"title": "NVIDIA: Global Performance Tuner, Part 1", "url": "https://developer.nvidia.com/blog/scaling-nvidia-tensorrt-performance-optimization-beyond-a-single-build-route-with-the-global-performance-tuner-part-1/", "publisher": "NVIDIA", "published": "2026-10-23", "accessed": "2026-10-30"}, {"title": "NVIDIA: Global Performance Tuner, Part 2", "url": "https://developer.nvidia.com/blog/scaling-nvidia-tensorrt-performance-optimization-beyond-a-single-build-route-with-the-global-performance-tuner-part-2/", "publisher": "NVIDIA", "published": "2026-10-23", "accessed": "2026-10-30"}]
+hero: {"src": "https://assets.mimir.business/assets/sites/aistudioth.com/general/hero.ff15e2bf544a.webp", "alt": "คอมพิวเตอร์ Acer สีดำขนาดเล็กวางบนโต๊ะข้างจอที่แสดงโค้ด", "caption": "ภาพประกอบเครื่องทำงานจากคลังภาพ Mimir ไม่ใช่เครื่องที่ใช้ทดสอบในข่าว", "credit": "คลังภาพ Mimir / aistudioth.com", "sourceUrl": "https://aistudioth.com/"}
+videos: [{"url": "https://www.youtube.com/watch?v=v-NGxyPjcrE", "title": "NVIDIA GTC Berlin 2026 Keynote With CEO Jensen Huang", "publisher": "NVIDIA", "published": "2026-10-23", "context": true}]
+faq: [{"question": "ต้องเก็บอะไรนอกจากไฟล์ engine", "answer": "เก็บ revision ของโมเดล รูปร่างข้อมูลเข้า GPU เวอร์ชันซอฟต์แวร์ เกณฑ์ตรวจคำตอบ build route และผลวัดที่ผูกกับไฟล์ engine เดียวกัน"}, {"question": "เปลี่ยน GPU แล้วใช้ผลเดิมได้ไหม", "answer": "ควรจูนและวัดใหม่ เพราะเส้นทางที่เหมาะกับ GPU หรือรูปทรงข้อมูลหนึ่งอาจไม่เหมาะกับอีกสภาพแวดล้อม"}]
+draft: false
+---
+
+ผลที่เร็วขึ้นต้องกลับมารันซ้ำได้ เริ่มจากเก็บตัวตนของ engine และเงื่อนไขที่ทำให้มันผ่านการตรวจคำตอบ ก่อนนำตัวเลขไปเปลี่ยนสเปก AI rig
+
+## NVIDIA เผยอะไรในคู่มือชุดนี้
+
+วันที่ 23 ตุลาคม 2026 NVIDIA เผยคู่มือ Global Performance Tuner สองตอน อธิบายการค้นหา build route ภายใต้เกณฑ์ความแม่นยำ คู่มือตอนสองรายงานผลเฉพาะชุดทดสอบของผู้ผลิต และให้จูนใหม่เมื่อเปลี่ยนโมเดล shapes GPU หรือซอฟต์แวร์ นี่เป็นการเผยวิธีใช้งานฟีเจอร์ที่มีใน TensorRT 11.1 อยู่แล้ว
+
+## เก็บไฟล์อะไรจึงจะกลับมาทดสอบได้
+
+ตารางนี้เป็นข้อเสนอสำหรับจัดโฟลเดอร์ผลทดสอบของนักพัฒนา ไม่ใช่ผลวัดเครื่องจาก AI Studio TH
+
+| สิ่งที่เก็บ | ผูกกับอะไร | ถ้าไม่มีจะตอบอะไรไม่ได้ |
+| --- | --- | --- |
+| Model revision และชุดข้อมูลเข้า | การรันครั้งนั้น | ทดสอบโมเดลเดียวกันหรือไม่ |
+| Shapes และ batch | รูปแบบงานจริง | เร็วขึ้นเพราะเปลี่ยนขนาดงานหรือไม่ |
+| เกณฑ์ตรวจคำตอบ | ผลอ้างอิงชุดเดิม | engine ที่เร็วขึ้นยังยอมรับได้หรือไม่ |
+| Build route และ tuning cache | GPU กับ runtime ที่ใช้ | จะสร้างผลเดิมกลับมาอย่างไร |
+| เวลา build และเวลา inference | engine ที่ถูกเลือก | ประหยัดเวลางานรวมคุ้มเวลาจูนหรือไม่ |
+
+## จะตัดสินผลจูนบน rig ของตนเองอย่างไร
+
+แยกเวลาค้นหาออกจากเวลารันงาน หากงานเกิดขึ้นครั้งเดียว การจูนนานอาจไม่ได้ลดเวลาจบงาน แต่ถ้า engine เดิมถูกเรียกซ้ำ ควรคำนวณจำนวนรอบที่ช่วยคืนเวลาจูนจากข้อมูลที่วัดได้จริง
+
+เมื่อมี candidate ที่ผ่านเกณฑ์ ให้เก็บ baseline ไว้คู่กัน ทดสอบกับข้อมูลที่ไม่ได้ใช้เลือกเส้นทาง แล้วจดทั้งความคลาดเคลื่อนและเวลาที่ใช้ การเลือกเฉพาะรอบเร็วที่สุดโดยไม่บันทึกรอบที่ล้มเหลวจะทำให้ผู้อื่นประเมินความเสี่ยงของสูตรนั้นไม่ได้
+
+นำรายการนี้ไปประกอบการอ่าน [แนวทาง benchmark ของ AI rig](/benchmarks/) โดยระบุสิ่งที่วัดเองให้ชัดจากตัวเลขผู้ผลิต วิดีโอ NVIDIA ที่แนบเป็นบริบทแพลตฟอร์ม ไม่ใช่การสาธิตสูตรจูนชุดนี้

@@ -1,0 +1,43 @@
+---
+title: "AMD เผยวิธีทดสอบ YOLO ด้วย MIGraphX"
+description: "แยกเวลา compile ครั้งแรกออกจาก inference รอบถัดไปเมื่อทดสอบ YOLO บน AMD พร้อมแบบบันทึกโมเดล precision cache และเวลา pre/post-processing"
+kind: "news"
+query: "YOLO MIGraphX บน AI rig ควรวัด cold start และ warm run อย่างไร"
+cluster: "/benchmarks/"
+source: "amd-ultralytics-rocm-guide"
+published: "2026-10-30"
+reviewed: "2026-10-30"
+newsDate: "2026-10-26"
+summary: "การวัด YOLO ด้วย MIGraphX ควรแยก cold start, เวลา inference หลังมี cache และเวลาคำขอรวม เพื่อไม่ให้ผลของรอบแรกหรือรอบอุ่นถูกนำไปใช้แทนกัน"
+citations: [{"title": "AMD: Ultralytics YOLO on ROCm", "url": "https://rocm.blogs.amd.com/ecosystems-and-partners/ultralytics-amd/README.html", "publisher": "AMD ROCm Blogs", "published": "2026-10-26", "accessed": "2026-10-30"}, {"title": "Ultralytics v8.4.171: AMD ROCm and MIGraphX", "url": "https://github.com/ultralytics/ultralytics/releases/tag/v8.4.171", "publisher": "Ultralytics", "published": "2026-10-01", "accessed": "2026-10-30"}]
+hero: {"src": "https://assets.mimir.business/assets/sites/aistudioth.com/general/hero.ff15e2bf544a.webp", "alt": "คอมพิวเตอร์ Acer สีดำขนาดเล็กวางบนโต๊ะข้างจอที่แสดงโค้ด", "caption": "ภาพประกอบเครื่องทำงานจากคลังภาพ Mimir ไม่ใช่เครื่องที่ใช้ทดสอบในข่าว", "credit": "คลังภาพ Mimir / aistudioth.com", "sourceUrl": "https://aistudioth.com/"}
+videos: [{"url": "https://www.youtube.com/watch?v=g1b-8fe39uU", "title": "Ultralytics YOLO Vision 2026 | Full Event: Ultralytics YOLO27 Announcement, Robotics, Edge AI & More", "publisher": "Ultralytics", "published": "2026-09-13", "context": true}]
+faq: [{"question": "ควรล้าง cache ทุกครั้งที่ benchmark ไหม", "answer": "ขึ้นกับคำถามที่ทดสอบ ถ้าวัด cold start ต้องกำหนดสภาพ cache ให้ชัด ส่วนการใช้งานซ้ำควรมีชุด warm run แยกออกมา"}, {"question": "เวลา inference รวมการเตรียมภาพเสมอหรือไม่", "answer": "ไม่เสมอ ต้องบอกขอบเขตวัดและเก็บ pre-processing กับ post-processing แยก รวมถึงเวลาคำขอจนได้ผลที่ใช้งานได้"}]
+draft: false
+---
+
+อย่าเทียบการเปิดโมเดลรอบแรกกับการรันที่มี cache แล้วโดยไม่บอกเงื่อนไข ทั้งสองตัวเลขมีประโยชน์ แต่ตอบคำถามการใช้งาน rig คนละแบบ
+
+## คู่มือและ release บอกอะไร
+
+AMD เผยแนวทาง YOLO บน ROCm วันที่ 26 ตุลาคม 2026 โดยแยกเส้นทาง PyTorch กับ ONNX ผ่าน MIGraphX ขณะที่ release Ultralytics v8.4.171 ก่อนหน้านั้นระบุการเก็บ compiled model ไว้ใช้ซ้ำ วันเผยคู่มือจึงไม่ใช่วันเปิดตัวการรองรับใหม่
+
+## จัดรอบทดลองอย่างไรให้เทียบกันได้
+
+ตารางเป็นข้อเสนอวิธีวัดสำหรับนักพัฒนา ตัวเลขจากเครื่องของตนเองต้องบันทึกแยกจากผลผู้ผลิต
+
+| ช่วงที่วัด | กำหนดอะไรไว้ก่อน | รายงานอย่างไร |
+| --- | --- | --- |
+| Cold start | cache มีหรือไม่มี | เวลาตั้งแต่โหลดจนพร้อมรับงาน |
+| Warm inference | โมเดลและ cache ชุดเดิม | หลายรอบพร้อมค่ากลางและช่วงกระจาย |
+| เตรียมข้อมูล | ขนาดภาพและวิธี resize | เวลาก่อนส่ง tensor ให้ backend |
+| หลัง inference | ขั้นตอนจัดรูปผล | เวลาจนได้คำตอบที่แอปใช้ได้ |
+| ทั้งคำขอ | input และขอบเขตเดียวกัน | เวลารวมที่ผู้ใช้ต้องรอ |
+
+## ต้องล็อกอะไรเมื่อเปลี่ยน backend
+
+ใช้ checkpoint, precision, task และข้อมูลตรวจคุณภาพชุดเดียวกัน แล้วตรวจ execution provider ที่ถูกเลือกจริงก่อนเก็บความเร็ว หากมีการตกไป CPU ผลนั้นควรแยกชื่อให้เห็นในรายงาน
+
+เมื่ออัปเดต runtime หรือเปลี่ยนโมเดล ให้ตรวจว่า cache เดิมยังเกี่ยวข้องกับการทดลองหรือไม่ และเก็บเวอร์ชันกับเงื่อนไขเริ่มต้นไว้พร้อมผลเสมอ การได้รอบอุ่นเร็วไม่ได้พิสูจน์ว่าแอปที่เริ่ม process ใหม่ทุกครั้งจะตอบได้เร็วเท่ากัน
+
+ใช้ [หน้า benchmark สำหรับ rig นักพัฒนา](/benchmarks/) เตรียมรูปแบบผลวัดก่อนปรับสเปก คู่มือเป้าหมายเป็น Linux x86_64 และไม่ได้ยืนยัน Windows หรือ WSL วิดีโอ Ultralytics ที่แนบเป็นบริบทจากงานก่อนหน้า
