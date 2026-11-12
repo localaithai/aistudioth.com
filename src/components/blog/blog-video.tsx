@@ -32,9 +32,9 @@ export function BlogVideo({ video }: BlogVideoProps) {
   const embedUrl = youtubeEmbedUrl(video.url);
 
   return (
-    <figure className="m-0 min-w-0 overflow-hidden rounded-[1rem] border border-line bg-surface">
+    <figure className="m-0 min-w-0 overflow-hidden rounded-[6px] border border-line bg-surface">
       <div
-        className="grid aspect-video place-items-center bg-[color-mix(in_oklch,var(--color-ink)_6%,var(--color-page))] bg-[image:radial-gradient(90%_120%_at_50%_110%,color-mix(in_oklch,var(--color-brand)_28%,transparent),transparent_70%)]"
+        className="grid aspect-video place-items-center bg-deck"
       >
         {embedUrl ? (
           <iframe
@@ -49,11 +49,11 @@ export function BlogVideo({ video }: BlogVideoProps) {
             allowFullScreen
           />
         ) : (
-          <p className="m-0 p-5 text-ink-2">เปิดวิดีโอได้จากลิงก์ต้นทางด้านล่าง</p>
+          <p className="m-0 p-5 text-deck-ink-2">เปิดวิดีโอได้จากลิงก์ต้นทางด้านล่าง</p>
         )}
       </div>
       <figcaption className="grid gap-1 px-6 py-5">
-        <h3 className="m-0 text-lg leading-[1.6] font-[650]">{video.title}</h3>
+        <h3 className="m-0 text-lg leading-[1.6] font-bold">{video.title}</h3>
         <p className="m-0 text-sm text-ink-2">
           {video.publisher} · เผยแพร่{" "}
           <time dateTime={video.published}>
@@ -69,7 +69,7 @@ export function BlogVideo({ video }: BlogVideoProps) {
           href={video.url}
           target="_blank"
           rel="noopener noreferrer"
-          className={`inline-flex min-h-11 items-center justify-self-start text-[0.9375rem] font-semibold text-brand ${focusRing}`}
+          className={`inline-flex min-h-11 items-center justify-self-start text-[0.9375rem] font-semibold text-brand-deep ${focusRing}`}
         >
           ดูวิดีโอต้นทางบน YouTube
         </a>

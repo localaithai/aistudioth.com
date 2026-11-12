@@ -15,33 +15,23 @@ const partners = [
 ] as const;
 ---
 
-<section
-  aria-labelledby="partners-heading"
-  class="apple-section section-white"
->
+<section aria-labelledby="partners-heading" class="bg-page section-pad">
   <div class="container-wide">
-    <div
-      class="grid gap-6 md:grid-cols-[minmax(0,28rem)_1fr] md:items-end md:gap-12"
-    >
-      <div>
-        <p class="eyebrow mb-4">
-          Build network
-        </p>
-        <h2 id="partners-heading" class="text-h2 font-semibold">
-          พาร์ทเนอร์ของ rig ทุกเครื่อง
-        </h2>
-      </div>
-      <p class="max-w-2xl text-lead">
+    <div class="grid gap-6 md:grid-cols-12 md:items-end md:gap-12">
+      <h2 id="partners-heading" class="text-h2 md:col-span-6">
+        พาร์ทเนอร์ของ rig ทุกเครื่อง
+      </h2>
+      <p class="text-lead md:col-span-6">
         เราเชื่อมสเปกที่คุณเลือกกับเครือข่ายจัดหา ระบบไฟ และโครงสร้างพื้นฐาน
         เพื่อให้ build ที่ออกแบบไว้ส่งมอบและดูแลต่อได้จริง
       </p>
     </div>
     <ul
-      class="mt-12 grid grid-cols-2 border-l border-t border-black/[0.08] sm:grid-cols-3 lg:grid-cols-7"
+      class="mt-12 grid grid-cols-2 gap-px border-y border-ink bg-line sm:grid-cols-4 lg:grid-cols-7"
     >
       {
         partners.map((partner) => (
-          <li class="flex min-h-28 items-center justify-center border-b border-r border-black/[0.08] bg-white px-5 py-6">
+          <li class="flex min-h-24 items-center justify-center bg-page px-5 py-6 last:col-span-2 lg:last:col-span-1">
             <img
               src={partner.logo}
               alt={`${partner.name} logo`}
@@ -49,7 +39,7 @@ const partners = [
               height="64"
               loading="lazy"
               decoding="async"
-              class="h-10 w-full object-contain text-transparent"
+              class="h-9 w-full object-contain text-transparent opacity-80 mix-blend-multiply contrast-125 grayscale"
             />
           </li>
         ))

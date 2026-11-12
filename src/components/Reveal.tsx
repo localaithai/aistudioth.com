@@ -1,7 +1,7 @@
 import { motion, useAnimationControls, useReducedMotion } from "framer-motion";
 import { type ReactNode, useEffect, useRef } from "react";
 
-const glide = [0.22, 0.75, 0.2, 1] as const;
+const glide = [0.22, 1, 0.36, 1] as const;
 
 type RevealProps = {
   as?: "div" | "article" | "figure";
@@ -22,7 +22,7 @@ export function Reveal({
   as = "div",
   className,
   delay = 0,
-  y = 22,
+  y = 16,
   amount = 0.08,
   children,
 }: RevealProps) {
@@ -50,8 +50,8 @@ export function Reveal({
           opacity: 1,
           y: 0,
           transition: {
-            opacity: { duration: 1.1, delay, ease: glide },
-            y: { duration: 1.2, delay, ease: glide },
+            opacity: { duration: 0.6, delay, ease: glide },
+            y: { duration: 0.7, delay, ease: glide },
           },
         });
       },

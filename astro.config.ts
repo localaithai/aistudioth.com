@@ -16,11 +16,19 @@ export default defineConfig({
   fonts: [
     {
       provider: fontProviders.google(),
-      name: "Bai Jamjuree",
-      cssVariable: "--font-bai",
-      weights: [300, 400, 500, 600, 700],
+      name: "K2D",
+      cssVariable: "--font-k2d",
+      weights: [400, 500, 600, 700, 800],
       styles: ["normal"],
       subsets: ["latin", "thai"],
+    },
+    {
+      provider: fontProviders.google(),
+      name: "Big Shoulders",
+      cssVariable: "--font-shoulders",
+      weights: [700, 800],
+      styles: ["normal"],
+      subsets: ["latin"],
     },
   ],
   vite: {

@@ -1,4 +1,5 @@
 ---
+import { Meter } from "@/components/Meter";
 import Base from "@/layouts/Base.astro";
 import { metadataFor } from "@/lib/site-data";
 import { NOT_FOUND_SOCIAL_IMAGE } from "@/lib/social";
@@ -14,20 +15,13 @@ const head = {
 };
 ---
 
-<Base head={head} bodyClass="bg-white text-black dark:bg-black dark:text-white">
-  <div
-    class="flex h-screen flex-col items-center justify-center text-center font-[family-name:system-ui,'Segoe_UI',Roboto,Helvetica,Arial,sans-serif,'Apple_Color_Emoji','Segoe_UI_Emoji']"
-  >
-    <div>
-      <h1
-        class="mr-5 inline-block border-r border-r-[rgba(0,0,0,0.3)] pr-[23px] align-top text-[24px] leading-[49px] font-medium dark:border-r-[rgba(255,255,255,0.3)]"
-      >
-        404
-      </h1><div class="inline-block">
-        <h2 class="text-[14px] leading-[49px] font-normal">
-          This page could not be found.
-        </h2>
-      </div>
-    </div>
-  </div>
+<Base head={head} bodyClass="bg-page text-ink">
+  <main class="container-wide flex min-h-screen flex-col justify-center py-16">
+    <h1 class="font-readout text-title font-extrabold text-ink">404</h1>
+    <Meter segments={16} lit={0} size="md" className="mt-6 max-w-md" />
+    <h2 class="mt-6 text-lead font-normal text-ink-2">
+      This page could not be found.
+    </h2>
+    <a href="/" class="btn btn-ghost mt-8 self-start">Home</a>
+  </main>
 </Base>

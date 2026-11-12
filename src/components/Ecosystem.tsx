@@ -1,66 +1,60 @@
+import { ArrowUpRight } from "lucide-react";
+import { Reveal } from "@/components/Reveal";
 import { assetUrl } from "@/lib/assets";
 import { mimirScopeNotice } from "@/lib/site";
-import { Cloud } from "lucide-react";
-import { Reveal } from "@/components/Reveal";
 
 export default function Ecosystem() {
   return (
-    <section className="section-gray apple-section">
+    <section className="bg-panel section-pad">
       <div className="container-wide">
-        <Reveal className="max-w-[44rem] mb-12">
-          <p className="label mb-4">
-            เลือกวิธีใช้งาน
+        <Reveal className="mb-10 max-w-[44rem]">
+          <h2 className="text-h2">Local rig หรือ cloud models</h2>
+          <p className="mt-5 text-lead">
+            เลือกจากที่ inference ต้องทำงาน ไม่ใช่จากชื่อแบรนด์
           </p>
-          <h2 className="text-h2 font-semibold mb-5">
-            Local rig หรือ cloud models
-          </h2>
-          <p className="text-lead">เลือกจากที่ inference ต้องทำงาน ไม่ใช่จากชื่อแบรนด์</p>
         </Reveal>
-        <div className="grid md:grid-cols-2 gap-5">
-          <Reveal
-            as="article"
-            amount={0}
-            className="apple-card bg-[#1d1d1f] p-8 text-white"
-          >
-            <img
-              src={assetUrl("/mimir-suite-logo.png")}
-              alt=""
-              width={72}
-              height={48}
-              loading="lazy"
-              decoding="async"
-              className="mb-6 h-12 w-auto object-contain text-transparent"
-            />
-            <h2 className="text-2xl font-semibold text-white mb-4">
-              Mimir Suites Local บน rig ของคุณ
-            </h2>
-            <p className="text-gray-300 text-sm">
-              ติดตั้งและตั้งค่า Mimir Suites Local บน rig ได้ เมื่อคุณต้องการรับ software
-              layer พร้อม hardware.
-            </p>
-            <p className="text-gray-300 text-sm mt-4">{mimirScopeNotice}</p>
-          </Reveal>
-          <Reveal
-            as="article"
-            amount={0}
-            delay={0.09}
-            className="apple-card bg-white p-8 border border-black/[0.06]"
-          >
-            <Cloud className="text-[#06c] mb-6" size={28} />
-            <h2 className="text-2xl font-semibold mb-4">CloudAIThai.com</h2>
-            <p className="text-sm mb-6">
-              ถ้าไม่ต้องรัน inference ในเครื่อง ดู cloud models ได้ที่ CloudAIThai.com.
-            </p>
-            <a
-              className="apple-link"
-              href="https://cloudaithai.com"
-              target="_blank"
-              rel="noreferrer"
-            >
-              ไปที่ CloudAIThai.com
-            </a>
-          </Reveal>
-        </div>
+        <Reveal amount={0}>
+          <p className="legend mb-4">เลือกวิธีใช้งาน</p>
+          <div className="grid overflow-hidden rounded-[6px] border border-ink md:grid-cols-2">
+            <article className="bg-deck p-8 sm:p-10">
+              <img
+                src={assetUrl("/mimir-suite-logo.png")}
+                alt=""
+                width={72}
+                height={48}
+                loading="lazy"
+                decoding="async"
+                className="mb-6 h-12 w-auto object-contain text-transparent"
+              />
+              <h2 className="text-h3 text-deck-ink">
+                Mimir Suites Local บน rig ของคุณ
+              </h2>
+              <p className="mt-4 text-base text-deck-ink-2">
+                ติดตั้งและตั้งค่า Mimir Suites Local บน rig ได้
+                เมื่อคุณต้องการรับ software layer พร้อม hardware.
+              </p>
+              <p className="mt-4 text-sm text-deck-ink-2">
+                {mimirScopeNotice}
+              </p>
+            </article>
+            <article className="border-t border-ink bg-surface p-8 sm:p-10 md:border-t-0 md:border-l">
+              <h2 className="text-h3">CloudAIThai.com</h2>
+              <p className="mt-4 text-base">
+                ถ้าไม่ต้องรัน inference ในเครื่อง ดู cloud models
+                ได้ที่ CloudAIThai.com.
+              </p>
+              <a
+                className="text-link mt-4"
+                href="https://cloudaithai.com"
+                target="_blank"
+                rel="noreferrer"
+              >
+                ไปที่ CloudAIThai.com{" "}
+                <ArrowUpRight size={16} aria-hidden="true" />
+              </a>
+            </article>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

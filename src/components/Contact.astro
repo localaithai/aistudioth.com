@@ -1,59 +1,74 @@
 ---
 import { Mail, MessageCircle, Phone } from "@lucide/astro";
+import { assetUrl } from "@/lib/assets";
 
 // cta.js injects the lead form, so its markup takes no classes: style it from the host.
 const omniForm = [
-  "[&_.omni-form]:grid [&_.omni-form]:gap-5 [&_.omni-form]:rounded-[24px] [&_.omni-form]:border [&_.omni-form]:border-[rgba(0,0,0,0.07)] [&_.omni-form]:bg-[#f5f5f7] [&_.omni-form]:p-6 sm:[&_.omni-form]:p-8",
+  "[&_.omni-form]:grid [&_.omni-form]:gap-5 [&_.omni-form]:p-6 sm:[&_.omni-form]:grid-cols-2 sm:[&_.omni-form]:p-8",
   "[&_.omni-heading]:hidden",
-  "[&_.omni-field]:block [&_.omni-field]:text-[14px] [&_.omni-field]:font-semibold [&_.omni-field]:text-[#1d1d1f]",
+  "[&_.omni-field]:block [&_.omni-field]:text-sm [&_.omni-field]:font-semibold [&_.omni-field]:text-ink",
+  "sm:[&_.omni-field--textarea]:col-span-2",
   "[&_.omni-field.omni-field--checkbox]:flex [&_.omni-field--checkbox]:items-center [&_.omni-field--checkbox]:gap-2.5",
-  "[&_.omni-input]:mt-2 [&_.omni-input]:w-full [&_.omni-input]:rounded-[12px] [&_.omni-input]:border [&_.omni-input]:border-[rgba(0,0,0,0.1)] [&_.omni-input]:bg-white [&_.omni-input]:px-4 [&_.omni-input]:py-3 [&_.omni-input]:text-[14px] [&_.omni-input]:font-normal [&_.omni-input]:text-[#1d1d1f] [&_.omni-input]:outline-none [&_.omni-input]:transition-[border-color,box-shadow] [&_.omni-input]:duration-350 [&_.omni-input]:ease-glide",
-  "[&_.omni-input:focus]:border-[#06c] [&_.omni-input:focus]:shadow-[0_0_0_2px_rgba(0,102,204,0.2)]",
-  "[&_textarea.omni-input]:min-h-24 [&_textarea.omni-input]:resize-y",
+  "[&_.omni-input]:mt-2 [&_.omni-input]:w-full [&_.omni-input]:rounded-[4px] [&_.omni-input]:border [&_.omni-input]:border-edge [&_.omni-input]:bg-white [&_.omni-input]:px-4 [&_.omni-input]:py-3 [&_.omni-input]:text-base [&_.omni-input]:font-normal [&_.omni-input]:text-ink [&_.omni-input]:outline-none [&_.omni-input]:transition-[border-color,box-shadow] [&_.omni-input]:duration-200",
+  "[&_.omni-input::placeholder]:text-ink-2",
+  "[&_.omni-input:focus]:border-ink [&_.omni-input:focus]:shadow-[0_0_0_2px_var(--color-brand)]",
+  "[&_textarea.omni-input]:min-h-32 [&_textarea.omni-input]:resize-y",
   "[&_.omni-field--checkbox_.omni-input]:mt-0 [&_.omni-field--checkbox_.omni-input]:w-auto [&_.omni-field--checkbox_.omni-input]:p-0",
-  "[&_.omni-submit]:inline-flex [&_.omni-submit]:w-full [&_.omni-submit]:cursor-pointer [&_.omni-submit]:items-center [&_.omni-submit]:justify-center [&_.omni-submit]:gap-[0.6rem] [&_.omni-submit]:rounded-[980px] [&_.omni-submit]:bg-[#06c] [&_.omni-submit]:px-6 [&_.omni-submit]:py-3 [&_.omni-submit]:text-[17px] [&_.omni-submit]:font-normal [&_.omni-submit]:text-white [&_.omni-submit]:transition-[background-color,color,border-color,transform] [&_.omni-submit]:duration-350 [&_.omni-submit]:ease-glide",
-  "[&_.omni-submit:hover]:bg-[#0055aa] [&_.omni-submit:active]:[transform:scale(0.98)] [&_.omni-submit:disabled]:cursor-default [&_.omni-submit:disabled]:opacity-60",
-  "[&_.omni-error]:text-[14px] [&_.omni-error]:font-medium [&_.omni-error]:text-[#b3261e]",
-  "[&_.omni-success]:text-[17px] [&_.omni-success]:font-medium [&_.omni-success]:text-[#1d1d1f]",
+  "[&_.omni-submit]:inline-flex [&_.omni-submit]:min-h-13 [&_.omni-submit]:w-full [&_.omni-submit]:cursor-pointer [&_.omni-submit]:items-center [&_.omni-submit]:justify-center [&_.omni-submit]:rounded-[4px] [&_.omni-submit]:bg-brand [&_.omni-submit]:px-6 [&_.omni-submit]:text-base [&_.omni-submit]:font-semibold [&_.omni-submit]:text-white [&_.omni-submit]:transition-[background-color,transform] [&_.omni-submit]:duration-200 sm:[&_.omni-submit]:col-span-2",
+  "[&_.omni-submit:hover]:bg-brand-deep [&_.omni-submit:active]:translate-y-px [&_.omni-submit:disabled]:cursor-default [&_.omni-submit:disabled]:opacity-60",
+  "[&_.omni-error]:text-sm [&_.omni-error]:font-medium [&_.omni-error]:text-brand-deep sm:[&_.omni-error]:col-span-2",
+  "[&_.omni-success]:text-lg [&_.omni-success]:font-medium [&_.omni-success]:text-ink sm:[&_.omni-success]:col-span-2",
 ].join(" ");
 
 const channelClass =
-  "flex items-center gap-3 rounded-2xl border border-black/[0.07] p-5 text-sm font-semibold text-[#1d1d1f] transition-[border-color,transform] duration-[350ms] ease-glide hover:-translate-y-0.5 hover:border-[#06c]/35 active:scale-[0.98]";
+  "flex min-h-14 items-center gap-3 border-t border-ink text-base font-semibold text-ink transition-colors duration-200 hover:text-brand-deep";
 ---
 
-<section id="contact" class="section-white apple-section scroll-mt-16">
-  <div class="container-wide">
-    <div class="max-w-[44rem] mb-10">
-      <p class="eyebrow mb-4">
-        Configure your studio
-      </p>
-      <h2 class="text-h2 font-semibold mb-5">
-        ส่ง workload ของคุณมา
-      </h2>
-      <p class="text-lead">
+<section id="contact" class="scroll-mt-16 bg-panel section-pad">
+  <div class="container-wide grid gap-12 lg:grid-cols-12 lg:gap-14">
+    <div class="lg:col-span-5">
+      <h2 class="text-h2">ส่ง workload ของคุณมา</h2>
+      <p class="mt-5 text-lead">
         บอก model, context และ stack ที่คุณจะใช้ เราจะเริ่มจาก memory budget
         ก่อนคุยเรื่อง build
       </p>
-    </div>
-    <div class="grid gap-8 lg:grid-cols-[1.4fr_0.6fr]">
-      <div class={omniForm} data-cta="form"></div>
-      <aside class="space-y-4">
-        <div class="rounded-3xl bg-[#1d1d1f] p-7 text-white">
-          <h3 class="text-xl font-semibold text-white mb-3">อยากคุยโดยตรง?</h3>
-          <p class="text-sm text-gray-300">
-            ส่ง model list และ current stack มาก่อนได้
-          </p>
+      <figure class="mt-10 max-sm:hidden">
+        <div class="aspect-[3/2] overflow-hidden rounded-[6px] bg-panel">
+          <img
+            src={assetUrl("/photography/developer-desk.webp")}
+            alt="developer นั่งทำงานที่โต๊ะ มี AI rig ขนาดเล็กวางข้างจอ"
+            width="1536"
+            height="1024"
+            loading="lazy"
+            decoding="async"
+            class="block size-full object-cover text-transparent"
+          />
         </div>
+        <figcaption class="mt-3 text-sm text-ink-2">
+          ภาพจำลอง · rig ข้างจอบนโต๊ะทำงาน
+        </figcaption>
+      </figure>
+      <h3 class="mt-10 text-h3">อยากคุยโดยตรง?</h3>
+      <p class="mt-2 text-base">ส่ง model list และ current stack มาก่อนได้</p>
+      <div class="mt-5 border-b border-ink">
         <a data-cta="email" class={channelClass}>
-          <Mail class="text-[#06c]" size={19} />
+          <Mail class="flex-none text-brand" size={18} />
         </a>
         <a data-cta="tel" class={channelClass}>
-          <Phone class="text-[#06c]" size={19} />
+          <Phone class="flex-none text-brand" size={18} />
         </a>
         <a data-cta="line" class={channelClass}>
-          <MessageCircle class="text-[#06c]" size={19} />LINE Official
+          <MessageCircle class="flex-none text-brand" size={18} />LINE Official
         </a>
-      </aside>
+      </div>
+    </div>
+    <div class="lg:col-span-7">
+      <div class="plate overflow-hidden">
+        <p class="legend border-b border-ink px-6 py-4 sm:px-8">
+          Configure your studio
+        </p>
+        <div class={omniForm} data-cta="form"></div>
+      </div>
     </div>
   </div>
 </section>

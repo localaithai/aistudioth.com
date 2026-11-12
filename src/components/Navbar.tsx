@@ -34,7 +34,7 @@ const isCurrent = (pathname: string, href: string) => {
 };
 
 const contactClass =
-  "link-line flex min-h-11 items-center gap-3 text-base font-medium text-[#1d1d1f]";
+  "link-line flex min-h-11 items-center gap-3 text-base font-medium text-ink";
 
 export default function Navbar({ pathname = "/" }: { pathname?: string }) {
   const overHero = normalise(pathname) === "";
@@ -92,17 +92,17 @@ export default function Navbar({ pathname = "/" }: { pathname?: string }) {
 
   return (
     <nav
-      className="sticky top-0 z-50 transition-[background-color,box-shadow,transform] duration-[.5s,.5s,.6s] ease-glide data-hidden:[transform:translateY(-100%)] data-[state=solid]:bg-[rgb(255_255_255/0.78)] data-[state=solid]:shadow-[inset_0_-1px_0_rgb(0_0_0/0.07),0_10px_30px_-18px_rgb(29_29_31/0.3)] data-[state=solid]:backdrop-blur-[18px] data-[state=solid]:backdrop-saturate-[1.8]"
+      className="sticky top-0 z-50 bg-page transition-[background-color,box-shadow,transform] duration-[.4s,.4s,.5s] ease-glide data-hidden:[transform:translateY(-100%)] data-[state=solid]:bg-page/92 data-[state=solid]:shadow-[inset_0_-1px_0_var(--color-ink)] data-[state=solid]:backdrop-blur-[12px]"
       data-state={atTop && !open ? "top" : "solid"}
       data-hidden={hidden && !open ? "" : undefined}
       onFocus={() => setHidden(false)}
     >
       <div className="container-wide flex h-16 items-center justify-between">
-        <a
-          href="/"
-          className="text-xl font-bold tracking-tight text-[#1d1d1f]"
-        >
-          AI <span className="gradient-text">Studio</span> TH
+        <a href="/" className="flex min-h-11 items-center gap-2.5 text-ink">
+          <span aria-hidden="true" className="size-2.5 flex-none bg-brand" />
+          <span className="font-readout text-[1.625rem] leading-none font-extrabold tracking-[0.02em] uppercase">
+            AI Studio TH
+          </span>
         </a>
         <div className="hidden items-center lg:flex">
           {links.map((link) => (
@@ -110,14 +110,14 @@ export default function Navbar({ pathname = "/" }: { pathname?: string }) {
               key={link.href}
               href={link.href}
               aria-current={isCurrent(pathname, link.href) ? "page" : undefined}
-              className="relative inline-flex min-h-11 items-center px-3 text-[.875rem] font-medium text-[#1d1d1f] transition-[color] duration-350 ease-glide after:absolute after:right-3 after:bottom-[0.55rem] after:left-3 after:h-px after:origin-[right] after:bg-current after:[transform:scaleX(0)] after:transition-[transform] after:duration-450 after:ease-glide hover:text-[#06c] hover:after:origin-[left] hover:after:[transform:scaleX(1)] aria-[current=page]:font-semibold aria-[current=page]:text-[#06c] aria-[current=page]:after:origin-[left] aria-[current=page]:after:[transform:scaleX(1)]"
+              className="relative inline-flex min-h-11 items-center px-3 text-[0.9375rem] font-medium text-ink transition-[color] duration-200 ease-glide after:absolute after:right-3 after:bottom-[0.5rem] after:left-3 after:h-0.5 after:origin-[right] after:bg-brand after:[transform:scaleX(0)] after:transition-[transform] after:duration-300 after:ease-glide hover:after:origin-[left] hover:after:[transform:scaleX(1)] aria-[current=page]:font-semibold aria-[current=page]:after:origin-[left] aria-[current=page]:after:[transform:scaleX(1)]"
             >
               {link.label}
             </a>
           ))}
           <a
             href="/contact"
-            className="ml-4 inline-flex items-center justify-center gap-[0.6rem] rounded-[980px] bg-[#1d1d1f] px-5 py-2.5 text-sm font-medium text-white transition-[background-color,color,border-color,transform] duration-350 ease-glide hover:bg-black active:[transform:scale(0.98)]"
+            className="btn btn-primary ml-4 min-h-11 px-5 text-sm"
           >
             {site.primaryCta.label}
           </a>
@@ -125,7 +125,7 @@ export default function Navbar({ pathname = "/" }: { pathname?: string }) {
         <button
           ref={toggle}
           type="button"
-          className="-mr-2.5 inline-flex size-11 items-center justify-center rounded-xl text-[#1d1d1f] transition-transform active:scale-[0.98] lg:hidden"
+          className="-mr-2.5 inline-flex size-11 items-center justify-center rounded-[4px] text-ink transition-transform active:scale-[0.98] lg:hidden"
           aria-label="Toggle menu"
           aria-expanded={open}
           aria-controls="site-menu"
@@ -137,7 +137,7 @@ export default function Navbar({ pathname = "/" }: { pathname?: string }) {
       {open && (
         <div
           id="site-menu"
-          className="absolute inset-x-0 top-full flex h-[calc(100dvh-4rem)] flex-col overflow-y-auto bg-white lg:hidden"
+          className="absolute inset-x-0 top-full flex h-[calc(100dvh-4rem)] flex-col overflow-y-auto bg-page lg:hidden"
         >
           <div className="container-wide flex w-full flex-1 flex-col justify-between gap-10 pt-4 pb-[max(2rem,env(safe-area-inset-bottom))]">
             <div className="grid">
@@ -149,7 +149,7 @@ export default function Navbar({ pathname = "/" }: { pathname?: string }) {
                     isCurrent(pathname, link.href) ? "page" : undefined
                   }
                   onClick={() => setOpen(false)}
-                  className="flex min-h-13 items-center text-[clamp(1.75rem,7.5vw,2.25rem)] leading-[1.3] font-semibold tracking-[-0.02em] text-[#1d1d1f] transition-[color] duration-350 ease-glide hover:text-[#06c] aria-[current=page]:text-[#06c] motion-safe:animate-menu-rise"
+                  className="flex min-h-14 items-center border-b border-line text-[clamp(1.75rem,7.5vw,2.25rem)] leading-[1.3] font-bold tracking-[-0.01em] text-ink transition-[color] duration-200 ease-glide hover:text-brand-deep aria-[current=page]:text-brand motion-safe:animate-menu-rise"
                   style={{ "--i": index } as CSSProperties}
                 >
                   {link.label}
@@ -157,27 +157,27 @@ export default function Navbar({ pathname = "/" }: { pathname?: string }) {
               ))}
             </div>
             <div
-              className="grid gap-4 border-t border-black/[0.08] pt-6 motion-safe:animate-menu-rise"
+              className="grid gap-4 border-t border-ink pt-6 motion-safe:animate-menu-rise"
               style={{ "--i": links.length } as CSSProperties}
             >
               <a
                 href="/contact"
                 onClick={() => setOpen(false)}
-                className="apple-btn apple-btn-blue min-h-12 w-full"
+                className="btn btn-primary min-h-13 w-full"
               >
                 {site.primaryCta.label}
                 <ArrowRight size={18} aria-hidden="true" />
               </a>
               <div className="grid">
                 <a data-cta="email" className={contactClass}>
-                  <Mail className="text-[#06c]" size={18} aria-hidden="true" />
+                  <Mail className="text-brand" size={18} aria-hidden="true" />
                 </a>
                 <a data-cta="tel" className={contactClass}>
-                  <Phone className="text-[#06c]" size={18} aria-hidden="true" />
+                  <Phone className="text-brand" size={18} aria-hidden="true" />
                 </a>
                 <a data-cta="line" className={contactClass}>
                   <MessageCircle
-                    className="text-[#06c]"
+                    className="text-brand"
                     size={18}
                     aria-hidden="true"
                   />

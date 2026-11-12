@@ -7,75 +7,75 @@ import { metadataFor } from "@/lib/site-data";
 
 <Base head={metadataFor("/privacy")}>
   <Navbar client:load pathname={Astro.url.pathname} />
-  <main class="bg-[#fbfbfd] text-[#1d1d1f]">
-    <article class="container-wide py-20 sm:py-28">
-      <p class="text-sm font-semibold text-[#06c]">PDPA</p>
-      <h1 class="mt-4 max-w-3xl text-4xl font-semibold tracking-tight sm:text-6xl">
+  <main class="bg-page text-ink">
+    <article class="container-wide py-16 sm:py-24">
+      <p class="legend">PDPA</p>
+      <h1 class="mt-5 max-w-3xl text-[clamp(2.25rem,1.6rem+3vw,3.75rem)] leading-[1.2] font-extrabold">
         นโยบายความเป็นส่วนตัว
       </h1>
-      <p class="mt-5 max-w-2xl text-lg leading-8 text-[#6e6e73]">
+      <p class="mt-5 max-w-2xl text-lead">
         ประกาศนี้อธิบายข้อมูลที่เราเก็บเมื่อคุณใช้เว็บไซต์หรือติดต่อ AI Studio TH
       </p>
-      <p class="mt-3 text-sm text-[#6e6e73]">
+      <p class="mt-3 text-sm">
         ปรับปรุงล่าสุด 7 กันยายน 2026
       </p>
 
-      <div class="mt-14 grid max-w-3xl gap-10 text-base leading-8 text-[#424245] [&_p]:leading-8 [&_p]:text-[#424245]">
-        <section>
-          <h2 class="text-2xl font-semibold text-[#1d1d1f]">
+      <div class="mt-14 max-w-3xl border-b border-ink">
+        <section class="border-t border-ink py-8">
+          <h2 class="text-h3">
             ข้อมูลติดต่อ
           </h2>
-          <p class="mt-3">
+          <p class="mt-3 text-base leading-[1.8]">
             แบบฟอร์มส่งชื่อ ช่องทางติดต่อ บริษัท
             และรายละเอียดงานที่คุณกรอกไปยังระบบลูกค้าสัมพันธ์ของเรา เพื่อให้ทีมงานตอบกลับ
             ประเมินสเปก และจัดทำข้อเสนอ
             เราไม่ส่งค่าที่กรอกในแบบฟอร์มไปยังเครื่องมือวิเคราะห์ ติดต่อเรื่องข้อมูลส่วนบุคคลได้ที่{" "}
-            <a data-cta="email" class="underline"></a>{" "}
+            <a data-cta="email" class="underline decoration-brand underline-offset-4"></a>{" "}
             ผู้ดำเนินการเว็บไซต์เป็นผู้ควบคุมข้อมูลตาม PDPA
           </p>
         </section>
-        <section>
-          <h2 class="text-2xl font-semibold text-[#1d1d1f]">
+        <section class="border-t border-ink py-8">
+          <h2 class="text-h3">
             Analytics แบบไม่ใช้คุกกี้
           </h2>
-          <p class="mt-3">
+          <p class="mt-3 text-base leading-[1.8]">
             เราใช้ PostHog ในโปรเจกต์ LocalAIThailand ที่โฮสต์ในสหรัฐอเมริกา
             เพื่อวัดหน้าเว็บ แหล่งอ้างอิง แคมเปญ ประเภทอุปกรณ์ การกดช่องทางติดต่อ
             และการเลื่อนถึง 50% หรือ 90% ของหน้า URL จะเหลือเฉพาะโดเมนและ path
             และเราไม่สร้างโปรไฟล์บุคคล
           </p>
-          <p class="mt-3">
+          <p class="mt-3 text-base leading-[1.8]">
             PostHog ทำงานแบบไม่ใช้คุกกี้ตลอดเวลา ไม่เก็บข้อมูลใน local storage หรือ
             session storage ไม่บันทึกภาพการใช้งาน และไม่แสดงกล่องขอความยินยอม
             ระบบนับผู้ชมด้วย hash ที่คำนวณบนเซิร์ฟเวอร์ และไม่รับค่าที่กรอกในแบบฟอร์ม
           </p>
         </section>
-        <section>
-          <h2 class="text-2xl font-semibold text-[#1d1d1f]">
+        <section class="border-t border-ink py-8">
+          <h2 class="text-h3">
             วัตถุประสงค์และผู้รับข้อมูล
           </h2>
-          <p class="mt-3">
+          <p class="mt-3 text-base leading-[1.8]">
             เราใช้ข้อมูลติดต่อเพื่อดำเนินการตามคำขอก่อนเข้าทำสัญญา
             และใช้สถิติรวมเพื่อปรับปรุงเว็บไซต์ตามประโยชน์โดยชอบด้วยกฎหมาย
             ผู้รับข้อมูลมีเฉพาะทีมงาน ผู้ให้บริการ CRM และ PostHog ในสหรัฐอเมริกา
             เราไม่ขายข้อมูลหรือใช้ข้อมูลของคุณฝึกโมเดล AI
           </p>
         </section>
-        <section>
-          <h2 class="text-2xl font-semibold text-[#1d1d1f]">
+        <section class="border-t border-ink py-8">
+          <h2 class="text-h3">
             ระยะเวลาและสิทธิของคุณ
           </h2>
-          <p class="mt-3">
+          <p class="mt-3 text-base leading-[1.8]">
             ข้อมูล Analytics เก็บไม่เกิน 12 เดือน ข้อมูลติดต่อที่ไม่เกิดสัญญาเก็บไม่เกิน 2 ปี
             ส่วนเอกสารลูกค้าเก็บตามกฎหมาย คุณขอเข้าถึง แก้ไข ลบ ระงับ คัดค้าน โอนย้าย
             หรือถอนความยินยอม และร้องเรียนต่อสำนักงานคณะกรรมการคุ้มครองข้อมูลส่วนบุคคลได้
           </p>
         </section>
-        <section>
-          <h2 class="text-2xl font-semibold text-[#1d1d1f]">
+        <section class="border-t border-ink py-8">
+          <h2 class="text-h3">
             ข้อมูลในระบบ Local AI
           </h2>
-          <p class="mt-3">
+          <p class="mt-3 text-base leading-[1.8]">
             การวัดเว็บไซต์แยกจากข้อมูลที่ rig หรือระบบ Local AI ของลูกค้าประมวลผล
             ข้อมูลในระบบที่ติดตั้งในเครื่องของลูกค้ายังคงอยู่ในขอบเขตที่ตกลงไว้ และไม่ถูกส่งให้
             PostHog

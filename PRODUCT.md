@@ -18,7 +18,7 @@ Slides, Image Studio, and Video Studio are paused and excluded from Mimir Suites
 
 ## Brand Personality
 
-Geeky, exact, and approachable. The site should feel like a premium bench notebook for a serious machine.
+Geeky, exact, and approachable. The site should feel like the faceplate and spec plate of a serious desk-side machine: aluminium, ink legends, one signal red.
 
 ## Anti-references
 
@@ -34,6 +34,7 @@ Geeky, exact, and approachable. The site should feel like a premium bench notebo
 - Write for the person who will sit at the machine.
 - Use motion only to clarify the specification story.
 - Make hardware-only and configured-system paths equally clear.
+- Borrow studio-gear form (faceplates, legends, level meters), never audio or creator-studio subject matter.
 
 ## Accessibility & Inclusion
 

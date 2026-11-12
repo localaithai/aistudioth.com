@@ -65,26 +65,26 @@ for (const post of archive) {
   class="mx-auto max-w-[76rem] px-[clamp(1.25rem,4vw,3rem)] pt-[clamp(1.5rem,4vw,3rem)] pb-[clamp(3rem,8vw,6rem)] leading-[1.85] text-ink wrap-anywhere"
   aria-labelledby="mimir-blog-index-title"
 >
-  <BlogBreadcrumb class="[&_ol]:justify-center" items={[{ label: "หน้าแรก", href: "/" }, { label: "ข่าวและอัปเดต" }]} />
+  <BlogBreadcrumb items={[{ label: "หน้าแรก", href: "/" }, { label: "ข่าวและอัปเดต" }]} />
 
   <header
-    class="grid animate-blog-rise justify-items-center gap-6 border-b border-line pb-[clamp(2rem,4vw,3rem)] text-center motion-reduce:animate-none"
+    class="grid animate-blog-rise gap-6 border-b border-ink pb-[clamp(2rem,4vw,3rem)] motion-reduce:animate-none"
   >
-    <div class="grid min-w-0 justify-items-center gap-3">
-      <p class="m-0 text-[0.9375rem] font-semibold text-ink-2">{siteName}</p>
+    <div class="grid min-w-0 gap-3">
+      <p class="legend m-0">{siteName}</p>
       <h1
         id="mimir-blog-index-title"
-        class="m-0 mx-auto max-w-[18ch] font-display text-[clamp(2.25rem,1.5rem+3.2vw,4.25rem)] leading-[1.3] font-[650] tracking-[-0.01em] text-balance"
+        class="m-0 max-w-[20ch] font-display text-[clamp(2.25rem,1.5rem+3.2vw,4.25rem)] leading-[1.3] font-extrabold tracking-[-0.01em] text-balance"
       >
         {indexTitle}
       </h1>
       <p
-        class="m-0 mx-auto mt-1 max-w-[62ch] text-[clamp(1.0625rem,1rem+0.3vw,1.1875rem)] leading-[1.8] text-pretty text-ink-2"
+        class="m-0 mt-1 max-w-[62ch] text-[clamp(1.0625rem,1rem+0.3vw,1.1875rem)] leading-[1.8] text-pretty text-ink-2"
       >
         {indexDescription}
       </p>
     </div>
-    <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+    <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
       {
         lead ? (
           <p class="m-0 text-sm text-ink-2">
@@ -98,7 +98,7 @@ for (const post of archive) {
       <a
         href="/blog/feed.xml"
         class:list={[
-          "inline-flex min-h-11 items-center gap-2 rounded-full border border-line px-4 text-sm font-semibold text-ink no-underline transition-colors hover:border-brand hover:bg-ink/4",
+          "inline-flex min-h-11 items-center gap-2 rounded-[4px] border border-ink px-4 text-sm font-semibold text-ink no-underline transition-colors hover:border-brand hover:bg-ink/4",
           focusRing,
         ]}
       >
@@ -123,12 +123,12 @@ for (const post of archive) {
     lead ? (
       <article
         class:list={[
-          "group relative my-[clamp(2rem,4vw,3.5rem)] grid animate-blog-rise gap-6 [animation-delay:80ms] motion-reduce:animate-none lg:grid-cols-1 lg:gap-9",
+          "group relative my-[clamp(2rem,4vw,3.5rem)] grid animate-blog-rise gap-6 [animation-delay:80ms] motion-reduce:animate-none lg:grid-cols-12 lg:items-center lg:gap-10",
           entryFocus,
         ]}
       >
         {lead.hero ? (
-          <div class:list={[media, "aspect-video lg:aspect-[2/1]"]}>
+          <div class:list={[media, "aspect-video lg:col-span-7"]}>
             <img
               src={lead.hero.src}
               alt={lead.hero.alt}
@@ -140,20 +140,25 @@ for (const post of archive) {
             />
           </div>
         ) : null}
-        <div class="grid min-w-0 content-center justify-items-start gap-4 mx-auto max-w-[46rem] justify-items-center text-center">
-          <p class="m-0 flex flex-wrap items-center gap-x-3 gap-y-1.5 justify-center">
+        <div
+          class:list={[
+            "grid min-w-0 content-center justify-items-start gap-4",
+            lead.hero ? "lg:col-span-5" : "lg:col-span-12",
+          ]}
+        >
+          <p class="m-0 flex flex-wrap items-center gap-x-3 gap-y-1.5">
             <span class={badge}>ล่าสุด</span>
             <span class={chip}>{categoryLabels[lead.kind]}</span>
           </p>
-          <h2 class="m-0 font-display text-[clamp(1.625rem,1.15rem+1.8vw,2.625rem)] leading-[1.4] font-[650] tracking-[-0.01em] text-balance transition-colors group-hover:text-brand">
+          <h2 class="m-0 font-display text-[clamp(1.625rem,1.15rem+1.8vw,2.625rem)] leading-[1.4] font-bold tracking-[-0.01em] text-balance transition-colors group-hover:text-brand">
             <a class={stretchLink} href={lead.path}>
               {lead.title}
             </a>
           </h2>
-          <p class="m-0 max-w-[52ch] text-[1.0625rem] leading-[1.85] text-pretty text-ink-2 mx-auto">
+          <p class="m-0 max-w-[52ch] text-[1.0625rem] leading-[1.85] text-pretty text-ink-2">
             {lead.summary ?? lead.description}
           </p>
-          <p class="m-0 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-sm leading-[1.6] text-ink-2 justify-center">
+          <p class="m-0 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-sm leading-[1.6] text-ink-2">
             <span>
               ข่าววันที่{" "}
               <time datetime={lead.published.toISOString()}>
@@ -196,7 +201,7 @@ for (const post of archive) {
       >
         <h2
           id={`mimir-blog-month-${monthIndex}`}
-          class="m-0 mb-8 text-center font-display text-[clamp(1.375rem,1.2rem+0.6vw,1.75rem)] leading-[1.6] font-semibold"
+          class="m-0 mb-8 border-t border-ink pt-6 font-display text-[clamp(1.375rem,1.2rem+0.6vw,1.75rem)] leading-[1.6] font-bold"
         >
           {month}
         </h2>

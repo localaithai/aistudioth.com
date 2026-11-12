@@ -9,7 +9,7 @@ const anchorOffset = "scroll-mt-26";
 
 function Callout({ children, title }: CalloutProps) {
   return (
-    <aside className="my-8 rounded-[1rem] border border-brand/30 bg-brand-tint px-6 py-5 *:last:mb-0">
+    <aside className="my-8 rounded-[6px] border border-ink bg-surface px-6 py-5 *:last:mb-0">
       {title ? (
         <p className={`${marker} m-0 mb-1.5 font-bold before:bg-brand`}>{title}</p>
       ) : null}
@@ -27,7 +27,7 @@ function Figure({ src, alt, caption, credit, sourceUrl }: FigureProps) {
         width={1200}
         height={675}
         loading="lazy"
-        className="block w-full rounded-[1rem] bg-surface"
+        className="block w-full rounded-[6px] bg-surface"
       />
       {caption || credit || sourceUrl ? (
         <figcaption className="mt-3 flex flex-wrap items-center gap-x-4 text-sm leading-[1.7] text-ink-2">
@@ -36,7 +36,7 @@ function Figure({ src, alt, caption, credit, sourceUrl }: FigureProps) {
           {sourceUrl ? (
             <a
               href={sourceUrl}
-              className={`inline-flex min-h-11 items-center text-brand ${focusRing}`}
+              className={`inline-flex min-h-11 items-center text-brand-deep ${focusRing}`}
             >
               แหล่งที่มาของภาพ
             </a>
@@ -50,7 +50,7 @@ function Figure({ src, alt, caption, credit, sourceUrl }: FigureProps) {
 function Table(props: ComponentPropsWithoutRef<"table">) {
   return (
     <section
-      className={`my-8 max-w-full overflow-x-auto rounded-[1rem] border border-line bg-surface ${focusRing}`}
+      className={`my-8 max-w-full overflow-x-auto rounded-[6px] border border-line bg-surface ${focusRing}`}
       aria-label="ตารางข้อมูล เลื่อนได้ในแนวนอน"
       tabIndex={0}
     >
@@ -69,7 +69,7 @@ export const mdxComponents = {
   h2: (props: ComponentPropsWithoutRef<"h2">) => (
     <h2
       {...props}
-      className={`mt-12 mb-4 font-display text-[clamp(1.375rem,1.2rem+0.8vw,1.875rem)] leading-[1.5] font-[650] tracking-[-0.005em] text-balance ${anchorOffset}`}
+      className={`mt-12 mb-4 font-display text-[clamp(1.375rem,1.2rem+0.8vw,1.875rem)] leading-[1.5] font-bold tracking-[-0.005em] text-balance ${anchorOffset}`}
     />
   ),
   h3: (props: ComponentPropsWithoutRef<"h3">) => (
@@ -99,16 +99,16 @@ export const mdxComponents = {
   a: (props: ComponentPropsWithoutRef<"a">) => (
     <a
       {...props}
-      className={`text-brand underline decoration-brand/45 decoration-1 underline-offset-[0.25em] transition-[text-decoration-color] hover:decoration-current ${focusRing}`}
+      className={`text-brand-deep underline decoration-brand/45 decoration-1 underline-offset-[0.25em] transition-[text-decoration-color] hover:decoration-current ${focusRing}`}
     />
   ),
   strong: (props: ComponentPropsWithoutRef<"strong">) => (
-    <strong {...props} className="font-[650]" />
+    <strong {...props} className="font-bold" />
   ),
   blockquote: (props: ComponentPropsWithoutRef<"blockquote">) => (
     <blockquote
       {...props}
-      className="mx-0 my-8 rounded-[1rem] border border-line bg-ink/4 px-6 py-5 text-[1.125em] *:last:mb-0"
+      className="mx-0 my-8 rounded-[6px] border border-line bg-ink/4 px-6 py-5 text-[1.125em] *:last:mb-0"
     />
   ),
   hr: (props: ComponentPropsWithoutRef<"hr">) => (
@@ -117,13 +117,13 @@ export const mdxComponents = {
   code: (props: ComponentPropsWithoutRef<"code">) => (
     <code
       {...props}
-      className="rounded-md bg-ink/4 px-1.5 py-0.5 text-[0.875em]"
+      className="rounded-[3px] bg-ink/4 px-1.5 py-0.5 text-[0.875em]"
     />
   ),
   pre: (props: ComponentPropsWithoutRef<"pre">) => (
     <pre
       {...props}
-      className="max-w-full overflow-x-auto rounded-[1rem] border border-line bg-surface px-5 py-4 text-sm [&_code]:bg-transparent [&_code]:p-0"
+      className="max-w-full overflow-x-auto rounded-[6px] border border-line bg-surface px-5 py-4 text-sm [&_code]:bg-transparent [&_code]:p-0"
     />
   ),
   th: (props: ComponentPropsWithoutRef<"th">) => (

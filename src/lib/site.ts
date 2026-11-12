@@ -11,7 +11,7 @@ export const site = {
     "AI Studio TH คือผู้ประกอบ AI rig บนโต๊ะสำหรับรัน model ในเครื่อง ปรับสเปกตาม VRAM และ runtime สำหรับ developer ในไทย.",
   description:
     "AI Studio TH คือผู้ประกอบ AI rig บนโต๊ะสำหรับรัน model ในเครื่อง ปรับสเปกตาม VRAM และ runtime สำหรับ developer ในไทย.",
-  themeColor: "#fbfbfd",
+  themeColor: "#e4e5e7",
   social: { ogImage: "/opengraph-image" },
   legalDisclosure: null,
   primaryCta: {

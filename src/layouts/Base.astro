@@ -8,7 +8,7 @@ import "@/styles/global.css";
 
 type Props = { head: PageHead; bodyClass?: string };
 
-const { head, bodyClass = "bg-white text-[#1d1d1f]" } = Astro.props;
+const { head, bodyClass = "bg-page text-ink" } = Astro.props;
 const { openGraph: og, twitter } = head;
 const googleVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 const bingVerification = import.meta.env.PUBLIC_BING_SITE_VERIFICATION;
@@ -90,11 +90,12 @@ const bingVerification = import.meta.env.PUBLIC_BING_SITE_VERIFICATION;
     />
     <script type="application/ld+json" set:html={JSON.stringify(siteGraph())} />
     <link rel="preconnect" href="https://assets.mimir.business" />
-    <Font cssVariable="--font-bai" preload={[{ weight: 400 }, { weight: 600 }]} />
+    <Font cssVariable="--font-k2d" preload={[{ weight: 400 }, { weight: 800 }]} />
+    <Font cssVariable="--font-shoulders" preload={[{ weight: 800 }]} />
   </head>
   <body
     class:list={[
-      "overflow-x-hidden font-[family-name:var(--font-bai),'Bai_Jamjuree',-apple-system,sans-serif] font-normal tracking-[-0.005em] antialiased [-webkit-tap-highlight-color:transparent] selection:bg-[rgba(0,102,204,0.15)] selection:text-[#1d1d1f]",
+      "overflow-x-hidden font-sans font-normal antialiased [-webkit-tap-highlight-color:transparent] selection:bg-brand/20 selection:text-ink",
       bodyClass,
     ]}
   >

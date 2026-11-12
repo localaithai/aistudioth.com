@@ -20,14 +20,18 @@ const breadcrumbs = JSON.stringify({
 }).replaceAll("<", "\\u003c");
 ---
 
-<nav aria-label="Breadcrumb" class="container-wide pt-3 text-sm text-[#6e6e73]">
-  <ol class="flex items-center gap-2">
-    <li>
-      <a href="/" class="inline-flex min-h-11 items-center hover:text-[#06c]">Home</a>
-    </li>
-    <li aria-hidden="true">/</li>
-    <li aria-current="page" class="text-[#1d1d1f]">{sitelinkName}</li>
-  </ol>
-</nav>
-<h1 class="sr-only">{sitelinkName}</h1>
+<div class="border-b border-ink bg-page">
+  <div class="container-wide pt-3 pb-10 sm:pb-14">
+    <nav aria-label="Breadcrumb" class="text-sm text-ink-2">
+      <ol class="flex items-center gap-2">
+        <li>
+          <a href="/" class="inline-flex min-h-11 items-center hover:text-brand-deep">Home</a>
+        </li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page" class="text-ink">{sitelinkName}</li>
+      </ol>
+    </nav>
+    <h1 class="mt-6 font-readout text-title font-extrabold text-ink uppercase">{sitelinkName}</h1>
+  </div>
+</div>
 <script type="application/ld+json" set:html={breadcrumbs} />

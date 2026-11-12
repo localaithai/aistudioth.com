@@ -1,8 +1,18 @@
 const sharedAssets: Readonly<Record<string, string>> = {
-  "/photography/hero.webp":
-    "https://assets.mimir.business/assets/sites/aistudioth.com/general/hero.ff15e2bf544a.webp",
-  "/photography/hero-mobile.webp":
-    "https://assets.mimir.business/assets/sites/aistudioth.com/general/hero-mobile.4f88ac1551b9.webp",
+  "/photography/hero-ai-rig.webp":
+    "https://assets.mimir.business/assets/sites/aistudioth.com/generated/hero-ai-rig.626463a2f6c5.webp",
+  "/photography/build-consultation.webp":
+    "https://assets.mimir.business/assets/sites/aistudioth.com/generated/build-consultation.f90ec2c32899.webp",
+  "/photography/memory-planning.webp":
+    "https://assets.mimir.business/assets/sites/aistudioth.com/generated/memory-planning.a533e249079c.webp",
+  "/photography/runtime-bench.webp":
+    "https://assets.mimir.business/assets/sites/aistudioth.com/generated/runtime-bench.95d0dcb533a4.webp",
+  "/photography/developer-desk.webp":
+    "https://assets.mimir.business/assets/sites/aistudioth.com/generated/developer-desk.8c228b267af6.webp",
+  "/photography/research-studio.webp":
+    "https://assets.mimir.business/assets/sites/aistudioth.com/generated/research-studio.e22b498b66c3.webp",
+  "/photography/airflow-build.webp":
+    "https://assets.mimir.business/assets/sites/aistudioth.com/generated/airflow-build.7cfca9157099.webp",
   "/nvidia-dgx-spark.jpg":
     "https://assets.mimir.business/assets/sites/mimir.business/presentations/nvidia-dgx-spark.8d2f40a53de1.jpg",
   "/msi-edgexpert.png":
