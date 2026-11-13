@@ -1,0 +1,42 @@
+---
+title: "AMD เผยวิธีรัน xDiT บน RDNA 4"
+description: "วัด xDiT บน 1 2 4 GPU โดยตรึง container model seed และ cache แยก offload sharding งานแยก และ latency ของ request เดียว"
+kind: "news"
+query: "benchmark xDiT 1 2 4 RDNA 4 แยก cold warm PCIe อย่างไร"
+cluster: "/benchmarks/"
+source: "amd-rdna4-multigpu-diffusion"
+published: "2026-11-14"
+reviewed: "2026-11-14"
+newsDate: "2026-11-02"
+summary: "benchmark xDiT ควรแยก cold start จาก warm run และแยกหนึ่ง request ที่กระจายหลาย GPU จากหลาย request ที่รันอิสระ มิฉะนั้นจะอธิบายเหตุของ speedup ไม่ได้"
+faq: [{"question":"ควรเอา cold run รวมเฉลี่ยกับ warm run หรือไม่","answer":"ควรรายงานแยกเพื่อให้เห็นต้นทุนเริ่มงานและประสิทธิภาพงานต่อเนื่อง แล้วจึงคำนวณตามสัดส่วนการใช้งานที่ต้องการ"},{"question":"เพิ่ม GPU แล้วเร็วขึ้นแปลว่าสเกลคำนวณดีอย่างเดียวหรือไม่","answer":"ไม่จำเป็น อาจเลิก CPU offload ได้หรือเปลี่ยนวิธีโหลดด้วย ต้องบันทึกความต่างเหล่านี้ก่อนตีความ"}]
+citations: [{"title":"How to Scale Diffusion Inference Across AMD RDNA 4 GPUs","url":"https://rocm.blogs.amd.com/artificial-intelligence/diffusion-xdit-rdna4/README.html","publisher":"AMD ROCm Blogs","published":"2026-11-02","accessed":"2026-11-13"},{"title":"FP8 GEMM Optimization on AMD RDNA 4 Architecture","url":"https://rocm.blogs.amd.com/software-tools-optimization/rdna-fp8-gemm/README.html","publisher":"AMD ROCm Blogs","published":"2026-10-23","accessed":"2026-11-13"}]
+hero: {"src":"https://assets.mimir.business/assets/sites/aistudioth.com/generated/runtime-bench.95d0dcb533a4.webp","alt":"ภาพสร้างด้วย AI ของคอมพิวเตอร์ตั้งโต๊ะ แล็ปท็อป และสมุดบนโต๊ะ","caption":"ภาพประกอบการทดสอบ runtime ที่สร้างด้วย AI ไม่ใช่ภาพเครื่องหรือผล benchmark ในข่าว","credit":"AI Studio TH / Mimir, AI-generated illustration","sourceUrl":"https://aistudioth.com/benchmarks"}
+videos: [{"url":"https://www.youtube.com/watch?v=crEztVjfAPM","title":"Advancing AI 2026 | Build What's Next with @AMD","publisher":"AMD","published":"2026-07-23","context":true}]
+draft: false
+---
+
+อย่าเทียบจำนวนการ์ดโดยเปลี่ยนโหมดโหลดไปพร้อมกันโดยไม่จด หากรอบหนึ่งใช้ CPU offload แต่อีกรอบไม่ต้องใช้ ผลต่างอธิบายทั้งเรื่อง capacity และการแบ่งงาน ไม่ใช่ประสิทธิภาพข้าม GPU เพียงอย่างเดียว
+
+## ข่าวนี้ยืนยันอะไร
+
+AMD ลงวิธีรัน xDiT บน RDNA 4 หลายการ์ดวันที่ 2 พฤศจิกายน 2026 [ตามประกาศหลัก](https://rocm.blogs.amd.com/artificial-intelligence/diffusion-xdit-rdna4/README.html) บท FP8 GEMM ก่อนหน้า [แหล่งข้อมูลอีกหน้าหนึ่ง](https://rocm.blogs.amd.com/software-tools-optimization/rdna-fp8-gemm/README.html) เป็นบริบทระดับ kernel และไม่ได้วัด latency ของ pipeline สร้างภาพทั้งหมด
+
+## ชุดรันที่ทำให้แยกสาเหตุได้
+
+ตารางต่อไปนี้เป็นเกณฑ์ที่เราเสนอให้ใช้ตัดสินใจ ไม่ใช่ผลทดสอบที่ Mimir วัด
+
+| ชุดทดลอง | คงค่าอะไร | รายงานอะไร |
+| --- | --- | --- |
+| cold | container/model และ cache เริ่มต้น | download compile load และ generation แยกช่วง |
+| warm | process และ cache พร้อมแบบเดียวกัน | latency ต่อ request กับ VRAM สูงสุด |
+| กระจายหนึ่ง request | seed resolution steps และ precision | วิธี sharding และต้นทุนสื่อสาร |
+| request อิสระ | จำนวนงานและรูปแบบผลเท่ากัน | throughput รวมกับเวลาของแต่ละงาน |
+
+## เก็บคุณภาพภาพไว้ข้างตัวเลขเวลา
+
+เราเสนอให้บันทึกภาพผลลัพธ์คู่กับ config ทุกครั้งที่เปิด quantization หรือ step caching กำหนด prompt ที่ตรวจรายละเอียดได้ก่อนทดลอง แล้วระบุว่าความต่างระดับใดยอมรับได้ อย่าเลือกเฉพาะภาพที่ดูดีมาอธิบายทั้งชุด
+
+เก็บผัง PCIe และภาระ host RAM ของเครื่องไว้ด้วย เพื่อให้คนอื่นรู้ขอบเขตการทำซ้ำ งานนี้เป็นการทดสอบเครื่องมือภายนอก ไม่ใช่บริการ Image/Video Studio ของ Mimir ดูแบบจัดผลใน [หน้ารวบรวม benchmarks](/benchmarks/)
+
+วิดีโอทางการ [Advancing AI 2026 | Build What's Next with @AMD](https://www.youtube.com/watch?v=crEztVjfAPM) เผยแพร่ 2026-07-23 ใช้เป็นบริบทของแพลตฟอร์ม ไม่ใช่ผลทดสอบเครื่องของผู้ซื้อ

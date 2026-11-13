@@ -1,0 +1,42 @@
+---
+title: "AMD เผย Quark quantize ตอนโหลด"
+description: "เทียบสูตร Quark online quantization ด้วย checkpoint เดียว บันทึก layer exclusions kernel เวลาโหลด memory peak และคุณภาพก่อนเลือกสูตร"
+kind: "news"
+query: "ทดลอง Quark online quantization หลายสูตรอย่างทำซ้ำได้อย่างไร"
+cluster: "/benchmarks/"
+source: "amd-quark-online-quantization"
+published: "2026-11-14"
+reviewed: "2026-11-14"
+newsDate: "2026-11-05"
+summary: "การทดลองสูตร quantize ตอนโหลดควรเปลี่ยน config ทีละรายการและตรึง checkpoint กับ runtime วัดเวลาโหลดและคุณภาพร่วมกันก่อนเลือกสูตรสุดท้าย"
+faq: [{"question":"online quantization ลดเวลาเริ่มทุกครั้งหรือไม่","answer":"ไม่ควรสรุป ต้องวัดการอ่าน checkpoint การแปลง และเวลาเริ่มรับคำขอเทียบกับเส้นทางที่เลือก"},{"question":"ควรเปลี่ยน checkpoint พร้อมสูตร quantization หรือไม่","answer":"หากต้องการหาผลของสูตร ควรตรึง checkpoint ก่อน แล้วแยกการเปลี่ยนโมเดลเป็นอีกการทดลองหนึ่ง"}]
+citations: [{"title":"Online Quantization: Smooth Path from One Checkpoint to Any Desired Serving Scenario","url":"https://rocm.blogs.amd.com/artificial-intelligence/online_quantization/README.html","publisher":"AMD ROCm Blogs","published":"2026-11-05","accessed":"2026-11-13"},{"title":"Efficiently Serving NVFP4 Models on AMD Instinct MI350X/MI355X Accelerators via Online NVFP4 to Quark MXFP4 Requantization","url":"https://rocm.blogs.amd.com/software-tools-optimization/nvfp4-to-mxfp4/README.html","publisher":"AMD ROCm Blogs","published":"2026-09-08","accessed":"2026-11-13"}]
+hero: {"src":"https://assets.mimir.business/assets/sites/aistudioth.com/generated/runtime-bench.95d0dcb533a4.webp","alt":"ภาพสร้างด้วย AI ของคอมพิวเตอร์ตั้งโต๊ะ แล็ปท็อป และสมุดบนโต๊ะ","caption":"ภาพประกอบการทดสอบ runtime ที่สร้างด้วย AI ไม่ใช่ภาพเครื่องหรือผล benchmark ในข่าว","credit":"AI Studio TH / Mimir, AI-generated illustration","sourceUrl":"https://aistudioth.com/benchmarks"}
+videos: [{"url":"https://www.youtube.com/watch?v=0LurDa6ERCM","title":"ROCm Open Software for AI: Advanced Insights S2E7","publisher":"AMD","published":"2025-10-22","context":true}]
+draft: false
+---
+
+เริ่มจาก baseline ที่รันได้ แล้วเก็บ config เป็นไฟล์สำหรับแต่ละสูตร ไม่แก้ค่าหลายจุดระหว่างรันโดยอาศัยความจำ เพราะผลที่เร็วขึ้นอาจมาจาก backend หรือ cache ที่เปลี่ยนแทนสูตร quantization
+
+## ข่าวนี้ยืนยันอะไร
+
+AMD อธิบาย Quark online quantization วันที่ 5 พฤศจิกายน 2026 [ตามประกาศหลัก](https://rocm.blogs.amd.com/artificial-intelligence/online_quantization/README.html) ส่วนงาน NVFP4 ไป MXFP4 เดือนกันยายน [แหล่งข้อมูลอีกหน้าหนึ่ง](https://rocm.blogs.amd.com/software-tools-optimization/nvfp4-to-mxfp4/README.html) แสดงตัวอย่าง requantize ตอนโหลดบนชุดที่ระบุ ไม่ได้ทำให้ทุก format มีคุณภาพเท่ากัน
+
+## ผลแต่ละสูตรควรมีคอลัมน์ใด
+
+ตารางต่อไปนี้เป็นเกณฑ์ที่เราเสนอให้ใช้ตัดสินใจ ไม่ใช่ผลทดสอบที่ Mimir วัด
+
+| กลุ่มค่า | ข้อมูลที่เก็บ | เหตุผล |
+| --- | --- | --- |
+| ต้นทาง | checkpoint revision และไฟล์ที่ใช้ | ยืนยันว่าเทียบจากน้ำหนักเดียวกัน |
+| สูตร | precision รายชั้นและ exclusions | เห็นว่าส่วนใดยังใช้ความแม่นยำสูง |
+| ระบบรัน | engine build kernel และ flags | ไม่ปนผลจาก runtime คนละชุด |
+| ผลวัด | เวลาโหลด memory peak และงานคุณภาพ | สูตรที่ใช้ memory น้อยอาจไม่เหมาะกับโจทย์ |
+
+## คัดสูตรก่อนสร้างเส้นทางใช้งานประจำ
+
+ข้อเสนอของเราคือทดสอบงานที่แพ้การลด precision ได้ง่าย เช่น คำตอบที่มีรูปแบบตายตัวและการเรียกเครื่องมือ แล้วเก็บกรณีไม่ผ่านคู่กับ latency ไม่มีเหตุให้ถือว่าสูตรที่เล็กที่สุดเป็นผู้ชนะก่อนเห็นงานจริง
+
+online ในที่นี้คือช่วงโหลดน้ำหนัก จึงควรจับเวลา reload และการเริ่ม process ด้วย เมื่อเลือกสูตรได้แล้วค่อยกำหนดวิธีเก็บ artifact และรันซ้ำให้ชัด เทียบรูปแบบจดผลกับ [แนวทาง benchmark ที่ทำซ้ำได้](/benchmarks/)
+
+วิดีโอทางการ [ROCm Open Software for AI: Advanced Insights S2E7](https://www.youtube.com/watch?v=0LurDa6ERCM) เผยแพร่ 2025-10-22 ใช้เป็นบริบทของแพลตฟอร์ม ไม่ใช่ผลทดสอบเครื่องของผู้ซื้อ

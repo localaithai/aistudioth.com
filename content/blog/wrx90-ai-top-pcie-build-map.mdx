@@ -1,0 +1,42 @@
+---
+title: "GIGABYTE เปิด WRX90 AI TOP สำหรับ rig"
+description: "วาง build map ของ WRX90 AI TOP ก่อนสั่ง GPU แยก direct slot riser NIC NVMe พื้นที่การ์ด สายไฟ และผล peer transfer ของ runtime"
+kind: "news"
+query: "วางผัง PCIe WRX90 AI TOP สำหรับ AI rig หลาย GPU อย่างไร"
+cluster: "/builds/"
+source: "gigabyte-wrx90-ai-top"
+published: "2026-11-14"
+reviewed: "2026-11-14"
+newsDate: "2026-10-30"
+summary: "ก่อนสั่งการ์ดให้ WRX90 AI TOP ให้เขียนผัง direct slot และ expansion พร้อมจองช่องให้ NIC กับ NVMe แล้วตรวจความหนาการ์ด ไฟ และเส้นทางข้อมูลของ runtime"
+faq: [{"question":"ระบบเห็น GPU ครบแปลว่าโมเดลใช้ทุกตัวแล้วหรือไม่","answer":"ไม่เสมอ ต้องตรวจการตั้งค่า parallelism worker และการส่งข้อมูลของ runtime ที่รันจริง"},{"question":"ควรจองช่อง NIC กับ NVMe ก่อนใส่ GPU หรือไม่","answer":"ควรวางทุกอุปกรณ์ในผังเดียวกัน เพื่อไม่ให้การขยาย GPU ปิดทางของ storage เครือข่าย หรือการซ่อมบำรุง"}]
+citations: [{"title":"GIGABYTE Advances Local AI Infrastructure with WRX90 AI TOP Motherboard","url":"https://www.gigabyte.com/press/news/2465","publisher":"GIGABYTE","published":"2026-10-30","accessed":"2026-11-13"},{"title":"AMD Introduces New Zen 5 based Ryzen Threadripper PRO 9000 WX-Series Processors","url":"https://www.amd.com/en/blogs/2025/amd-introduces-new-zen-5-based-ryzen-threadripper-pro.html","publisher":"AMD","published":"2025-07-17","accessed":"2026-11-13"}]
+hero: {"src":"https://assets.mimir.business/assets/sites/aistudioth.com/generated/runtime-bench.95d0dcb533a4.webp","alt":"ภาพสร้างด้วย AI ของคอมพิวเตอร์ตั้งโต๊ะ แล็ปท็อป และสมุดบนโต๊ะ","caption":"ภาพประกอบการทดสอบ runtime ที่สร้างด้วย AI ไม่ใช่ภาพเครื่องหรือผล benchmark ในข่าว","credit":"AI Studio TH / Mimir, AI-generated illustration","sourceUrl":"https://aistudioth.com/benchmarks"}
+videos: [{"url":"https://www.youtube.com/watch?v=crEztVjfAPM","title":"Advancing AI 2026 | Build What's Next with @AMD","publisher":"AMD","published":"2026-07-23","context":true}]
+draft: false
+---
+
+วาดเครื่องที่จะประกอบจริงก่อนเลือกจำนวน GPU ใส่การ์ดทุกใบและสายทุกเส้นลงในผัง รวมของที่ต้องใช้เพื่อ boot ดูแล และเก็บโมเดล เพื่อไม่ให้แผนขยายกินพื้นที่ที่ส่วนอื่นจำเป็นต้องใช้
+
+## ข่าวนี้ยืนยันอะไร
+
+GIGABYTE เปิด WRX90 AI TOP วันที่ 30 ตุลาคม 2026 พร้อมทางขยาย PCIe/MCIO [ตามประกาศหลัก](https://www.gigabyte.com/press/news/2465) ส่วน AMD อธิบายพื้นฐาน Threadripper PRO [แหล่งข้อมูลอีกหน้าหนึ่ง](https://www.amd.com/en/blogs/2025/amd-introduces-new-zen-5-based-ryzen-threadripper-pro.html) ไว้ก่อนแล้ว ทั้งสองไม่ใช่ผลทดสอบ peer transfer ของ rig ที่เราประกอบ
+
+## build map ที่ควรเสร็จก่อนกดสั่ง
+
+ตารางต่อไปนี้เป็นเกณฑ์ที่เราเสนอให้ใช้ตัดสินใจ ไม่ใช่ผลทดสอบที่ Mimir วัด
+
+| ชั้นผัง | สิ่งที่ต้องวาด | สิ่งที่ต้องตรวจภายหลัง |
+| --- | --- | --- |
+| physical | ความหนาการ์ด ช่องว่าง riser และเคส | เสียบสายและถอดซ่อมได้จริง |
+| power | PSU หัวต่อและสายแต่ละการ์ด | โหลดต่อเนื่องไม่เกินกรอบที่ออกแบบ |
+| PCIe | slot, expansion, NIC และ NVMe | ความกว้างลิงก์ที่ OS เห็นเมื่อใส่ครบ |
+| runtime | วิธีแบ่งโมเดลและการส่งข้อมูล | peer transfer กับงานตัวแทน ไม่ใช่แค่เห็น GPU |
+
+## ประกอบเป็นขั้นเพื่อหาจุดจำกัดได้
+
+เราเสนอให้เริ่มจาก configuration ที่เล็กและรันซ้ำได้ เก็บ topology และผลทดสอบก่อนเพิ่มการ์ดแต่ละชุด หากผลถอยลงจะได้รู้ว่าส่วนใดเปลี่ยน ไม่ต้องไล่ทั้งเครื่องพร้อมกัน
+
+จด BIOS firmware และ DIMM ที่ใช้ควบคู่กับผัง เมื่อเครื่องมือเห็น GPU ครบแล้ว ยังต้องตรวจว่าโมเดลใช้วิธี parallelism ที่ตั้งใจไว้ อย่ารวม VRAM เป็นผลความจุอัตโนมัติ เริ่มวางรายการใน [แนวทางเลือก AI rig build](/builds/)
+
+วิดีโอทางการ [Advancing AI 2026 | Build What's Next with @AMD](https://www.youtube.com/watch?v=crEztVjfAPM) เผยแพร่ 2026-07-23 ใช้เป็นบริบทของแพลตฟอร์ม ไม่ใช่ผลทดสอบเครื่องของผู้ซื้อ

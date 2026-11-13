@@ -1,0 +1,42 @@
+---
+title: "NVIDIA เพิ่มเครื่องมือใน CUDA 13.5"
+description: "ย้าย benchmark ไป CUDA 13.5 โดยตรึง target architecture driver mode libraries framework และ container แยกความถูกต้องจาก speedup"
+kind: "news"
+query: "ย้าย benchmark มา CUDA 13.5 ให้ทำซ้ำได้ต้องบันทึกอะไร"
+cluster: "/benchmarks/"
+source: "nvidia-cuda-135-ga"
+published: "2026-11-14"
+reviewed: "2026-11-14"
+newsDate: "2026-11-04"
+summary: "ก่อนเทียบความเร็วบน CUDA 13.5 ให้พิสูจน์ว่า build และผลลัพธ์ยังถูกต้องใน target เดียวกัน เก็บ toolkit driver framework และ library versions ไว้กับผลทุกชุด"
+faq: [{"question":"ใช้ compiler รุ่นใหม่แล้วต้องทดสอบผลก่อนจับเวลาหรือไม่","answer":"ควรทดสอบ เพราะความเร็วที่ดีขึ้นไม่มีความหมายหากเส้นทางคำนวณหรือผลลัพธ์ไม่ตรงเกณฑ์งาน"},{"question":"ผลจาก feature preview รวมกับ baseline ได้เลยหรือไม่","answer":"ควรแยกเงื่อนไขและบันทึกให้ชัด เพื่อให้ผู้อื่นทำซ้ำและรู้ว่าความต่างมาจากการเปิด feature ใด"}]
+citations: [{"title":"NVIDIA CUDA 13.5 Brings NVIDIA Vera Rubin GA Support","url":"https://developer.nvidia.com/blog/nvidia-cuda-13-5-brings-nvidia-vera-rubin-ga-support/","publisher":"NVIDIA","published":"2026-11-04","accessed":"2026-11-13"},{"title":"Code, Test, and Deploy on One Machine with NVIDIA RTX Spark","url":"https://developer.nvidia.com/blog/code-test-and-deploy-on-one-machine-with-nvidia-rtx-spark/","publisher":"NVIDIA","published":"2026-10-16","accessed":"2026-11-13"}]
+hero: {"src":"https://assets.mimir.business/assets/sites/aistudioth.com/generated/runtime-bench.95d0dcb533a4.webp","alt":"ภาพสร้างด้วย AI ของคอมพิวเตอร์ตั้งโต๊ะ แล็ปท็อป และสมุดบนโต๊ะ","caption":"ภาพประกอบการทดสอบ runtime ที่สร้างด้วย AI ไม่ใช่ภาพเครื่องหรือผล benchmark ในข่าว","credit":"AI Studio TH / Mimir, AI-generated illustration","sourceUrl":"https://aistudioth.com/benchmarks"}
+videos: [{"url":"https://www.youtube.com/watch?v=v-NGxyPjcrE","title":"NVIDIA GTC Berlin 2026 Keynote With CEO Jensen Huang","publisher":"NVIDIA","published":"2026-10-23","context":true}]
+draft: false
+---
+
+เก็บ baseline เดิมที่สร้างใหม่ได้ก่อนอัปเกรด แล้วเปลี่ยน dependency เป็นชุดที่ระบุชัด หากเพิ่ม feature preview พร้อมเปลี่ยน framework จะยังแยกไม่ได้ว่าผลต่างเกิดจากส่วนใด
+
+## ข่าวนี้ยืนยันอะไร
+
+NVIDIA ออก CUDA 13.5 วันที่ 4 พฤศจิกายน 2026 [ตามประกาศหลัก](https://developer.nvidia.com/blog/nvidia-cuda-13-5-brings-nvidia-vera-rubin-ga-support/) พร้อมการรองรับแพลตฟอร์มและเครื่องมือเพิ่มเติม ส่วนคู่มือ RTX Spark เดือนตุลาคม [แหล่งข้อมูลอีกหน้าหนึ่ง](https://developer.nvidia.com/blog/code-test-and-deploy-on-one-machine-with-nvidia-rtx-spark/) อธิบาย stack บน Windows on Arm ซึ่งยังต้องตรวจ build ของงานเราเอง
+
+## manifest ที่แนบกับผล benchmark
+
+ตารางต่อไปนี้เป็นเกณฑ์ที่เราเสนอให้ใช้ตัดสินใจ ไม่ใช่ผลทดสอบที่ Mimir วัด
+
+| รายการ | สิ่งที่ต้องตรึง | ข้อผิดพลาดที่ช่วยแยก |
+| --- | --- | --- |
+| build target | GPU/CPU architecture และ compiler flags | ใช้ binary หรือเป้าหมายคนละชุด |
+| driver | เวอร์ชันและโหมดที่รองรับ | โปรแกรมคาดโหมดจากเครื่องเดิม |
+| runtime | toolkit libraries framework และ image digest | เปลี่ยนหลาย dependency โดยไม่มีร่องรอย |
+| ชุดวัด | input seed warmup และการตรวจผล | เวลาลดลงเพราะงานหรือผลลัพธ์เปลี่ยน |
+
+## ผ่านความถูกต้องก่อนประกาศว่ารุ่นใหม่เร็วขึ้น
+
+เราเสนอให้รันชุดตรวจผลที่ครอบคลุมเส้นทางสำคัญก่อนจับเวลา จากนั้นใช้ input และวิธี warmup เดิมเพื่อเทียบ throughput กับ latency จด feature ที่เปิดเพิ่มเป็นเงื่อนไขแยก และไม่เรียกส่วนที่เป็น preview ว่าพร้อม production ตาม toolkit ทั้งชุด
+
+บน Rubin ให้ตรวจข้อกำหนด driver mode แทนสมมติว่าใช้ TCC ตามเครื่องเก่าได้ เก็บคำสั่ง build และ manifest เป็น artifact คู่กับผล แล้วเชื่อมเข้า [สมุด benchmark ของ rig](/benchmarks/)
+
+วิดีโอทางการ [NVIDIA GTC Berlin 2026 Keynote With CEO Jensen Huang](https://www.youtube.com/watch?v=v-NGxyPjcrE) เผยแพร่ 2026-10-23 ใช้เป็นบริบทของแพลตฟอร์ม ไม่ใช่ผลทดสอบเครื่องของผู้ซื้อ

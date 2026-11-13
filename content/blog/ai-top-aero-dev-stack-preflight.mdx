@@ -1,0 +1,42 @@
+---
+title: "GIGABYTE เปิด AI TOP AERO รัน local AI"
+description: "ทำ preflight stack บน AI TOP AERO ด้วย OS Arm Python wheels model runtime และ libraries แยก model fit จากเครื่องมือพัฒนาที่ใช้งานได้"
+kind: "news"
+query: "ตั้ง dev stack local AI บน AI TOP AERO N1X ต้องเช็กอะไร"
+cluster: "/models/"
+source: "gigabyte-ai-top-aero-launch"
+published: "2026-11-14"
+reviewed: "2026-11-14"
+newsDate: "2026-11-10"
+summary: "ก่อนย้าย dev stack ไป AI TOP AERO ให้ตรวจสถาปัตยกรรมของ package และ runtime ทุกส่วน การโหลดโมเดลพอดี memory ไม่ได้ยืนยันว่าเครื่องมือพัฒนาทั้ง workflow ใช้งานได้"
+faq: [{"question":"โมเดลโหลดได้แล้วข้ามการทดสอบ package ได้หรือไม่","answer":"ไม่ควร workflow อาจยังติดที่ preprocessing ส่วนขยาย หรือแอป client ที่ inference demo ไม่ได้เรียก"},{"question":"ควรบันทึก package version อย่างเดียวพอหรือไม่","answer":"ควรเก็บ architecture แหล่ง wheel หรือ build และ library ที่เกี่ยวข้องด้วย เพื่อให้ติดตั้งซ้ำได้ตรงกัน"}]
+citations: [{"title":"GIGABYTE Expands Its Local AI Portfolio with the Launch of AI TOP AERO Powered by NVIDIA RTX SPARK","url":"https://www.gigabyte.com/press/news/2467","publisher":"GIGABYTE","published":"2026-11-11","accessed":"2026-11-13"},{"title":"NVIDIA RTX Spark PCs Available Today: A New Beginning for Windows PCs","url":"https://nvidianews.nvidia.com/news/nvidia-rtx-spark-pcs-available-today-a-new-beginning-for-windows-pcs","publisher":"NVIDIA","published":"2026-10-16","accessed":"2026-11-13"}]
+hero: {"src":"https://assets.mimir.business/assets/sites/aistudioth.com/generated/runtime-bench.95d0dcb533a4.webp","alt":"ภาพสร้างด้วย AI ของคอมพิวเตอร์ตั้งโต๊ะ แล็ปท็อป และสมุดบนโต๊ะ","caption":"ภาพประกอบการทดสอบ runtime ที่สร้างด้วย AI ไม่ใช่ภาพเครื่องหรือผล benchmark ในข่าว","credit":"AI Studio TH / Mimir, AI-generated illustration","sourceUrl":"https://aistudioth.com/benchmarks"}
+videos: [{"url":"https://www.youtube.com/watch?v=v-NGxyPjcrE","title":"NVIDIA GTC Berlin 2026 Keynote With CEO Jensen Huang","publisher":"NVIDIA","published":"2026-10-23","context":true}]
+draft: false
+---
+
+เริ่มจากโปรเจกต์เล็กที่เรียกส่วนสำคัญครบ แล้วติดตั้งจาก manifest บนเครื่องใหม่ เก็บรายการที่ต้อง build เองหรือใช้วิธีเฉพาะ แทนการเริ่มจากการย้าย environment เดิมทั้งชุด
+
+## ข่าวนี้ยืนยันอะไร
+
+AI TOP AERO เปิดตัววันที่ 10 พฤศจิกายน ตามข่าว GIGABYTE วันที่ 11 พฤศจิกายน 2026 [ตามประกาศหลัก](https://www.gigabyte.com/press/news/2467) ประกาศ RTX Spark ก่อนหน้า [แหล่งข้อมูลอีกหน้าหนึ่ง](https://nvidianews.nvidia.com/news/nvidia-rtx-spark-pcs-available-today-a-new-beginning-for-windows-pcs) ให้บริบท Windows และ Grace/Blackwell แต่ยังต้องตรวจ dependencies ของแต่ละโปรเจกต์
+
+## preflight จากติดตั้งถึงเรียกโมเดล
+
+ตารางต่อไปนี้เป็นเกณฑ์ที่เราเสนอให้ใช้ตัดสินใจ ไม่ใช่ผลทดสอบที่ Mimir วัด
+
+| จุดตรวจ | สิ่งที่บันทึก | ลองอะไรให้ผ่าน |
+| --- | --- | --- |
+| OS/architecture | รุ่น OS และสถาปัตยกรรม process | เครื่องมือที่เรียกไม่สลับ build โดยไม่รู้ตัว |
+| Python packages | รุ่น wheel และของที่ build เอง | ติดตั้งใหม่จากรายการเดียวกัน |
+| runtime | engine backend และ library build | โหลดโมเดลกับเรียกฟังก์ชันที่ต้องใช้ |
+| workflow | แอป client และงานร่วม | รับไฟล์ เรียกโมเดล และเก็บผลได้ครบ |
+
+## ทดสอบ model fit กับเครื่องมือแยกกัน
+
+แนวทางที่เราเสนอคือเก็บผลสองตาราง ตารางหนึ่งบอกว่าโมเดลกับบริบทใดพอดี อีกตารางบอกว่าเครื่องมือใดทำงานบน stack นี้ได้ หากบังคับใช้ชื่อโมเดลเดียวอธิบายทุกอย่าง จะมองไม่เห็นปัญหาที่เกิดก่อนถึง inference
+
+เมื่อ preflight ผ่านแล้วจึงวัดงานต่อเนื่องและภาระ agent เบื้องหลังด้วยค่าที่ตรึงไว้ ข่าวนี้ยังไม่ยืนยัน SKU หรือราคาไทย จัดรายการโมเดลที่ตั้งใจใช้กับ [แนวทาง model fit ของ AI rig](/models/)
+
+วิดีโอทางการ [NVIDIA GTC Berlin 2026 Keynote With CEO Jensen Huang](https://www.youtube.com/watch?v=v-NGxyPjcrE) เผยแพร่ 2026-10-23 ใช้เป็นบริบทของแพลตฟอร์ม ไม่ใช่ผลทดสอบเครื่องของผู้ซื้อ

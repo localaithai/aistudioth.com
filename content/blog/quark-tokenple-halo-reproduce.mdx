@@ -1,0 +1,42 @@
+---
+title: "AMD เผย TokenPLE ลดขนาด Qwen บน Halo"
+description: "ทำซ้ำ Qwen TokenPLE โดยตรึง checkpoint lookup mode PR runtime และ thinking preset แยกผลคุณภาพบน Instinct จาก latency บน Halo"
+kind: "news"
+query: "ทำซ้ำ benchmark Qwen TokenPLE บน Halo ต้องตรึงค่าอะไร"
+cluster: "/benchmarks/"
+source: "amd-quark-qwen-tokenple-halo"
+published: "2026-11-14"
+reviewed: "2026-11-14"
+newsDate: "2026-11-12"
+summary: "การทำซ้ำ TokenPLE ต้องตรึงทั้ง checkpoint วิธี lookup และ runtime ที่แก้ไข แล้ววัดความเร็วบน Halo แยกจากผลคุณภาพที่ AMD รายงานบน Instinct"
+faq: [{"question":"checkpoint เล็กลงพิสูจน์ว่าโมเดลตอบเหมือนเดิมหรือไม่","answer":"ไม่พิสูจน์ ต้องทดสอบคุณภาพใน lookup mode และชุดงานที่เลือก พร้อมดูความผิดพลาดรายประเภท"},{"question":"ควรบันทึกเฉพาะชื่อ vLLM version หรือไม่","answer":"ไม่พอเมื่อใช้ patch ต้องเก็บ commit และการแก้ไขที่ใช้ด้วย เพื่อให้เครื่องอื่นสร้างสภาพแวดล้อมเดียวกันได้"}]
+citations: [{"title":"Beyond Embedding Quantization: Quark UINT4 Qwen3.8-Flash-Next on Ryzen AI Halo","url":"https://rocm.blogs.amd.com/artificial-intelligence/quark-qwen-ple/README.html","publisher":"AMD ROCm Blogs","published":"2026-11-12","accessed":"2026-11-13"},{"title":"[ROCm][Qwen4Exp][DeepSeek-V4.1] Add per_token PLE/Engram lookup mode","url":"https://github.com/vllm-project/vllm/pull/64369","publisher":"AMD contributor / vLLM","published":"2026-10-28","accessed":"2026-11-13"}]
+hero: {"src":"https://assets.mimir.business/assets/sites/aistudioth.com/generated/runtime-bench.95d0dcb533a4.webp","alt":"ภาพสร้างด้วย AI ของคอมพิวเตอร์ตั้งโต๊ะ แล็ปท็อป และสมุดบนโต๊ะ","caption":"ภาพประกอบการทดสอบ runtime ที่สร้างด้วย AI ไม่ใช่ภาพเครื่องหรือผล benchmark ในข่าว","credit":"AI Studio TH / Mimir, AI-generated illustration","sourceUrl":"https://aistudioth.com/benchmarks"}
+videos: [{"url":"https://www.youtube.com/watch?v=crEztVjfAPM","title":"Advancing AI 2026 | Build What's Next with @AMD","publisher":"AMD","published":"2026-07-23","context":true}]
+draft: false
+---
+
+สร้าง manifest ของการทดลองก่อนเปลี่ยนโมเดล แล้วเปลี่ยนทีละตัวแปร การลดขนาดไฟล์เป็นผลด้าน storage ส่วนคุณภาพคำตอบและ latency เป็นผลคนละชุดที่ต้องวัดเพิ่ม
+
+## ข่าวนี้ยืนยันอะไร
+
+AMD เผยผลตาราง per-token ของ Qwen3.8-Flash-Next วันที่ 12 พฤศจิกายน 2026 [ตามประกาศหลัก](https://rocm.blogs.amd.com/artificial-intelligence/quark-qwen-ple/README.html) โค้ดที่เกี่ยวข้องอยู่ใน PR เปิดวันที่ 28 ตุลาคม [แหล่งข้อมูลอีกหน้าหนึ่ง](https://github.com/vllm-project/vllm/pull/64369) จึงต้องเก็บ commit และ patch ที่ใช้จริง ไม่อ้างชื่อ stable release แทน
+
+## manifest สำหรับเทียบ lookup อย่างตรงกัน
+
+ตารางต่อไปนี้เป็นเกณฑ์ที่เราเสนอให้ใช้ตัดสินใจ ไม่ใช่ผลทดสอบที่ Mimir วัด
+
+| ตัวแปร | ค่าที่ต้องบันทึก | เหตุให้ผลเทียบกันไม่ได้ |
+| --- | --- | --- |
+| น้ำหนัก | model revision และ quantization config | เปลี่ยนทั้งตารางและน้ำหนักพร้อมกัน |
+| lookup | โหมดกับไฟล์ตารางที่โหลด | ชื่อโมเดลเหมือนกันแต่ใช้คนละตาราง |
+| runtime | commit, patch และ backend | เครื่องหนึ่งใช้โค้ดที่อีกเครื่องไม่มี |
+| การวัด | thinking preset seed และชุดงาน | เปลี่ยน sampling หรือขอบเขตโจทย์ |
+
+## แยกการรันได้ ความแม่นยำ และความเร็ว
+
+แนวทางที่เราเสนอคือเก็บผลคำตอบของงาน coding และ parallel tool calls เป็นรายโจทย์ด้วย คะแนนรวมอาจซ่อนลักษณะความผิดพลาดที่ทำให้ workflow ใช้ต่อไม่ได้ สำหรับ latency ให้บันทึก prompt output และภาระเครื่อง ไม่อนุมานจากความยาวคำตอบ
+
+อย่านำเวลาหรือคะแนนจาก hardware คนละชุดมารวมเป็น benchmark เดียว เก็บผลที่ยังทำซ้ำไม่ได้เป็นช่องว่างของการทดลอง แล้วเทียบวิธีจดผลกับ [แนวทาง benchmarks ของ AI rig](/benchmarks/)
+
+วิดีโอทางการ [Advancing AI 2026 | Build What's Next with @AMD](https://www.youtube.com/watch?v=crEztVjfAPM) เผยแพร่ 2026-07-23 ใช้เป็นบริบทของแพลตฟอร์ม ไม่ใช่ผลทดสอบเครื่องของผู้ซื้อ
